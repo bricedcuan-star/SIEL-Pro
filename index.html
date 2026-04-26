@@ -4,163 +4,180 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIEL PRO MASTER 5.0</title>
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <style>
-        body { background-color: #f1f5f9; font-family: sans-serif; margin: 0; padding: 20px; color: #1e293b; }
-        .container { max-width: 1200px; margin: 0 auto; }
-        header { background: #0C447C; color: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; }
+        :root { --blue: #0C447C; --green: #1D9E75; --red: #e11d48; --gray: #f1f5f9; }
+        body { background-color: var(--gray); font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 20px; color: #1e293b; }
+        .container { max-width: 1100px; margin: 0 auto; }
+        header { background: var(--blue); color: white; padding: 25px; border-radius: 15px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         nav { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
-        .btn-nav { padding: 10px 15px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; background: #cbd5e1; }
-        .active { background: #0C447C; color: white; }
-        .card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        .btn-nav { padding: 12px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; background: #cbd5e1; color: #475569; }
+        .btn-nav.active { background: var(--blue); color: white; }
+        .card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 20px; display: none; }
+        .card.active { display: block; }
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-        input, select, textarea { width: 100%; padding: 10px; margin: 5px 0; border-radius: 8px; border: 1px solid #cbd5e1; box-sizing: border-box; }
-        .prompt-box { background: #1e293b; color: #38bdf8; padding: 15px; border-radius: 10px; font-family: monospace; font-size: 13px; white-space: pre-wrap; }
-        .badge { padding: 4px 8px; border-radius: 10px; font-size: 12px; font-weight: bold; }
+        input, select, textarea { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid #cbd5e1; box-sizing: border-box; font-size: 14px; }
+        .prompt-box { background: #1e293b; color: #38bdf8; padding: 20px; border-radius: 12px; font-family: monospace; font-size: 13px; white-space: pre-wrap; border: 1px solid #334155; }
+        .badge { padding: 5px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; }
         .pass { background: #dcfce7; color: #166534; }
         .fail { background: #fee2e2; color: #991b1b; }
+        .resumen-caja { background: var(--blue); color: white; padding: 20px; border-radius: 12px; margin-top: 15px; }
     </style>
 </head>
 <body>
-    <div id="root"></div>
 
-    <script type="text/babel">
-        const { useState } = React;
+<div class="container">
+    <header>
+        <h1 style="margin:0;">SIEL PRO MASTER 5.0</h1>
+        <p style="margin:5px 0 0 0; opacity:0.8;">Blindaje Contractual & Consultoría de Licitaciones</p>
+    </header>
 
-        function App() {
-            const [tab, setTab] = useState('ESTRUCTURA');
-            const [form, setForm] = useState({
-                empresa: "", tipo: "Contratista", asociacion: "Empresa Única", unspsc: "",
-                activos: 0, pasivos: 0, utilidad: 0, gInt: 0,
-                base: 0, usaAIU: false, pU: 3, tasaIca: 9.66, estampillas: 2,
-                miembros: [{ id: 1, nombre: '', participacion: 100 }]
-            });
+    <nav>
+        <button class="btn-nav active" onclick="showTab('tab-estructura', this)">🏢 ESTRUCTURA & UT</button>
+        <button class="btn-nav" onclick="showTab('tab-finanzas', this)">📊 RUP & FINANZAS</button>
+        <button class="btn-nav" onclick="showTab('tab-ia', this)">🤖 CEREBRO IA</button>
+        <button class="btn-nav" onclick="showTab('tab-retencol', this)">💰 RETENCOL AIU</button>
+    </nav>
 
-            // Cálculos Financieros
-            const liq = form.pasivos > 0 ? (Number(form.activos) / Number(form.pasivos)).toFixed(2) : 0;
-            const end = form.activos > 0 ? ((Number(form.pasivos) / Number(form.activos)) * 100).toFixed(1) : 0;
-            
-            // Cálculos RETENCOL
-            const vTotal = Number(form.base) || 0;
-            const baseRF = form.usaAIU ? (vTotal * (Number(form.pU) / 100)) : vTotal;
-            const vRf = baseRF * 0.04;
-            const vIca = (vTotal * Number(form.tasaIca)) / 1000;
-            const vEst = vTotal * (Number(form.estampillas) / 100);
-            const neto = vTotal - (vRf + vIca + vEst);
+    <div id="tab-estructura" class="card active">
+        <h3>Estructura del Proponente</h3>
+        <div class="grid">
+            <div>
+                <label>Tipo de Proceso</label>
+                <select id="tipoProceso">
+                    <option>Contratista de Obra</option>
+                    <option>Interventoría</option>
+                    <option>Consultoría</option>
+                    <option>Prestación de Servicios</option>
+                </select>
+            </div>
+            <div>
+                <label>Forma Asociativa</label>
+                <select id="formaAsoc">
+                    <option>Empresa Única</option>
+                    <option>Unión Temporal</option>
+                    <option>Consorcio</option>
+                </select>
+            </div>
+        </div>
+        <label>Códigos UNSPSC (Habilitados)</label>
+        <textarea id="unspsc" placeholder="Ej: 81101500, 72102900..."></textarea>
+        <h4>Miembros / Socios</h4>
+        <div id="lista-miembros">
+            <div class="grid" style="margin-bottom:10px;">
+                <input type="text" placeholder="Nombre Miembro 1">
+                <input type="number" placeholder="% Participación">
+            </div>
+        </div>
+    </div>
 
-            const PROMPT = `ACTÚA COMO CONSULTOR SENIOR. Analiza pliego para ${form.tipo} (${form.asociacion}). 
-UNSPSC del proponente: ${form.unspsc}. 
-Indicadores Financieros: Liq ${liq}, End ${end}%.
-Detecta: 1. Amarres técnicos. 2. Riesgos en cláusulas de multas. 3. Veredicto Go/No Go.`;
+    <div id="tab-finanzas" class="card">
+        <h3>Indicadores Financieros (Habilitantes)</h3>
+        <div class="grid">
+            <div>
+                <label>Activo Corriente</label>
+                <input type="number" id="activo" oninput="calcularFinanzas()">
+                <label>Pasivo Corriente</label>
+                <input type="number" id="pasivo" oninput="calcularFinanzas()">
+            </div>
+            <div style="background:#f8fafc; padding:15px; border-radius:10px;">
+                <h4>Veredicto RUP</h4>
+                <p>Liquidez (>1.2): <span id="res-liq" class="badge">0.00</span></p>
+                <p>Endeudamiento (<70%): <span id="res-end" class="badge">0.0%</span></p>
+            </div>
+        </div>
+    </div>
 
-            return (
-                <div className="container">
-                    <header>
-                        <h1 style={{margin:0}}>SIEL PRO 5.0</h1>
-                        <p style={{margin:0, opacity:0.8}}>Blindaje Contractual Avanzado</p>
-                    </header>
+    <div id="tab-ia" class="card">
+        <h3>Análisis de Pliegos con IA</h3>
+        <p>Copia este prompt y pégalo en Gemini o ChatGPT para detectar amarres:</p>
+        <div class="prompt-box" id="prompt-maestro">
+Actúa como Consultor Senior en Contratación Estatal Colombia. Analiza este pliego detectando:
+1. Amarres técnicos en UNSPSC y personal.
+2. Cláusulas de multas abusivas.
+3. Veredicto de viabilidad Go/No Go.
+        </div>
+        <hr>
+        <h4>Checklist de Trampas Comunes</h4>
+        <label><input type="checkbox"> UNSPSC muy específicos que no guardan relación lógica.</label><br>
+        <label><input type="checkbox"> Experiencia exigida en un tiempo de ejecución muy corto.</label><br>
+        <label><input type="checkbox"> Exigencia de personal con posgrados innecesarios.</label>
+    </div>
 
-                    <nav>
-                        <button className={"btn-nav " + (tab === 'ESTRUCTURA' ? 'active' : '')} onClick={() => setTab('ESTRUCTURA')}>🏢 ESTRUCTURA</button>
-                        <button className={"btn-nav " + (tab === 'FINANZAS' ? 'active' : '')} onClick={() => setTab('FINANZAS')}>📊 FINANZAS</button>
-                        <button className={"btn-nav " + (tab === 'IA' ? 'active' : '')} onClick={() => setTab('IA')}>🤖 CEREBRO IA</button>
-                        <button className={"btn-nav " + (tab === 'RETENCOL' ? 'active' : '')} onClick={() => setTab('RETENCOL')}>💰 RETENCOL AIU</button>
-                    </nav>
-
-                    {tab === 'ESTRUCTURA' && (
-                        <div className="card">
-                            <h3>Perfil del Proponente y UT/Consorcios</h3>
-                            <div className="grid">
-                                <div>
-                                    <label>Tipo de Proceso</label>
-                                    <select value={form.tipo} onChange={e=>setForm({...form, tipo: e.target.value})}>
-                                        <option>Contratista</option>
-                                        <option>Interventoría</option>
-                                        <option>Consultoría</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label>Forma Asociativa</label>
-                                    <select value={form.asociacion} onChange={e=>setForm({...form, asociacion: e.target.value})}>
-                                        <option>Empresa Única</option>
-                                        <option>Unión Temporal</option>
-                                        <option>Consorcio</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <label>Códigos UNSPSC (Habilitados en RUP)</label>
-                            <textarea placeholder="Pegue aquí sus códigos..." onChange={e=>setForm({...form, unspsc: e.target.value})} />
-                            
-                            <h4>Miembros de la Asociación</h4>
-                            {form.miembros.map((m, i) => (
-                                <div key={m.id} className="grid" style={{marginBottom: '10px'}}>
-                                    <input placeholder="Nombre Miembro" />
-                                    <input type="number" placeholder="% Participación" />
-                                </div>
-                            ))}
-                            <button className="btn-nav" onClick={()=>setForm({...form, miembros: [...form.miembros, {id: Date.now()}]})}>+ Añadir Miembro</button>
-                        </div>
-                    )}
-
-                    {tab === 'FINANZAS' && (
-                        <div className="grid">
-                            <div className="card">
-                                <h3>Habilitantes Financieros</h3>
-                                <label>Activo Corriente</label><input type="number" onChange={e=>setForm({...form, activos: e.target.value})} />
-                                <label>Pasivo Corriente</label><input type="number" onChange={e=>setForm({...form, pasivos: e.target.value})} />
-                            </div>
-                            <div className="card" style={{background:'#f8fafc'}}>
-                                <h3>Veredicto RUP</h3>
-                                <p>Liquidez (>1.2): <span className={"badge " + (liq>=1.2?'pass':'fail')}>{liq}</span></p>
-                                <p>Endeudamiento (<70%): <span className={"badge " + (end<=70?'pass':'fail')}>{end}%</span></p>
-                            </div>
-                        </div>
-                    )}
-
-                    {tab === 'IA' && (
-                        <div className="card">
-                            <h3>Prompt Maestro para Gemini/ChatGPT</h3>
-                            <div className="prompt-box">{PROMPT}</div>
-                            <hr/>
-                            <h3>Trampas en Pliegos / Contratos</h3>
-                            <label><input type="checkbox" /> UNSPSC extraños al objeto</label>
-                            <label><input type="checkbox" /> Visitas obligatorias en menos de 3 días</label>
-                            <label><input type="checkbox" /> Cláusulas de multas sin debido proceso</label>
-                        </div>
-                    )}
-
-                    {tab === 'RETENCOL' && (
-                        <div className="grid">
-                            <div className="card">
-                                <h3>Calculadora Tributaria AIU</h3>
-                                <label>Valor Contrato</label><input type="number" onChange={e=>setForm({...form, base: e.target.value})} />
-                                <label><input type="checkbox" checked={form.usaAIU} onChange={e=>setForm({...form, usaAIU: e.target.checked})} /> ¿Aplica AIU?</label>
-                                {form.usaAIU && <input type="number" placeholder="% Utilidad (U)" value={form.pU} onChange={e=>setForm({...form, pU: e.target.value})} />}
-                                <label>Tasa ICA (x mil)</label><input type="number" value={form.tasaIca} onChange={e=>setForm({...form, tasaIca: e.target.value})} />
-                                <label>% Estampillas</label><input type="number" value={form.estampillas} onChange={e=>setForm({...form, estampillas: e.target.value})} />
-                            </div>
-                            <div className="card" style={{background:'#0C447C', color:'white'}}>
-                                <h3>Neto Estimado</h3>
-                                <p>ReteFuente: -${vRf.toLocaleString()}</p>
-                                <p>ReteICA: -${vIca.toLocaleString()}</p>
-                                <p>Estampillas: -${vEst.toLocaleString()}</p>
-                                <hr/>
-                                <h2>CAJA NETO: ${neto.toLocaleString()}</h2>
-                                <div className="grid">
-                                    <button style={{padding:'10px', borderRadius:'5px', cursor:'pointer'}}>📊 EXCEL SIEL</button>
-                                    <button style={{padding:'10px', borderRadius:'5px', cursor:'pointer'}}>📄 PDF VEREDICTO</button>
-                                </div>
-                            </div>
-                        </div>
-                    )}
+    <div id="tab-retencol" class="card">
+        <h3>Calculadora RETENCOL AIU</h3>
+        <div class="grid">
+            <div>
+                <label>Valor del Contrato (Sin IVA)</label>
+                <input type="number" id="valContrato" oninput="calcularRetencol()">
+                <label><input type="checkbox" id="usaAIU" onchange="calcularRetencol()"> ¿Aplica AIU?</label>
+                <div id="box-aiu" style="display:none; margin-top:10px;">
+                    <label>% Utilidad (U)</label>
+                    <input type="number" id="pUtilidad" value="3" oninput="calcularRetencol()">
                 </div>
-            );
-        }
+                <label>ICA (x 1000)</label>
+                <input type="number" id="valIca" value="9.66" oninput="calcularRetencol()">
+                <label>% Estampillas</label>
+                <input type="number" id="valEst" value="2" oninput="calcularRetencol()">
+            </div>
+            <div class="resumen-caja">
+                <h3>Flujo Neto de Caja</h3>
+                <p>ReteFuente: -$<span id="out-rf">0</span></p>
+                <p>ReteICA: -$<span id="out-ica">0</span></p>
+                <p>Estampillas: -$<span id="out-est">0</span></p>
+                <hr>
+                <h2 style="color:#22c55e;">NETO RECIBIDO: $<span id="out-neto">0</span></h2>
+                <button onclick="alert('Generando Excel...')" style="width:100%; padding:10px; cursor:pointer; font-weight:bold;">📊 EXPORTAR INFORME SIEL</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
-    </script>
+<script>
+    function showTab(tabId, btn) {
+        document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
+        document.querySelectorAll('.btn-nav').forEach(b => b.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        btn.classList.add('active');
+    }
+
+    function calcularFinanzas() {
+        const activo = parseFloat(document.getElementById('activo').value) || 0;
+        const pasivo = parseFloat(document.getElementById('pasivo').value) || 0;
+        
+        const liq = pasivo > 0 ? (activo / pasivo).toFixed(2) : 0;
+        const end = activo > 0 ? ((pasivo / activo) * 100).toFixed(1) : 0;
+
+        const resLiq = document.getElementById('res-liq');
+        const resEnd = document.getElementById('res-end');
+
+        resLiq.innerText = liq;
+        resLiq.className = 'badge ' + (liq >= 1.2 ? 'pass' : 'fail');
+
+        resEnd.innerText = end + '%';
+        resEnd.className = 'badge ' + (end <= 70 ? 'pass' : 'fail');
+    }
+
+    function calcularRetencol() {
+        const total = parseFloat(document.getElementById('valContrato').value) || 0;
+        const usaAIU = document.getElementById('usaAIU').checked;
+        const pU = parseFloat(document.getElementById('pUtilidad').value) || 0;
+        const tIca = parseFloat(document.getElementById('valIca').value) || 0;
+        const tEst = parseFloat(document.getElementById('valEst').value) || 0;
+
+        document.getElementById('box-aiu').style.display = usaAIU ? 'block' : 'none';
+
+        const baseRF = usaAIU ? (total * (pU / 100)) : total;
+        const rf = baseRF * 0.04;
+        const ica = (total * tIca) / 1000;
+        const est = total * (tEst / 100);
+        const neto = total - (rf + ica + est);
+
+        document.getElementById('out-rf').innerText = rf.toLocaleString();
+        document.getElementById('out-ica').innerText = ica.toLocaleString();
+        document.getElementById('out-est').innerText = est.toLocaleString();
+        document.getElementById('out-neto').innerText = neto.toLocaleString();
+    }
+</script>
+
 </body>
 </html>
