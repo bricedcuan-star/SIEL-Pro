@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIEL PRO 6.0 - CONSULTORÍA SENIOR</title>
+    <title>SIEL PRO 6.5 - CONSULTORÍA SENIOR</title>
     <style>
         :root { --blue: #0C447C; --green: #1D9E75; --red: #e11d48; --gold: #b45309; --dark: #1e293b; }
         body { background-color: #f1f5f9; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 20px; color: var(--dark); }
@@ -18,11 +18,9 @@
         label { font-weight: 700; font-size: 13px; display: block; margin-top: 12px; color: var(--blue); }
         input, select, textarea { width: 100%; padding: 12px; margin: 5px 0; border-radius: 8px; border: 1px solid #cbd5e1; box-sizing: border-box; }
         .prompt-box { background: #1e293b; color: #38bdf8; padding: 20px; border-radius: 12px; font-family: 'Courier New', monospace; font-size: 12px; white-space: pre-wrap; line-height: 1.4; border: 1px solid #334155; }
-        .badge { padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: bold; }
-        .pass { background: #dcfce7; color: #166534; }
-        .fail { background: #fee2e2; color: #991b1b; }
         .resumen-fiscal { background: var(--dark); color: white; padding: 20px; border-radius: 15px; }
         .estatuton-link { background: #facc15; color: #854d0e; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: bold; display: inline-block; margin-bottom: 15px; width: 100%; text-align: center; }
+        .info-base { font-size: 11px; color: #64748b; font-style: italic; margin-top: -5px; }
     </style>
 </head>
 <body>
@@ -30,17 +28,17 @@
 <div class="container">
     <header>
         <div>
-            <h1 style="margin:0;">SIEL PRO 6.0</h1>
+            <h1 style="margin:0;">SIEL PRO 6.5</h1>
             <p style="margin:0; opacity:0.8;">Consultoría Senior - Blindaje Contractual Colombia</p>
         </div>
-        <span class="badge" style="background:#facc15; color:#000;">UVT 2026: $52.374</span>
+        <span style="background:#facc15; color:#000; padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: bold;">UVT 2026: $52.374</span>
     </header>
 
     <nav>
         <button class="btn-nav active" onclick="showTab('tab-config', this)">⚙️ CONFIGURACIÓN</button>
         <button class="btn-nav" onclick="showTab('tab-empresa', this)">🏢 DATOS EMPRESA</button>
-        <button class="btn-nav" onclick="showTab('tab-ia', this)">🤖 ANÁLISIS IA (PROMPT)</button>
-        <button class="btn-nav" onclick="showTab('tab-retencol', this)">💰 RETENCOL 360</button>
+        <button class="btn-nav" onclick="showTab('tab-ia', this)">🤖 CEREBRO IA</button>
+        <button class="btn-nav" onclick="showTab('tab-retencol', this)">💰 RETENCOL PRO</button>
         <button class="btn-nav" onclick="showTab('tab-reportes', this)" style="background:var(--gold); color:white;">📊 DASHBOARD</button>
     </nav>
 
@@ -49,115 +47,92 @@
         <div class="grid">
             <div>
                 <label>TIPO DE PROCESO</label>
-                <select id="tipoProceso" onchange="updatePrompt()">
-                    <option>LICITACIÓN PÚBLICA</option>
-                    <option>CONVOCATORIA PRIVADA</option>
-                    <option>TÉRMINOS DE REFERENCIA PRIVADOS</option>
-                </select>
+                <select id="tipoProceso" onchange="updatePrompt()"><option>LICITACIÓN PÚBLICA</option><option>CONVOCATORIA PRIVADA</option></select>
                 <label>SECTOR</label>
-                <select id="sector" onchange="updatePrompt()">
-                    <option>OBRAS CIVILES</option>
-                    <option>TECNOLOGÍA</option>
-                    <option>FACHADAS Y CUBIERTAS</option>
-                    <option>VIGILANCIA Y ASEO</option>
-                    <option>SALUD</option>
-                </select>
+                <select id="sector" onchange="updatePrompt()"><option>OBRAS CIVILES</option><option>FACHADAS Y CUBIERTAS</option><option>VIGILANCIA Y ASEO</option></select>
             </div>
             <div>
                 <label>MODALIDAD</label>
-                <select id="modalidad" onchange="updatePrompt()">
-                    <option>EMPRESA INDIVIDUAL</option>
-                    <option>CONSORCIO</option>
-                    <option>UNIÓN TEMPORAL</option>
-                </select>
-                <label>ROL</label>
-                <select id="rol" onchange="updatePrompt()">
-                    <option>CONTRATISTA</option>
-                    <option>INTERVENTOR</option>
-                    <option>PROVEEDOR</option>
-                </select>
+                <select id="modalidad" onchange="updatePrompt()"><option>EMPRESA INDIVIDUAL</option><option>CONSORCIO</option><option>UNIÓN TEMPORAL</option></select>
             </div>
         </div>
     </div>
 
     <div id="tab-empresa" class="card">
-        <h3>Perfil Financiero y Técnico (Fijo)</h3>
+        <h3>Perfil Financiero y Técnico</h3>
         <div class="grid">
             <div>
                 <label>Liquidez</label><input type="number" id="e_liq" value="1.5" oninput="updatePrompt()">
                 <label>Endeudamiento (%)</label><input type="number" id="e_end" value="45" oninput="updatePrompt()">
-                <label>Capital de Trabajo ($)</label><input type="number" id="e_ct" placeholder="Ingrese valor" oninput="updatePrompt()">
-                <label>Patrimonio ($)</label><input type="number" id="e_pat" oninput="updatePrompt()">
+                <label>Capital de Trabajo ($)</label><input type="number" id="e_ct" oninput="updatePrompt()">
             </div>
             <div>
+                <label>Patrimonio ($)</label><input type="number" id="e_pat" oninput="updatePrompt()">
                 <label>Experiencia Máxima ($)</label><input type="number" id="e_exp" oninput="updatePrompt()">
                 <label>Capacidad K</label><input type="number" id="e_k" oninput="updatePrompt()">
-                <label>Póliza RC Vigente ($)</label><input type="number" id="e_rc" oninput="updatePrompt()">
-                <label>Certificación Alturas</label>
-                <select id="e_alt" onchange="updatePrompt()">
-                    <option>Si Cuento con Personal Certificado</option>
-                    <option>No Cuento</option>
-                </select>
             </div>
         </div>
     </div>
 
     <div id="tab-ia" class="card">
-        <h3>Consultora Senior IA</h3>
-        <p>Copie el siguiente prompt y péguelo en Gemini para un análisis estricto:</p>
-        <div class="prompt-box" id="promptDisplay">Generando prompt maestro...</div>
-        <button class="btn-nav" style="background:var(--blue); color:white; width:100%; margin-top:10px;" onclick="copyPrompt()">COPIAR PROMPT AL PORTAPAPELES</button>
+        <h3>Prompt Consultora Senior</h3>
+        <div class="prompt-box" id="promptDisplay">Generando...</div>
+        <button class="btn-nav" style="background:var(--blue); color:white; width:100%; margin-top:10px;" onclick="copyPrompt()">COPIAR PROMPT</button>
     </div>
 
     <div id="tab-retencol" class="card">
-        <a href="https://sites.google.com/view/estatuton-2024/inicio" target="_blank" class="estatuton-link">🔗 ABRIR ESTATUTÓN OFICIAL (Tarifas 2024-2026)</a>
+        <a href="https://sites.google.com/view/estatuton-2024/inicio" target="_blank" class="estatuton-link">🔗 ABRIR ESTATUTÓN (TARIFARIO NACIONAL)</a>
         <div class="grid">
             <div>
-                <label>VALOR CONTRATO (BASE)</label>
-                <input type="number" id="r_base" oninput="calcFiscal()">
+                <label>VALOR BASE DEL CONTRATO (SIN IVA)</label>
+                <input type="number" id="r_base" placeholder="0" oninput="calcFiscal()">
                 
-                <label>MUNICIPIO (TARIFA ICA)</label>
-                <select id="r_municipio" onchange="setIcaTarifa()">
-                    <option value="9.66">Bogotá (Servicios 9.66)</option>
-                    <option value="11.04">Bogotá (Consultoría 11.04)</option>
-                    <option value="7.0">Medellín (7.0)</option>
-                    <option value="10.0">Cali (10.0)</option>
-                    <option value="5.0">Barranquilla (5.0)</option>
-                    <option value="8.0">Bucaramanga (8.0)</option>
-                    <option value="6.0">Cartagena (6.0)</option>
-                    <option value="10.0">Pereira (10.0)</option>
+                <label>MUNICIPIO (ICA)</label>
+                <select id="r_municipio" onchange="calcFiscal()">
+                    <option value="9.66">Bogotá - Servicios (9.66 x 1000)</option>
+                    <option value="11.04">Bogotá - Consultoría/Obra (11.04 x 1000)</option>
+                    <option value="7.0">Medellín (7.0 x 1000)</option>
+                    <option value="10.0">Cali (10.0 x 1000)</option>
+                    <option value="5.0">Barranquilla (5.0 x 1000)</option>
                 </select>
 
-                <label>RETENCIÓN EN LA FUENTE (RENTA)</label>
+                <label>CONCEPTO DE RETEFUENTE (RENTA)</label>
                 <select id="r_rf_tipo" onchange="calcFiscal()">
-                    <option value="0.04">Servicios General (4%) - Base > 4 UVT</option>
-                    <option value="0.06">Servicios No Declarantes (6%)</option>
-                    <option value="0.11">Honorarios y Consultoría (11%)</option>
-                    <option value="0.025">Compras (2.5%) - Base > 27 UVT</option>
-                    <option value="0.01">Obra Civil (1%)</option>
+                    <option value="0.04">Servicios - Declarante (4.0%) [Base > 4 UVT]</option>
+                    <option value="0.06">Servicios - NO Declarante (6.0%) [Base > 4 UVT]</option>
+                    <option value="0.11">Honorarios/Consultoría - Declarante (11.0%)</option>
+                    <option value="0.10">Honorarios/Consultoría - NO Declarante (10.0%)</option>
+                    <option value="0.02">Contratos de Construcción / Obra (2.0%)</option>
+                    <option value="0.025">Compras - Declarante (2.5%) [Base > 27 UVT]</option>
+                    <option value="0.035">Compras - NO Declarante (3.5%) [Base > 27 UVT]</option>
                 </select>
+                <p class="info-base">Nota: El sistema asume que el pago supera la base mínima legal.</p>
 
-                <label><input type="checkbox" id="r_usaAIU" onchange="calcFiscal()"> APLICAR AIU</label>
-                <input type="number" id="r_pU" value="3" style="display:none;" oninput="calcFiscal()" placeholder="% Utilidad">
+                <label style="color:var(--gold)"><input type="checkbox" id="r_usaAIU" onchange="calcFiscal()"> APLICAR RÉGIMEN AIU</label>
+                <div id="boxAIU" style="display:none; padding:10px; border:1px solid var(--gold); border-radius:10px; margin-top:5px;">
+                    <label>% Utilidad (Base para Renta)</label>
+                    <input type="number" id="r_pU" value="3" oninput="calcFiscal()">
+                </div>
             </div>
 
             <div class="resumen-fiscal">
-                <h3>Impacto Financiero</h3>
-                <p>ReteFuente: -$<span id="f_rf">0</span></p>
-                <p>ReteICA: -$<span id="f_ica">0</span></p>
-                <p>Estampillas (2% Prom.): -$<span id="f_est">0</span></p>
+                <h3>Cálculo de Deducciones</h3>
+                <p>Retención Fuente: -$<span id="f_rf">0</span></p>
+                <p>Retención ICA: -$<span id="f_ica">0</span></p>
+                <p>Estampillas/Otros (2.5%): -$<span id="f_est">0</span></p>
                 <hr>
-                <h2 style="color:#22c55e;">NETO CAJA: $<span id="f_neto">0</span></h2>
+                <h2 style="color:#22c55e; margin:0;">NETO A RECIBIR: $<span id="f_neto">0</span></h2>
+                <p style="font-size:10px; opacity:0.7; margin-top:10px;">* Cálculo estimado para 2026. Verifique bases UVT según concepto.</p>
             </div>
         </div>
     </div>
 
     <div id="tab-reportes" class="card">
         <div style="text-align:center;">
-            <h2>Centro de Informes</h2>
+            <h2>Exportación de Resultados</h2>
             <div class="grid">
-                <button class="btn-nav" style="background:var(--green); color:white; height:100px;">📄 DESCARGAR VIABILIDAD PDF<br>(Veredicto Go/No Go)</button>
-                <button class="btn-nav" style="background:var(--blue); color:white; height:100px;">📊 DESCARGAR EXCEL SIEL<br>(Dashboard Completo)</button>
+                <button class="btn-nav" style="background:var(--green); color:white; height:100px;">📄 GENERAR PDF<br>Veredicto Senior</button>
+                <button class="btn-nav" style="background:var(--blue); color:white; height:100px;">📊 GENERAR EXCEL<br>Dashboard SIEL</button>
             </div>
         </div>
     </div>
@@ -171,10 +146,6 @@
         btn.classList.add('active');
     }
 
-    function setIcaTarifa() {
-        calcFiscal();
-    }
-
     function calcFiscal() {
         const base = parseFloat(document.getElementById('r_base').value) || 0;
         const tIca = parseFloat(document.getElementById('r_municipio').value) || 0;
@@ -182,12 +153,18 @@
         const usaAIU = document.getElementById('r_usaAIU').checked;
         const pU = parseFloat(document.getElementById('r_pU').value) || 0;
 
-        document.getElementById('r_pU').style.display = usaAIU ? 'block' : 'none';
+        document.getElementById('boxAIU').style.display = usaAIU ? 'block' : 'none';
 
-        const baseRF = usaAIU ? (base * (pU/100)) : base;
-        const vRf = baseRF * tRf;
+        // Lógica de Retención en la Fuente: Si es AIU se aplica sobre la Utilidad
+        const baseCalculoRF = usaAIU ? (base * (pU/100)) : base;
+        const vRf = baseCalculoRF * tRf;
+        
+        // ICA se aplica sobre el valor total del contrato (Ingreso Bruto)
         const vIca = (base * tIca) / 1000;
-        const vEst = base * 0.02; // Estampillas promedio
+        
+        // Estampillas (Cálculo sugerido del 2.5% sobre total)
+        const vEst = base * 0.025;
+        
         const neto = base - (vRf + vIca + vEst);
 
         document.getElementById('f_rf').innerText = Math.round(vRf).toLocaleString();
@@ -197,49 +174,16 @@
     }
 
     function updatePrompt() {
-        const tProceso = document.getElementById('tipoProceso').value;
-        const sector = document.getElementById('sector').value;
-        const mod = document.getElementById('modalidad').value;
-        const rol = document.getElementById('rol').value;
-        
-        const liq = document.getElementById('e_liq').value;
-        const end = document.getElementById('e_end').value;
-        const ct = document.getElementById('e_ct').value;
-        const pat = document.getElementById('e_pat').value;
-        const exp = document.getElementById('e_exp').value;
-        const k = document.getElementById('e_k').value;
-
-        const prompt = `Actúa como mi Consultora Senior de Procesos de Contratación. Sé estricta y directa.
-
-CONFIGURACIÓN:
-TIPO_PROCESO: ${tProceso}
-SECTOR: ${sector}
-MODALIDAD_EMPRESA: ${mod}
-ROL_EN_PROCESO: ${rol}
-
-DATOS_MI_EMPRESA:
-Liquidez: ${liq} | Endeudamiento: ${end}% | Capital Trabajo: $${ct} | Patrimonio: $${pat}
-Exp_Máxima: $${exp} | Capacidad_K: $${k}
-
-EJECUTA:
-1. Aplica MÓDULOS A, B, C, D o E según corresponda.
-2. Analiza Criterios Financieros vs Exigencia del Pliego.
-3. Detecta TRAMPAS (Días de lluvia, marcas específicas, multas automáticas).
-4. VEREDICTO FINAL: GO / NO-GO con justificación técnica.`;
-
+        const prompt = `Actúa como mi Consultora Senior. Datos: Liq ${document.getElementById('e_liq').value}, End ${document.getElementById('e_end').value}%, CT: ${document.getElementById('e_ct').value}. Analiza pliego de ${document.getElementById('tipoProceso').value} sector ${document.getElementById('sector').value}.`;
         document.getElementById('promptDisplay').innerText = prompt;
     }
 
     function copyPrompt() {
-        const text = document.getElementById('promptDisplay').innerText;
-        navigator.clipboard.writeText(text);
-        alert("Prompt copiado. Pégalo en Gemini.");
+        navigator.clipboard.writeText(document.getElementById('promptDisplay').innerText);
+        alert("Prompt copiado.");
     }
 
-    window.onload = function() {
-        updatePrompt();
-        calcFiscal();
-    };
+    window.onload = function() { updatePrompt(); calcFiscal(); };
 </script>
 
 </body>
