@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIEL PRO 2.0</title>
+    <title>SIEL PRO - Master 360</title>
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <style>
-        body { background-color: #F1F5F9; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; color: #334155; }
+        body { background-color: #F1F5F9; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; color: #1e293b; }
         .container { max-width: 1100px; margin: 0 auto; }
         header { background: #0C447C; color: white; padding: 25px; border-radius: 15px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        nav { display: flex; gap: 10px; margin-bottom: 25px; flex-wrap: wrap; }
-        .btn { padding: 12px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; color: white; }
+        nav { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+        .btn { padding: 10px 18px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; color: white; transition: 0.2s; }
         .card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 20px; }
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-        input, select, textarea { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid #e2e8f0; font-size: 14px; box-sizing: border-box; }
-        .badge { padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; }
+        input, select, textarea { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid #cbd5e1; box-sizing: border-box; font-size: 14px; }
+        .badge { padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: bold; text-transform: uppercase; }
         .pass { background: #dcfce7; color: #166534; }
         .fail { background: #fee2e2; color: #991b1b; }
     </style>
@@ -28,99 +28,113 @@
         const { useState } = React;
 
         function App() {
-            const [tab, setTab] = useState('FINANCIERO');
+            const [tab, setTab] = useState('PERFIL');
             const [datos, setDatos] = useState({
+                miembros: [{ id: 1, nombre: 'Empresa Líder', patrimonio: 0, expMax: 0, unspsc: "" }],
                 activos: 0, pasivos: 0, utilidadOp: 0, gastosInt: 0,
-                valorContrato: 0, tarifaIca: 9.66, analisisIA: "",
-                contratos: [{ id: 1, objeto: "", valorSmmlv: 0 }]
+                valorProceso: 0, tarifaIcaManual: 9.66, esImagen: false, analisisIA: ""
             });
 
-            // Cálculos
+            // Cálculos Financieros
             const liq = datos.pasivos > 0 ? (Number(datos.activos) / Number(datos.pasivos)).toFixed(2) : 0;
             const end = datos.activos > 0 ? ((Number(datos.pasivos) / Number(datos.activos)) * 100).toFixed(1) : 0;
             const cob = datos.gastosInt > 0 ? (Number(datos.utilidadOp) / Number(datos.gastosInt)).toFixed(2) : 0;
 
-            const calcularRet = () => {
-                const base = Number(datos.valorContrato) || 0;
-                const ica = (base * Number(datos.tarifaIca)) / 1000;
-                const renta = base * 0.04;
-                return { ica, renta, neto: base - ica - renta };
+            const calcularRetencol = () => {
+                const base = Number(datos.valorProceso) || 0;
+                const vIca = (base * (Number(datos.tarifaIcaManual) || 0)) / 1000;
+                const vRenta = base * 0.04;
+                return { vIca, vRenta, neto: base - (vIca + vRenta) };
             };
 
-            const ret = calcularRet();
+            const ret = calcularRetencol();
 
             return (
                 <div className="container">
                     <header>
                         <div>
-                            <h1 style={{margin:0, fontSize:'24px'}}>SIEL PRO 2.0</h1>
-                            <small>Consultoría Estratégica en Contratación</small>
+                            <h1 style={{margin:0, fontSize:'24px'}}>SIEL PRO MASTER</h1>
+                            <small>Plataforma de Blindaje Contractual</small>
                         </div>
                         <span className="badge" style={{background:'rgba(255,255,255,0.2)'}}>UVT 2026: $52.374</span>
                     </header>
 
                     <nav>
-                        <button className="btn" style={{background: tab==='FINANCIERO'?'#1D9E75':'#94a3b8'}} onClick={()=>setTab('FINANCIERO')}>📊 FINANCIERO</button>
-                        <button className="btn" style={{background: tab==='EXP'?'#1D9E75':'#94a3b8'}} onClick={()=>setTab('EXP')}>📜 EXPERIENCIA</button>
-                        <button className="btn" style={{background: tab==='RETEN'?'#1D9E75':'#94a3b8'}} onClick={()=>setTab('RETEN')}>💰 RETENCOL</button>
+                        <button className="btn" style={{background: tab==='PERFIL'?'#1D9E75':'#94a3b8'}} onClick={()=>setTab('PERFIL')}>👤 PERFIL & UNSPSC</button>
+                        <button className="btn" style={{background: tab==='FINANCIERO'?'#1D9E75':'#94a3b8'}} onClick={()=>setTab('FINANCIERO')}>📊 RUP & FINANZAS</button>
                         <button className="btn" style={{background: tab==='IA'?'#1D9E75':'#94a3b8'}} onClick={()=>setTab('IA')}>🔍 AMARRES IA</button>
+                        <button className="btn" style={{background: tab==='RETEN'?'#1D9E75':'#94a3b8'}} onClick={()=>setTab('RETEN')}>💰 RETENCOL</button>
                     </nav>
+
+                    {tab === 'PERFIL' && (
+                        <div className="card">
+                            <h3>Capacidad del Proponente</h3>
+                            {datos.miembros.map((m, i) => (
+                                <div key={m.id} style={{borderBottom:'1px solid #eee', paddingBottom:'15px', marginBottom:'15px'}}>
+                                    <input placeholder="Nombre del Socio / Empresa" value={m.nombre} onChange={e => {
+                                        let n = [...datos.miembros]; n[i].nombre = e.target.value; setDatos({...datos, miembros: n});
+                                    }} />
+                                    <div className="grid">
+                                        <input type="number" placeholder="Patrimonio RUP" onChange={e => {
+                                            let n = [...datos.miembros]; n[i].patrimonio = e.target.value; setDatos({...datos, miembros: n});
+                                        }} />
+                                        <input placeholder="Códigos UNSPSC" onChange={e => {
+                                            let n = [...datos.miembros]; n[i].unspsc = e.target.value; setDatos({...datos, miembros: n});
+                                        }} />
+                                    </div>
+                                </div>
+                            ))}
+                            <button className="btn" style={{background:'#0C447C'}} onClick={()=>setDatos({...datos, miembros: [...datos.miembros, {id: Date.now(), nombre:'', patrimonio:0, unspsc:''}]})}>+ Añadir Socio/Consorciado</button>
+                        </div>
+                    )}
 
                     {tab === 'FINANCIERO' && (
                         <div className="grid">
                             <div className="card">
-                                <h3>Indicadores RUP</h3>
+                                <h3>Indicadores Habilitantes</h3>
                                 <label>Activo Corriente</label>
-                                <input type="number" value={datos.activos} onChange={e=>setDatos({...datos, activos: e.target.value})} />
+                                <input type="number" onChange={e=>setDatos({...datos, activos: e.target.value})} />
                                 <label>Pasivo Corriente</label>
-                                <input type="number" value={datos.pasivos} onChange={e=>setDatos({...datos, pasivos: e.target.value})} />
+                                <input type="number" onChange={e=>setDatos({...datos, pasivos: e.target.value})} />
                                 <label>Utilidad Operativa</label>
-                                <input type="number" value={datos.utilidadOp} onChange={e=>setDatos({...datos, utilidadOp: e.target.value})} />
+                                <input type="number" onChange={e=>setDatos({...datos, utilidadOp: e.target.value})} />
                                 <label>Gastos Interés</label>
-                                <input type="number" value={datos.gastosInt} onChange={e=>setDatos({...datos, gastosInt: e.target.value})} />
+                                <input type="number" onChange={e=>setDatos({...datos, gastosInt: e.target.value})} />
                             </div>
                             <div className="card" style={{background:'#f8fafc'}}>
-                                <h3>Veredicto Habilitante</h3>
+                                <h3>Veredicto Financiero</h3>
                                 <p>Liquidez: <span className={`badge ${liq >= 1.2 ? 'pass' : 'fail'}`}>{liq}</span></p>
                                 <p>Endeudamiento: <span className={`badge ${end <= 70 ? 'pass' : 'fail'}`}>{end}%</span></p>
-                                <p>Cobertura: <span className={`badge ${cob >= 2 ? 'pass' : 'fail'}`}>{cob}</span></p>
-                            </div>
-                        </div>
-                    )}
-
-                    {tab === 'EXP' && (
-                        <div className="card">
-                            <h3>Experiencia en SMMLV</h3>
-                            {datos.contratos.map((c, i) => (
-                                <div key={c.id} className="grid" style={{marginBottom:'10px'}}>
-                                    <input placeholder="Objeto" />
-                                    <input type="number" placeholder="SMMLV" />
-                                </div>
-                            ))}
-                            <button className="btn" style={{background:'#0C447C'}} onClick={()=>setDatos({...datos, contratos: [...datos.contratos, {id: Date.now()}]})}>+ Añadir</button>
-                        </div>
-                    )}
-
-                    {tab === 'RETEN' && (
-                        <div className="grid">
-                            <div className="card">
-                                <h3>Calculadora</h3>
-                                <input type="number" placeholder="Valor Contrato" onChange={e=>setDatos({...datos, valorContrato: e.target.value})} />
-                                <input type="number" placeholder="Tarifa ICA" value={datos.tarifaIca} onChange={e=>setDatos({...datos, tarifaIca: e.target.value})} />
-                            </div>
-                            <div className="card" style={{background:'#0C447C', color:'white'}}>
-                                <h3>Neto: ${ret.neto.toLocaleString()}</h3>
-                                <small>Renta: -${ret.renta.toLocaleString()}</small><br/>
-                                <small>ICA: -${ret.ica.toLocaleString()}</small>
+                                <p>Cobertura Interés: <span className={`badge ${cob >= 2 ? 'pass' : 'fail'}`}>{cob}</span></p>
                             </div>
                         </div>
                     )}
 
                     {tab === 'IA' && (
                         <div className="card">
-                            <h3>Informe de Amarres</h3>
-                            <textarea style={{height:'150px'}} placeholder="Pega el análisis aquí..." onChange={e=>setDatos({...datos, analisisIA: e.target.value})} />
-                            <button className="btn" style={{background:'#e11d48', width:'100%'}} onClick={()=>alert('Imprima esta pantalla como PDF para su cliente.')}>GENERAR REPORTE</button>
+                            <h3>Detección de Amarres (IA)</h3>
+                            <label style={{fontWeight:'bold'}}>
+                                <input type="checkbox" onChange={e => setDatos({...datos, esImagen: e.target.checked})} /> ¿PDF ESCANEADO / IMAGEN?
+                            </label>
+                            <textarea style={{height:'180px', marginTop:'15px'}} placeholder="Pega aquí el análisis de la IA sobre multas, pliegos sastre y riesgos..." value={datos.analisisIA} onChange={e=>setDatos({...datos, analisisIA: e.target.value})} />
+                        </div>
+                    )}
+
+                    {tab === 'RETEN' && (
+                        <div className="grid">
+                            <div className="card">
+                                <h3>Calculadora Tributaria</h3>
+                                <input type="number" placeholder="Valor del Proceso" onChange={e => setDatos({...datos, valorProceso: e.target.value})} />
+                                <input type="number" placeholder="Tarifa ICA (X mil)" value={datos.tarifaIcaManual} onChange={e => setDatos({...datos, tarifaIcaManual: e.target.value})} />
+                                <button className="btn" style={{background:'#64748b', width:'100%'}} onClick={() => window.open('https://sites.google.com/view/estatuton-2024/inicio')}>🔍 CONSULTAR ESTATUTON</button>
+                            </div>
+                            <div className="card" style={{background:'#0C447C', color:'white'}}>
+                                <h3>Liquidación Estimada</h3>
+                                <p>ReteFuente (4%): -${ret.vRenta.toLocaleString()}</p>
+                                <p>ReteICA: -${ret.vIca.toLocaleString()}</p>
+                                <hr/>
+                                <h2 style={{color:'#1D9E75'}}>NETO: ${ret.neto.toLocaleString()}</h2>
+                            </div>
                         </div>
                     )}
                 </div>
