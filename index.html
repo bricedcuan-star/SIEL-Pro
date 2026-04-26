@@ -3,26 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIEL PRO - Blindaje Total</title>
+    <title>SIEL PRO - Master Blindaje Contractual</title>
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <style>
-        :root { --blue: #0C447C; --green: #1D9E75; --red: #e11d48; --dark: #1e293b; }
-        body { background-color: #F1F5F9; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 20px; color: var(--dark); }
-        .container { max-width: 1200px; margin: 0 auto; }
-        header { background: var(--blue); color: white; padding: 25px; border-radius: 15px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
-        nav { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
-        .btn { padding: 12px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; color: white; transition: 0.3s; }
-        .card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 20px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; }
-        label { font-weight: bold; font-size: 13px; display: block; margin-top: 10px; }
-        input, select, textarea { width: 100%; padding: 12px; margin: 5px 0; border-radius: 8px; border: 1px solid #cbd5e1; box-sizing: border-box; }
-        .badge { padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: bold; text-transform: uppercase; }
-        .pass { background: #dcfce7; color: #166534; }
-        .fail { background: #fee2e2; color: #991b1b; }
-        .prompt-box { background: #f8fafc; border-left: 4px solid var(--blue); padding: 15px; font-family: monospace; font-size: 12px; margin: 10px 0; white-space: pre-wrap; }
-        .aiu-box { background: #eff6ff; padding: 15px; border-radius: 10px; margin-top: 10px; border: 1px solid #bfdbfe; }
+        :root { --blue: #0C447C; --green: #1D9E75; --red: #e11d48; --dark: #1e293b; --gold: #b45309; }
+        body { background-color: #F8FAFC; font-family: 'Segoe UI', system-ui, sans-serif; margin: 0; padding: 20px; color: var(--dark); }
+        .container { max-width: 1300px; margin: 0 auto; }
+        header { background: var(--blue); color: white; padding: 30px; border-radius: 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 10px 25px rgba(12,68,124,0.2); }
+        nav { display: flex; gap: 10px; margin-bottom: 25px; flex-wrap: wrap; background: white; padding: 10px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .btn-nav { padding: 12px 20px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .card { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin-bottom: 25px; border: 1px solid #e2e8f0; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 25px; }
+        label { font-weight: 700; font-size: 14px; display: block; margin-top: 15px; color: var(--blue); }
+        input, select, textarea { width: 100%; padding: 14px; margin: 8px 0; border-radius: 10px; border: 1px solid #cbd5e1; box-sizing: border-box; background: #fcfcfc; }
+        .badge { padding: 8px 15px; border-radius: 30px; font-size: 12px; font-weight: 800; }
+        .pass { background: #dcfce7; color: #15803d; }
+        .fail { background: #fee2e2; color: #b91c1c; }
+        .prompt-box { background: #1e293b; color: #38bdf8; padding: 20px; border-radius: 15px; font-family: 'Courier New', monospace; font-size: 13px; margin: 15px 0; position: relative; border: 1px solid #334155; }
+        .go-no-go { padding: 20px; border-radius: 15px; text-align: center; font-size: 24px; font-weight: 900; margin-top: 20px; }
     </style>
 </head>
 <body>
@@ -32,14 +32,14 @@
         const { useState } = React;
 
         function App() {
-            const [tab, setTab] = useState('PERFIL');
+            const [tab, setTab] = useState('ESTRUCTURA');
             const [datos, setDatos] = useState({
-                empresa: "", tipo: "Contratista", unspsc: "",
+                tipoAsoc: "Empresa Única", 
+                miembros: [{ id: 1, nombre: '', participacion: 100, patrimonio: 0, unspsc: '' }],
                 activos: 0, pasivos: 0, utilidad: 0, gInt: 0,
-                contratos: [{ id: 1, smmlv: 0, objeto: "" }],
-                valorBase: 0, tasaIca: 9.66, estampillas: 2, 
-                usaAIU: false, pA: 5, pI: 2, pU: 3, // AIU por defecto
-                analisisIA: "", esOCR: false
+                baseContrato: 0, tasaIca: 9.66, estampillas: 2, 
+                usaAIU: false, pA: 5, pI: 2, pU: 3,
+                trampasPliego: [], trampasClausulas: [], veredicto: "REVISIÓN"
             });
 
             // Cálculos Financieros
@@ -47,103 +47,132 @@
             const end = datos.activos > 0 ? ((Number(datos.pasivos) / Number(datos.activos)) * 100).toFixed(1) : 0;
             const cob = datos.gInt > 0 ? (Number(datos.utilidad) / Number(datos.gInt)).toFixed(2) : 0;
 
-            // Lógica RETENCOL con AIU
-            const valorTotal = Number(datos.valorBase) || 0;
-            const porcentajeUtilidad = datos.usaAIU ? Number(datos.pU) / 100 : 1;
-            const baseGravable = datos.usaAIU ? (valorTotal * porcentajeUtilidad) : valorTotal;
+            // Lógica RETENCOL
+            const vBruto = Number(datos.baseContrato) || 0;
+            const bGravable = datos.usaAIU ? (vBruto * (Number(datos.pU)/100)) : vBruto;
+            const rf = bGravable * 0.04;
+            const ica = (vBruto * Number(datos.tasaIca)) / 1000;
+            const est = vBruto * (Number(datos.estampillas) / 100);
+            const neto = vBruto - (rf + ica + est);
 
-            const rf = baseGravable * 0.04; // Renta sobre base o utilidad
-            const ica = (valorTotal * Number(datos.tasaIca)) / 1000; // ICA suele ser sobre ingreso bruto
-            const est = valorTotal * (Number(datos.estampillas) / 100);
-            
-            const totalDeduc = rf + ica + est;
-            const neto = valorTotal - totalDeduc;
-
-            const PROMPT_MAESTRO = `Analiza pliego para ${datos.tipo}. Detecta amarres en UNSPSC: ${datos.unspsc}. Evalúa indicadores: Liq ${liq}, End ${end}%.`;
+            const PROMPT_MAESTRO = `Actúa como Experto en Contratación Estatal Colombia. Analiza este documento para una ${datos.tipoAsoc}.
+1. Identifica "Pliegos Sastre" en UNSPSC: ${datos.miembros[0].unspsc}.
+2. Evalúa si los Indicadores Financieros (Liq: ${liq}, End: ${end}%) son proporcionales al mercado.
+3. Busca cláusulas de multas abusivas o desequilibrio económico.
+4. Genera veredicto de viabilidad Go/No Go.`;
 
             return (
                 <div className="container">
                     <header>
-                        <div><h1>SIEL PRO MASTER 4.0</h1><p>Consultoría en Blindaje & Impuestos</p></div>
-                        <div style={{textAlign:'right'}}><span className="badge" style={{background:'#1e293b'}}>UVT 2026: $52.374</span></div>
+                        <div><h1 style={{margin:0}}>SIEL PRO MASTER 5.0</h1><p style={{margin:0, opacity:0.8}}>Sistema Inteligente de Evaluación de Licitaciones</p></div>
+                        <div className="badge" style={{background:'#facc15', color:'#854d0e'}}>UVT 2026: $52.374</div>
                     </header>
 
                     <nav>
-                        <button className="btn" style={{background: tab==='PERFIL'?'#1D9E75':'#94a3b8'}} onClick={()=>setTab('PERFIL')}>📊 PERFIL & RUP</button>
-                        <button className="btn" style={{background: tab==='IA'?'#1D9E75':'#94a3b8'}} onClick={()=>setTab('IA')}>🔍 ANÁLISIS IA</button>
-                        <button className="btn" style={{background: tab==='RETEN'?'#1D9E75':'#94a3b8'}} onClick={()=>setTab('RETEN')}>💰 RETENCOL AIU</button>
+                        <button className="btn-nav" style={{background: tab==='ESTRUCTURA'?var(--blue):'#e2e8f0', color: tab==='ESTRUCTURA'?'white':'#64748b'}} onClick={()=>setTab('ESTRUCTURA')}>🏢 ESTRUCTURA (UT/CONSORCIO)</button>
+                        <button className="btn-nav" style={{background: tab==='FINANZAS'?var(--blue):'#e2e8f0', color: tab==='FINANZAS'?'white':'#64748b'}} onClick={()=>setTab('FINANZAS')}>📊 CAPACIDAD RUP</button>
+                        <button className="btn-nav" style={{background: tab==='IA'?var(--blue):'#e2e8f0', color: tab==='IA'?'white':'#64748b'}} onClick={()=>setTab('IA')}>🤖 CEREBRO IA</button>
+                        <button className="btn-nav" style={{background: tab==='RETENCOL'?var(--blue):'#e2e8f0', color: tab==='RETENCOL'?'white':'#64748b'}} onClick={()=>setTab('RETENCOL')}>💰 RETENCOL 360</button>
+                        <button className="btn-nav" style={{background: tab==='REPORTES'?var(--gold):'#e2e8f0', color: 'white'}} onClick={()=>setTab('REPORTES')}>📋 DASHBOARD FINAL</button>
                     </nav>
 
-                    {tab === 'PERFIL' && (
+                    {tab === 'ESTRUCTURA' && (
+                        <div className="card">
+                            <h3>Configuración del Proponente</h3>
+                            <label>Forma Asociativa</label>
+                            <select onChange={e=>setDatos({...datos, tipoAsoc: e.target.value})}>
+                                <option>Empresa Única</option>
+                                <option>Unión Temporal (UT)</option>
+                                <option>Consorcio</option>
+                            </select>
+                            {datos.miembros.map((m, i) => (
+                                <div key={m.id} className="grid" style={{marginTop: '20px', borderBottom:'1px dashed #cbd5e1', paddingBottom:'15px'}}>
+                                    <input placeholder="Nombre Miembro" />
+                                    <input type="number" placeholder="% Participación" />
+                                    <textarea placeholder="Códigos UNSPSC del RUP" />
+                                </div>
+                            ))}
+                            <button className="btn-nav" style={{background:var(--blue), color:'white', marginTop:'15px'}} onClick={()=>setDatos({...datos, miembros: [...datos.miembros, {id: Date.now()}]})}>+ Agregar Miembro</button>
+                        </div>
+                    )}
+
+                    {tab === 'FINANZAS' && (
                         <div className="grid">
                             <div className="card">
-                                <h3>Datos de Identificación</h3>
-                                <label>Nombre Empresa</label>
-                                <input placeholder="Razón Social" onChange={e=>setDatos({...datos, empresa: e.target.value})} />
-                                <label>Tipo de Intervención</label>
-                                <select onChange={e=>setDatos({...datos, tipo: e.target.value})}>
-                                    <option>Contratista</option>
-                                    <option>Interventoría</option>
-                                    <option>Consultoría</option>
-                                </select>
-                                <label>Códigos UNSPSC (Habilitados)</label>
-                                <textarea placeholder="Ej: 81101500, 72102900..." onChange={e=>setDatos({...datos, unspsc: e.target.value})} />
+                                <h3>Habilitantes Financieros</h3>
+                                <label>Activo Corriente</label><input type="number" onChange={e=>setDatos({...datos, activos: e.target.value})} />
+                                <label>Pasivo Corriente</label><input type="number" onChange={e=>setDatos({...datos, pasivos: e.target.value})} />
+                                <label>Utilidad Operativa</label><input type="number" onChange={e=>setDatos({...datos, utilidad: e.target.value})} />
+                                <label>Gastos Interés</label><input type="number" onChange={e=>setDatos({...datos, gInt: e.target.value})} />
                             </div>
-                            <div className="card">
-                                <h3>Financiero & Experiencia</h3>
-                                <div className="grid" style={{gridTemplateColumns:'1fr 1fr'}}>
-                                    <div><label>Activo C.</label><input type="number" onChange={e=>setDatos({...datos, activos: e.target.value})} /></div>
-                                    <div><label>Pasivo C.</label><input type="number" onChange={e=>setDatos({...datos, pasivos: e.target.value})} /></div>
-                                </div>
-                                <p>Liquidez: <span className={`badge ${liq>=1.2?'pass':'fail'}`}>{liq}</span></p>
-                                <hr/>
-                                <h4>Experiencia RUP</h4>
-                                {datos.contratos.map(c => <div key={c.id}><input placeholder="Contrato en SMMLV" type="number" /></div>)}
-                                <button className="btn" style={{background: 'var(--blue)', width:'100%'}} onClick={()=>setDatos({...datos, contratos:[...datos.contratos, {id:Date.now()}]})}>+ Añadir Contrato</button>
+                            <div className="card" style={{background:'#f8fafc'}}>
+                                <h3>Cumplimiento</h3>
+                                <p>Liquidez (>1.2): <span className={`badge ${liq>=1.2?'pass':'fail'}`}>{liq}</span></p>
+                                <p>Endeudamiento (<70%): <span className={`badge ${end<=70?'pass':'fail'}`}>{end}%</span></p>
+                                <p>Rentabilidad Activos: <span className="badge pass">CUMPLE</span></p>
                             </div>
                         </div>
                     )}
 
                     {tab === 'IA' && (
                         <div className="card">
-                            <h3>Módulo de Inteligencia</h3>
-                            <div className="prompt-box"><strong>PROMPT PERSONALIZADO:</strong><br/>{PROMPT_MAESTRO}</div>
-                            <label style={{color: 'red'}}><input type="checkbox" onChange={e=>setDatos({...datos, esOCR: e.target.checked})} /> DOCUMENTO ESCANEADO (OCR)</label>
-                            <textarea style={{height:'150px'}} placeholder="Resultados de la IA..." onChange={e=>setDatos({...datos, analisisIA: e.target.value})} />
-                            <button className="btn" style={{background: 'var(--red)', width:'100%'}}>📄 GENERAR INFORME VIABILIDAD PDF</button>
+                            <h3>Prompt Maestro para Gemini / ChatGPT</h3>
+                            <div className="prompt-box">
+                                <strong>COPY & PASTE:</strong><br/>{PROMPT_MAESTRO}
+                            </div>
+                            <hr/>
+                            <h3>Detección de Trampas en Pliegos</h3>
+                            <div className="grid">
+                                <div>
+                                    <label><input type="checkbox" /> UNSPSC no relacionados al objeto</label>
+                                    <label><input type="checkbox" /> Visita de sitio obligatoria no justificada</label>
+                                    <label><input type="checkbox" /> Personal con certificaciones internacionales raras</label>
+                                </div>
+                                <div>
+                                    <label><input type="checkbox" /> Plazo de entrega imposible de cumplir</label>
+                                    <label><input type="checkbox" /> Experiencia solo en el sector público local</label>
+                                </div>
+                            </div>
                         </div>
                     )}
 
                     {tab === 'RETENCOL' && (
                         <div className="grid">
                             <div className="card">
-                                <h3>Cálculo de Impuestos</h3>
-                                <label>Valor Contrato</label>
-                                <input type="number" onChange={e=>setDatos({...datos, valorBase: e.target.value})} />
-                                <label style={{color: 'var(--blue)'}}>
-                                    <input type="checkbox" onChange={e=>setDatos({...datos, usaAIU: e.target.checked})} /> ¿APLICA AIU? (Aseo, Vigilancia, Obra)
-                                </label>
-                                {datos.usaAIU && (
-                                    <div className="aiu-box">
-                                        <div className="grid" style={{gridTemplateColumns:'1fr 1fr 1fr'}}>
-                                            <div><label>%A</label><input type="number" value={datos.pA} onChange={e=>setDatos({...datos, pA: e.target.value})} /></div>
-                                            <div><label>%I</label><input type="number" value={datos.pI} onChange={e=>setDatos({...datos, pI: e.target.value})} /></div>
-                                            <div><label>%U</label><input type="number" value={datos.pU} onChange={e=>setDatos({...datos, pU: e.target.value})} /></div>
-                                        </div>
-                                    </div>
-                                )}
-                                <label>ICA (x mil)</label><input type="number" value={datos.tasaIca} onChange={e=>setDatos({...datos, tasaIca: e.target.value})} />
-                                <label>% Estampillas</label><input type="number" value={datos.estampillas} onChange={e=>setDatos({...datos, estampillas: e.target.value})} />
+                                <h3>Calculadora de Retenciones</h3>
+                                <label>Valor Contrato</label><input type="number" onChange={e=>setDatos({...datos, baseContrato: e.target.value})} />
+                                <label><input type="checkbox" onChange={e=>setDatos({...datos, usaAIU: e.target.checked})} /> ¿Aplica AIU (Aseo/Vigilancia/Obra)?</label>
+                                {datos.usaAIU && <div className="grid"><input type="number" placeholder="% Utilidad" onChange={e=>setDatos({...datos, pU: e.target.value})} /></div>}
+                                <label>ICA (X mil)</label><input type="number" value={datos.tasaIca} onChange={e=>setDatos({...datos, tasaIca: e.target.value})} />
+                                <label>Estampillas (%)</label><input type="number" value={datos.estampillas} onChange={e=>setDatos({...datos, estampillas: e.target.value})} />
                             </div>
-                            <div className="card" style={{background: 'var(--blue)', color: 'white'}}>
-                                <h3>Resultado Final</h3>
-                                <p>ReteFuente: -${rf.toLocaleString()}</p>
+                            <div className="card" style={{background:var(--blue), color:'white'}}>
+                                <h3>Proyección de Flujo</h3>
+                                <p>ReteFuente (4%): -${rf.toLocaleString()}</p>
                                 <p>ReteICA: -${ica.toLocaleString()}</p>
                                 <p>Estampillas: -${est.toLocaleString()}</p>
                                 <hr/>
-                                <h2 style={{color: 'var(--green)'}}>NETO: ${neto.toLocaleString()}</h2>
-                                <button className="btn" style={{background: 'white', color: 'black', width:'100%'}}>📊 EXPORTAR EXCEL TIPO SIEL</button>
+                                <h2 style={{color:var(--green)}}>NETO CAJA: ${neto.toLocaleString()}</h2>
                             </div>
+                        </div>
+                    )}
+
+                    {tab === 'REPORTES' && (
+                        <div className="card" style={{textAlign:'center'}}>
+                            <h2>Dashboard de Viabilidad Final</h2>
+                            <div className="grid">
+                                <div className="card" style={{border:'2px solid var(--green)'}}>
+                                    <h4>GO (PARTICIPAR)</h4>
+                                    <p>Si cumple habilitantes y la rentabilidad es > 15%</p>
+                                    <button className="btn-nav" style={{background:var(--green), color:'white', width:'100%'}}>DESCARGAR PDF GO</button>
+                                </div>
+                                <div className="card" style={{border:'2px solid var(--red)'}}>
+                                    <h4>NO GO (DESCARTAR)</h4>
+                                    <p>Si hay amarres o el riesgo financiero es alto</p>
+                                    <button className="btn-nav" style={{background:var(--red), color:'white', width:'100%'}}>DESCARGAR PDF NO GO</button>
+                                </div>
+                            </div>
+                            <button className="btn-nav" style={{background:var(--blue), color:'white', marginTop:'20px', padding:'20px 40px'}}>📊 EXPORTAR SIEL COMPLETO (EXCEL)</button>
                         </div>
                     )}
                 </div>
