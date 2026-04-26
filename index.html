@@ -3,26 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIEL PRO 5.0 - Blindaje Senior</title>
+    <title>SIEL PRO 6.0 - CONSULTORÍA SENIOR</title>
     <style>
-        :root { --blue: #0C447C; --green: #1D9E75; --red: #e11d48; --gold: #b45309; --slate: #f8fafc; }
-        body { background-color: #f1f5f9; font-family: 'Segoe UI', system-ui, sans-serif; margin: 0; padding: 20px; color: #1e293b; }
-        .container { max-width: 1250px; margin: 0 auto; }
-        header { background: var(--blue); color: white; padding: 30px; border-radius: 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 10px 25px rgba(12,68,124,0.15); }
-        nav { display: flex; gap: 10px; margin-bottom: 25px; flex-wrap: wrap; background: white; padding: 10px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-        .btn-nav { padding: 12px 20px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; background: #e2e8f0; color: #475569; transition: 0.3s; }
+        :root { --blue: #0C447C; --green: #1D9E75; --red: #e11d48; --gold: #b45309; --dark: #1e293b; }
+        body { background-color: #f1f5f9; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 20px; color: var(--dark); }
+        .container { max-width: 1300px; margin: 0 auto; }
+        header { background: var(--blue); color: white; padding: 25px; border-radius: 15px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 8px 20px rgba(12,68,124,0.2); }
+        nav { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; background: white; padding: 12px; border-radius: 15px; }
+        .btn-nav { padding: 12px 18px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; background: #e2e8f0; color: #475569; }
         .btn-nav.active { background: var(--blue); color: white; }
-        .card { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); margin-bottom: 25px; display: none; border: 1px solid #e2e8f0; }
+        .card { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px; display: none; border: 1px solid #e2e8f0; }
         .card.active { display: block; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px; }
-        label { font-weight: 700; font-size: 14px; display: block; margin-top: 15px; color: var(--blue); }
-        input, select, textarea { width: 100%; padding: 12px; margin: 8px 0; border-radius: 10px; border: 1px solid #cbd5e1; box-sizing: border-box; background: #fcfcfc; }
-        .prompt-box { background: #1e293b; color: #38bdf8; padding: 20px; border-radius: 15px; font-family: 'Courier New', monospace; font-size: 13px; white-space: pre-wrap; border: 1px solid #334155; position: relative; }
-        .badge { padding: 6px 12px; border-radius: 30px; font-size: 12px; font-weight: 800; }
-        .pass { background: #dcfce7; color: #15803d; }
-        .fail { background: #fee2e2; color: #b91c1c; }
-        .footer-card { background: var(--blue); color: white; padding: 25px; border-radius: 15px; margin-top: 20px; }
-        .check-item { background: var(--slate); padding: 10px; border-radius: 8px; margin: 5px 0; display: flex; align-items: center; gap: 10px; border: 1px solid #e2e8f0; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+        label { font-weight: 700; font-size: 13px; display: block; margin-top: 12px; color: var(--blue); }
+        input, select, textarea { width: 100%; padding: 12px; margin: 5px 0; border-radius: 8px; border: 1px solid #cbd5e1; box-sizing: border-box; }
+        .prompt-box { background: #1e293b; color: #38bdf8; padding: 20px; border-radius: 12px; font-family: 'Courier New', monospace; font-size: 12px; white-space: pre-wrap; line-height: 1.4; border: 1px solid #334155; }
+        .badge { padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: bold; }
+        .pass { background: #dcfce7; color: #166534; }
+        .fail { background: #fee2e2; color: #991b1b; }
+        .resumen-fiscal { background: var(--dark); color: white; padding: 20px; border-radius: 15px; }
+        .estatuton-link { background: #facc15; color: #854d0e; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: bold; display: inline-block; margin-bottom: 15px; width: 100%; text-align: center; }
     </style>
 </head>
 <body>
@@ -30,144 +30,135 @@
 <div class="container">
     <header>
         <div>
-            <h1 style="margin:0;">SIEL PRO MASTER 5.0</h1>
-            <p style="margin:5px 0 0 0; opacity:0.8;">Sistema de Inteligencia en Licitaciones y Blindaje Contractual</p>
+            <h1 style="margin:0;">SIEL PRO 6.0</h1>
+            <p style="margin:0; opacity:0.8;">Consultoría Senior - Blindaje Contractual Colombia</p>
         </div>
-        <div style="text-align:right;">
-            <span class="badge" style="background:#facc15; color:#854d0e;">UVT 2026: $52.374</span>
-        </div>
+        <span class="badge" style="background:#facc15; color:#000;">UVT 2026: $52.374</span>
     </header>
 
     <nav>
-        <button class="btn-nav active" onclick="showTab('tab-estructura', this)">🏢 ESTRUCTURA (UT/CONSORCIO)</button>
-        <button class="btn-nav" onclick="showTab('tab-finanzas', this)">📊 RUP & FINANZAS</button>
-        <button class="btn-nav" onclick="showTab('tab-ia', this)">🤖 CEREBRO IA & TRAMPAS</button>
+        <button class="btn-nav active" onclick="showTab('tab-config', this)">⚙️ CONFIGURACIÓN</button>
+        <button class="btn-nav" onclick="showTab('tab-empresa', this)">🏢 DATOS EMPRESA</button>
+        <button class="btn-nav" onclick="showTab('tab-ia', this)">🤖 ANÁLISIS IA (PROMPT)</button>
         <button class="btn-nav" onclick="showTab('tab-retencol', this)">💰 RETENCOL 360</button>
-        <button class="btn-nav" onclick="showTab('tab-reportes', this)" style="background:var(--gold); color:white;">📋 DASHBOARD FINAL</button>
+        <button class="btn-nav" onclick="showTab('tab-reportes', this)" style="background:var(--gold); color:white;">📊 DASHBOARD</button>
     </nav>
 
-    <div id="tab-estructura" class="card active">
-        <h3>1. Configuración de la Propuesta</h3>
+    <div id="tab-config" class="card active">
+        <h3>Configuración del Análisis</h3>
         <div class="grid">
             <div>
-                <label>Objeto del Análisis</label>
-                <select id="tipoConsultoria">
-                    <option>Contratista de Obra / Suministro</option>
-                    <option>Interventoría Técnica/Admin</option>
-                    <option>Consultoría de Estudios y Diseños</option>
+                <label>TIPO DE PROCESO</label>
+                <select id="tipoProceso" onchange="updatePrompt()">
+                    <option>LICITACIÓN PÚBLICA</option>
+                    <option>CONVOCATORIA PRIVADA</option>
+                    <option>TÉRMINOS DE REFERENCIA PRIVADOS</option>
                 </select>
-                <label>Forma de Participación</label>
-                <select id="asociacion">
-                    <option>Empresa Única</option>
-                    <option>Unión Temporal (UT)</option>
-                    <option>Consorcio</option>
+                <label>SECTOR</label>
+                <select id="sector" onchange="updatePrompt()">
+                    <option>OBRAS CIVILES</option>
+                    <option>TECNOLOGÍA</option>
+                    <option>FACHADAS Y CUBIERTAS</option>
+                    <option>VIGILANCIA Y ASEO</option>
+                    <option>SALUD</option>
                 </select>
             </div>
             <div>
-                <label>Códigos UNSPSC del Proceso (Pliego)</label>
-                <textarea id="unspscPliego" placeholder="Pegue los códigos exigidos aquí..."></textarea>
+                <label>MODALIDAD</label>
+                <select id="modalidad" onchange="updatePrompt()">
+                    <option>EMPRESA INDIVIDUAL</option>
+                    <option>CONSORCIO</option>
+                    <option>UNIÓN TEMPORAL</option>
+                </select>
+                <label>ROL</label>
+                <select id="rol" onchange="updatePrompt()">
+                    <option>CONTRATISTA</option>
+                    <option>INTERVENTOR</option>
+                    <option>PROVEEDOR</option>
+                </select>
             </div>
         </div>
-        <h4>Miembros / Socios Participantes</h4>
-        <div id="miembros-container">
-            <div class="grid" style="background:var(--slate); padding:15px; border-radius:12px; margin-bottom:10px;">
-                <input type="text" placeholder="Nombre de la Empresa" oninput="updatePrompt()">
-                <input type="number" placeholder="% Participación" oninput="updatePrompt()">
-                <input type="text" placeholder="UNSPSC que aporta" oninput="updatePrompt()">
-            </div>
-        </div>
-        <button class="btn-nav" onclick="addMiembro()" style="background:var(--blue); color:white;">+ Añadir Miembro</button>
     </div>
 
-    <div id="tab-finanzas" class="card">
-        <h3>2. Capacidad Financiera y Organizacional</h3>
+    <div id="tab-empresa" class="card">
+        <h3>Perfil Financiero y Técnico (Fijo)</h3>
         <div class="grid">
             <div>
-                <label>Activo Corriente</label><input type="number" id="ac" oninput="calcRUP()">
-                <label>Pasivo Corriente</label><input type="number" id="pc" oninput="calcRUP()">
-                <label>Utilidad Operativa</label><input type="number" id="uo" oninput="calcRUP()">
-                <label>Gastos de Intereses</label><input type="number" id="gi" oninput="calcRUP()">
+                <label>Liquidez</label><input type="number" id="e_liq" value="1.5" oninput="updatePrompt()">
+                <label>Endeudamiento (%)</label><input type="number" id="e_end" value="45" oninput="updatePrompt()">
+                <label>Capital de Trabajo ($)</label><input type="number" id="e_ct" placeholder="Ingrese valor" oninput="updatePrompt()">
+                <label>Patrimonio ($)</label><input type="number" id="e_pat" oninput="updatePrompt()">
             </div>
-            <div style="background:white; border: 2px solid var(--blue); padding:20px; border-radius:15px;">
-                <h4 style="margin-top:0;">Veredicto de Habilitación</h4>
-                <p>Liquidez (Meta >1.2): <span id="liq-val" class="badge">0.00</span></p>
-                <p>Endeudamiento (Meta <70%): <span id="end-val" class="badge">0.0%</span></p>
-                <p>Cobertura Interés (Meta >2.0): <span id="cob-val" class="badge">0.00</span></p>
-                <hr>
-                <label>Experiencia RUP en SMMLV (Máximo Contrato)</label>
-                <input type="number" id="expSmmlv" placeholder="Ej: 5000" oninput="updatePrompt()">
+            <div>
+                <label>Experiencia Máxima ($)</label><input type="number" id="e_exp" oninput="updatePrompt()">
+                <label>Capacidad K</label><input type="number" id="e_k" oninput="updatePrompt()">
+                <label>Póliza RC Vigente ($)</label><input type="number" id="e_rc" oninput="updatePrompt()">
+                <label>Certificación Alturas</label>
+                <select id="e_alt" onchange="updatePrompt()">
+                    <option>Si Cuento con Personal Certificado</option>
+                    <option>No Cuento</option>
+                </select>
             </div>
         </div>
     </div>
 
     <div id="tab-ia" class="card">
-        <h3>3. Inteligencia de Pliegos & Riesgos</h3>
-        <p>Utilice este Prompt Maestro en Gemini/ChatGPT para el análisis profundo:</p>
-        <div class="prompt-box" id="promptDisplay">Cargando datos...</div>
-        <hr>
-        <div class="grid">
-            <div>
-                <h4>🚩 Trampas en Pliegos (Pre-Contractual)</h4>
-                <div class="check-item"><input type="checkbox"> UNSPSC muy cerrados (Sastre)</div>
-                <div class="check-item"><input type="checkbox"> Visita de sitio obligatoria sin sustento</div>
-                <div class="check-item"><input type="checkbox"> Experiencia solo válida en el Sector Público</div>
-                <div class="check-item"><input type="checkbox"> Personal con certificaciones de marca específica</div>
-            </div>
-            <div>
-                <h4>⚖️ Riesgos Contractuales (Cláusulas)</h4>
-                <div class="check-item"><input type="checkbox"> Multas automáticas sin debido proceso</div>
-                <div class="check-item"><input type="checkbox"> Plazos de pago superiores a 90 días</div>
-                <div class="check-item"><input type="checkbox"> Responsabilidad civil ilimitada</div>
-                <div class="check-item"><input type="checkbox"> Cesión de propiedad intelectual total</div>
-            </div>
-        </div>
+        <h3>Consultora Senior IA</h3>
+        <p>Copie el siguiente prompt y péguelo en Gemini para un análisis estricto:</p>
+        <div class="prompt-box" id="promptDisplay">Generando prompt maestro...</div>
+        <button class="btn-nav" style="background:var(--blue); color:white; width:100%; margin-top:10px;" onclick="copyPrompt()">COPIAR PROMPT AL PORTAPAPELES</button>
     </div>
 
     <div id="tab-retencol" class="card">
-        <h3>4. Calculadora RETENCOL (AIU & Impuestos)</h3>
+        <a href="https://sites.google.com/view/estatuton-2024/inicio" target="_blank" class="estatuton-link">🔗 ABRIR ESTATUTÓN OFICIAL (Tarifas 2024-2026)</a>
         <div class="grid">
             <div>
-                <label>Valor Total del Contrato (Sin IVA)</label>
-                <input type="number" id="baseTotal" oninput="calcRetencol()">
-                <div class="check-item" style="background:#e0f2fe">
-                    <input type="checkbox" id="checkAIU" onchange="calcRetencol()"> ¿Aplica AIU (Aseo, Vigilancia, Obra)?
-                </div>
-                <div id="aiuFields" style="display:none; padding:10px; border:1px solid #bae6fd; border-radius:10px;">
-                    <label>% Utilidad (U) - Base Gravable</label>
-                    <input type="number" id="pUtil" value="3" oninput="calcRetencol()">
-                </div>
-                <label>Tarifa ICA (x 1000)</label>
-                <input type="number" id="tIca" value="9.66" oninput="calcRetencol()">
-                <label>Estampillas y Otros (%)</label>
-                <input type="number" id="tEst" value="2.5" oninput="calcRetencol()">
+                <label>VALOR CONTRATO (BASE)</label>
+                <input type="number" id="r_base" oninput="calcFiscal()">
+                
+                <label>MUNICIPIO (TARIFA ICA)</label>
+                <select id="r_municipio" onchange="setIcaTarifa()">
+                    <option value="9.66">Bogotá (Servicios 9.66)</option>
+                    <option value="11.04">Bogotá (Consultoría 11.04)</option>
+                    <option value="7.0">Medellín (7.0)</option>
+                    <option value="10.0">Cali (10.0)</option>
+                    <option value="5.0">Barranquilla (5.0)</option>
+                    <option value="8.0">Bucaramanga (8.0)</option>
+                    <option value="6.0">Cartagena (6.0)</option>
+                    <option value="10.0">Pereira (10.0)</option>
+                </select>
+
+                <label>RETENCIÓN EN LA FUENTE (RENTA)</label>
+                <select id="r_rf_tipo" onchange="calcFiscal()">
+                    <option value="0.04">Servicios General (4%) - Base > 4 UVT</option>
+                    <option value="0.06">Servicios No Declarantes (6%)</option>
+                    <option value="0.11">Honorarios y Consultoría (11%)</option>
+                    <option value="0.025">Compras (2.5%) - Base > 27 UVT</option>
+                    <option value="0.01">Obra Civil (1%)</option>
+                </select>
+
+                <label><input type="checkbox" id="r_usaAIU" onchange="calcFiscal()"> APLICAR AIU</label>
+                <input type="number" id="r_pU" value="3" style="display:none;" oninput="calcFiscal()" placeholder="% Utilidad">
             </div>
-            <div class="footer-card">
-                <h3>Liquidación de Pagos</h3>
-                <p>Retención Fuente (Renta): -$<span id="out-rf">0</span></p>
-                <p>ReteICA: -$<span id="out-ica">0</span></p>
-                <p>Estampillas Totales: -$<span id="out-est">0</span></p>
+
+            <div class="resumen-fiscal">
+                <h3>Impacto Financiero</h3>
+                <p>ReteFuente: -$<span id="f_rf">0</span></p>
+                <p>ReteICA: -$<span id="f_ica">0</span></p>
+                <p>Estampillas (2% Prom.): -$<span id="f_est">0</span></p>
                 <hr>
-                <h2 style="color:#22c55e; margin:0;">CAJA NETA: $<span id="out-neto">0</span></h2>
+                <h2 style="color:#22c55e;">NETO CAJA: $<span id="f_neto">0</span></h2>
             </div>
         </div>
     </div>
 
     <div id="tab-reportes" class="card">
         <div style="text-align:center;">
-            <h2>Dashboard de Decisión Estratégica</h2>
+            <h2>Centro de Informes</h2>
             <div class="grid">
-                <div style="background:#dcfce7; padding:20px; border-radius:15px; border:2px solid var(--green);">
-                    <h3 style="color:var(--green);">VEREDICTO: GO</h3>
-                    <p>Cumple con habilitantes técnicos y financieros. Rentabilidad estimada aceptable.</p>
-                    <button class="btn-nav" style="background:var(--green); color:white; width:100%;" onclick="alert('Generando Informe de Viabilidad PDF...')">📄 DESCARGAR PDF GO</button>
-                </div>
-                <div style="background:#fee2e2; padding:20px; border-radius:15px; border:2px solid var(--red);">
-                    <h3 style="color:var(--red);">VEREDICTO: NO GO</h3>
-                    <p>Se detectaron amarres insuperables o riesgo de caja por impuestos/AIU.</p>
-                    <button class="btn-nav" style="background:var(--red); color:white; width:100%;" onclick="alert('Generando Informe de Riesgos PDF...')">📄 DESCARGAR PDF NO GO</button>
-                </div>
+                <button class="btn-nav" style="background:var(--green); color:white; height:100px;">📄 DESCARGAR VIABILIDAD PDF<br>(Veredicto Go/No Go)</button>
+                <button class="btn-nav" style="background:var(--blue); color:white; height:100px;">📊 DESCARGAR EXCEL SIEL<br>(Dashboard Completo)</button>
             </div>
-            <button class="btn-nav" style="background:var(--blue); color:white; margin-top:30px; padding:20px 40px; font-size:18px;" onclick="alert('Generando Base de Datos Excel SIEL PRO...')">📊 EXPORTAR ANÁLISIS COMPLETO (EXCEL)</button>
         </div>
     </div>
 </div>
@@ -178,71 +169,77 @@
         document.querySelectorAll('.btn-nav').forEach(b => b.classList.remove('active'));
         document.getElementById(id).classList.add('active');
         btn.classList.add('active');
-        updatePrompt();
     }
 
-    function addMiembro() {
-        const div = document.createElement('div');
-        div.className = 'grid';
-        div.style = 'background:var(--slate); padding:15px; border-radius:12px; margin-bottom:10px;';
-        div.innerHTML = `<input type="text" placeholder="Nombre Empresa" oninput="updatePrompt()">
-                         <input type="number" placeholder="% Part." oninput="updatePrompt()">
-                         <input type="text" placeholder="UNSPSC" oninput="updatePrompt()">`;
-        document.getElementById('miembros-container').appendChild(div);
+    function setIcaTarifa() {
+        calcFiscal();
     }
 
-    function calcRUP() {
-        const ac = parseFloat(document.getElementById('ac').value) || 0;
-        const pc = parseFloat(document.getElementById('pc').value) || 0;
-        const uo = parseFloat(document.getElementById('uo').value) || 0;
-        const gi = parseFloat(document.getElementById('gi').value) || 0;
+    function calcFiscal() {
+        const base = parseFloat(document.getElementById('r_base').value) || 0;
+        const tIca = parseFloat(document.getElementById('r_municipio').value) || 0;
+        const tRf = parseFloat(document.getElementById('r_rf_tipo').value) || 0;
+        const usaAIU = document.getElementById('r_usaAIU').checked;
+        const pU = parseFloat(document.getElementById('r_pU').value) || 0;
 
-        const liq = pc > 0 ? (ac / pc).toFixed(2) : 0;
-        const end = ac > 0 ? ((pc / ac) * 100).toFixed(1) : 0;
-        const cob = gi > 0 ? (uo / gi).toFixed(2) : 0;
+        document.getElementById('r_pU').style.display = usaAIU ? 'block' : 'none';
 
-        document.getElementById('liq-val').innerText = liq;
-        document.getElementById('liq-val').className = 'badge ' + (liq >= 1.2 ? 'pass' : 'fail');
-        document.getElementById('end-val').innerText = end + '%';
-        document.getElementById('end-val').className = 'badge ' + (end <= 70 ? 'pass' : 'fail');
-        document.getElementById('cob-val').innerText = cob;
-        document.getElementById('cob-val').className = 'badge ' + (cob >= 2 ? 'pass' : 'fail');
-        updatePrompt();
-    }
+        const baseRF = usaAIU ? (base * (pU/100)) : base;
+        const vRf = baseRF * tRf;
+        const vIca = (base * tIca) / 1000;
+        const vEst = base * 0.02; // Estampillas promedio
+        const neto = base - (vRf + vIca + vEst);
 
-    function calcRetencol() {
-        const total = parseFloat(document.getElementById('baseTotal').value) || 0;
-        const usaAIU = document.getElementById('checkAIU').checked;
-        const pU = parseFloat(document.getElementById('pUtil').value) || 0;
-        const tIca = parseFloat(document.getElementById('tIca').value) || 0;
-        const tEst = parseFloat(document.getElementById('tEst').value) || 0;
-
-        document.getElementById('aiuFields').style.display = usaAIU ? 'block' : 'none';
-
-        const baseGravable = usaAIU ? (total * (pU / 100)) : total;
-        const rf = baseGravable * 0.04;
-        const ica = (total * tIca) / 1000;
-        const est = total * (tEst / 100);
-        const neto = total - (rf + ica + est);
-
-        document.getElementById('out-rf').innerText = Math.round(rf).toLocaleString();
-        document.getElementById('out-ica').innerText = Math.round(ica).toLocaleString();
-        document.getElementById('out-est').innerText = Math.round(est).toLocaleString();
-        document.getElementById('out-neto').innerText = Math.round(neto).toLocaleString();
+        document.getElementById('f_rf').innerText = Math.round(vRf).toLocaleString();
+        document.getElementById('f_ica').innerText = Math.round(vIca).toLocaleString();
+        document.getElementById('f_est').innerText = Math.round(vEst).toLocaleString();
+        document.getElementById('f_neto').innerText = Math.round(neto).toLocaleString();
     }
 
     function updatePrompt() {
-        const tipo = document.getElementById('tipoConsultoria').value;
-        const liq = document.getElementById('liq-val').innerText;
-        const end = document.getElementById('end-val').innerText;
-        const exp = document.getElementById('expSmmlv').value;
-        const prompt = `Actúa como Consultor Senior en Contratación Estatal. Analiza pliego para ${tipo}.
-INDICADORES: Liquidez ${liq}, Endeudamiento ${end}, Exp. Máxima: ${exp} SMMLV.
-TAREA: Detecta amarres en UNSPSC, cláusulas abusivas de multas y evalúa viabilidad Go/No Go.`;
+        const tProceso = document.getElementById('tipoProceso').value;
+        const sector = document.getElementById('sector').value;
+        const mod = document.getElementById('modalidad').value;
+        const rol = document.getElementById('rol').value;
+        
+        const liq = document.getElementById('e_liq').value;
+        const end = document.getElementById('e_end').value;
+        const ct = document.getElementById('e_ct').value;
+        const pat = document.getElementById('e_pat').value;
+        const exp = document.getElementById('e_exp').value;
+        const k = document.getElementById('e_k').value;
+
+        const prompt = `Actúa como mi Consultora Senior de Procesos de Contratación. Sé estricta y directa.
+
+CONFIGURACIÓN:
+TIPO_PROCESO: ${tProceso}
+SECTOR: ${sector}
+MODALIDAD_EMPRESA: ${mod}
+ROL_EN_PROCESO: ${rol}
+
+DATOS_MI_EMPRESA:
+Liquidez: ${liq} | Endeudamiento: ${end}% | Capital Trabajo: $${ct} | Patrimonio: $${pat}
+Exp_Máxima: $${exp} | Capacidad_K: $${k}
+
+EJECUTA:
+1. Aplica MÓDULOS A, B, C, D o E según corresponda.
+2. Analiza Criterios Financieros vs Exigencia del Pliego.
+3. Detecta TRAMPAS (Días de lluvia, marcas específicas, multas automáticas).
+4. VEREDICTO FINAL: GO / NO-GO con justificación técnica.`;
+
         document.getElementById('promptDisplay').innerText = prompt;
     }
 
-    window.onload = updatePrompt;
+    function copyPrompt() {
+        const text = document.getElementById('promptDisplay').innerText;
+        navigator.clipboard.writeText(text);
+        alert("Prompt copiado. Pégalo en Gemini.");
+    }
+
+    window.onload = function() {
+        updatePrompt();
+        calcFiscal();
+    };
 </script>
 
 </body>
