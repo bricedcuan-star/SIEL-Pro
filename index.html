@@ -10,17 +10,17 @@
         .container { max-width: 1300px; margin: 0 auto; }
         header { background: var(--blue); color: white; padding: 25px; border-radius: 15px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 8px 20px rgba(12,68,124,0.2); }
         nav { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; background: white; padding: 12px; border-radius: 15px; }
-        .btn-nav { padding: 12px 18px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; background: #e2e8f0; color: #475569; }
+        .btn-nav { padding: 12px 18px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; background: #e2e8f0; color: #475569; transition: 0.3s; }
         .btn-nav.active { background: var(--blue); color: white; }
         .card { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px; display: none; border: 1px solid #e2e8f0; }
         .card.active { display: block; }
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
-        label { font-weight: 700; font-size: 13px; display: block; margin-top: 12px; color: var(--blue); }
-        input, select, textarea { width: 100%; padding: 12px; margin: 5px 0; border-radius: 8px; border: 1px solid #cbd5e1; box-sizing: border-box; }
-        .prompt-box { background: #1e293b; color: #38bdf8; padding: 20px; border-radius: 12px; font-family: 'Courier New', monospace; font-size: 12px; white-space: pre-wrap; line-height: 1.4; border: 1px solid #334155; }
-        .resumen-fiscal { background: var(--dark); color: white; padding: 20px; border-radius: 15px; }
-        .estatuton-link { background: #facc15; color: #854d0e; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: bold; display: inline-block; margin-bottom: 15px; width: 100%; text-align: center; }
-        .info-base { font-size: 11px; color: #64748b; font-style: italic; margin-top: -5px; }
+        label { font-weight: 700; font-size: 13px; display: block; margin-top: 12px; color: var(--blue); text-transform: uppercase; }
+        input, select, textarea { width: 100%; padding: 12px; margin: 5px 0; border-radius: 8px; border: 1px solid #cbd5e1; box-sizing: border-box; font-size: 14px; }
+        .prompt-box { background: #1e293b; color: #38bdf8; padding: 20px; border-radius: 12px; font-family: 'Courier New', monospace; font-size: 12px; white-space: pre-wrap; line-height: 1.4; border: 1px solid #334155; height: 150px; overflow-y: auto; }
+        .resumen-fiscal { background: var(--dark); color: white; padding: 25px; border-radius: 15px; border-left: 5px solid var(--green); }
+        .estatuton-link { background: #facc15; color: #854d0e; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: bold; display: block; margin-bottom: 15px; text-align: center; border: 1px solid #eab308; }
+        .ai-input-area { border: 2px dashed var(--blue); padding: 15px; border-radius: 12px; background: #f8fafc; margin-top: 20px; }
     </style>
 </head>
 <body>
@@ -31,7 +31,7 @@
             <h1 style="margin:0;">SIEL PRO 6.5</h1>
             <p style="margin:0; opacity:0.8;">Consultoría Senior - Blindaje Contractual Colombia</p>
         </div>
-        <span style="background:#facc15; color:#000; padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: bold;">UVT 2026: $52.374</span>
+        <span style="background:#facc15; color:#000; padding: 8px 15px; border-radius: 20px; font-size: 12px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">UVT 2026: $52.374</span>
     </header>
 
     <nav>
@@ -59,80 +59,79 @@
     </div>
 
     <div id="tab-empresa" class="card">
-        <h3>Perfil Financiero y Técnico</h3>
+        <h3>Perfil Financiero y Técnico de la Empresa</h3>
         <div class="grid">
             <div>
-                <label>Liquidez</label><input type="number" id="e_liq" value="1.5" oninput="updatePrompt()">
+                <label>Liquidez Actual</label><input type="number" id="e_liq" value="1.5" step="0.1" oninput="updatePrompt()">
                 <label>Endeudamiento (%)</label><input type="number" id="e_end" value="45" oninput="updatePrompt()">
-                <label>Capital de Trabajo ($)</label><input type="number" id="e_ct" oninput="updatePrompt()">
+                <label>Capital de Trabajo ($)</label><input type="number" id="e_ct" value="90000000" oninput="updatePrompt()">
             </div>
             <div>
-                <label>Patrimonio ($)</label><input type="number" id="e_pat" oninput="updatePrompt()">
-                <label>Experiencia Máxima ($)</label><input type="number" id="e_exp" oninput="updatePrompt()">
-                <label>Capacidad K</label><input type="number" id="e_k" oninput="updatePrompt()">
+                <label>Patrimonio ($)</label><input type="number" id="e_pat" value="500000000" oninput="updatePrompt()">
+                <label>Experiencia Máxima ($)</label><input type="number" id="e_exp" value="2000000000" oninput="updatePrompt()">
+                <label>Capacidad K (RPA)</label><input type="number" id="e_k" value="1500" oninput="updatePrompt()">
             </div>
         </div>
     </div>
 
     <div id="tab-ia" class="card">
-        <h3>Prompt Consultora Senior</h3>
-        <div class="prompt-box" id="promptDisplay">Generando...</div>
-        <button class="btn-nav" style="background:var(--blue); color:white; width:100%; margin-top:10px;" onclick="copyPrompt()">COPIAR PROMPT</button>
+        <h3>Prompt de Análisis Senior</h3>
+        <p style="font-size: 13px; color: #64748b;">Copia este prompt y pégalo en la IA junto con el PDF del pliego para obtener el veredicto.</p>
+        <div class="prompt-box" id="promptDisplay">Cargando prompt...</div>
+        <button class="btn-nav" style="background:var(--blue); color:white; width:100%; margin-top:15px; height: 50px;" onclick="copyPrompt()">📋 COPIAR PROMPT MAESTRO</button>
     </div>
 
     <div id="tab-retencol" class="card">
         <a href="https://sites.google.com/view/estatuton-2024/inicio" target="_blank" class="estatuton-link">🔗 ABRIR ESTATUTÓN (TARIFARIO NACIONAL)</a>
+        
         <div class="grid">
             <div>
                 <label>VALOR BASE DEL CONTRATO (SIN IVA)</label>
-                <input type="number" id="r_base" placeholder="0" oninput="calcFiscal()">
+                <input type="number" id="r_base" placeholder="Ingrese valor base" oninput="calcFiscal()">
                 
-                <label>MUNICIPIO (ICA)</label>
-                <select id="r_municipio" onchange="calcFiscal()">
-                    <option value="9.66">Bogotá - Servicios (9.66 x 1000)</option>
-                    <option value="11.04">Bogotá - Consultoría/Obra (11.04 x 1000)</option>
-                    <option value="7.0">Medellín (7.0 x 1000)</option>
-                    <option value="10.0">Cali (10.0 x 1000)</option>
-                    <option value="5.0">Barranquilla (5.0 x 1000)</option>
-                </select>
-
                 <label>CONCEPTO DE RETEFUENTE (RENTA)</label>
                 <select id="r_rf_tipo" onchange="calcFiscal()">
-                    <option value="0.04">Servicios - Declarante (4.0%) [Base > 4 UVT]</option>
-                    <option value="0.06">Servicios - NO Declarante (6.0%) [Base > 4 UVT]</option>
-                    <option value="0.11">Honorarios/Consultoría - Declarante (11.0%)</option>
-                    <option value="0.10">Honorarios/Consultoría - NO Declarante (10.0%)</option>
-                    <option value="0.02">Contratos de Construcción / Obra (2.0%)</option>
-                    <option value="0.025">Compras - Declarante (2.5%) [Base > 27 UVT]</option>
-                    <option value="0.035">Compras - NO Declarante (3.5%) [Base > 27 UVT]</option>
+                    <option value="0.02">CONTRATOS DE OBRA / CONSTRUCCIÓN (2.0%)</option>
+                    <option value="0.04">SERVICIOS - DECLARANTE (4.0%)</option>
+                    <option value="0.06">SERVICIOS - NO DECLARANTE (6.0%)</option>
+                    <option value="0.11">HONORARIOS/CONSULTORÍA - DECLARANTE (11.0%)</option>
+                    <option value="0.10">HONORARIOS/CONSULTORÍA - NO DECLARANTE (10.0%)</option>
+                    <option value="0.025">COMPRAS - DECLARANTE (2.5%)</option>
                 </select>
-                <p class="info-base">Nota: El sistema asume que el pago supera la base mínima legal.</p>
 
-                <label style="color:var(--gold)"><input type="checkbox" id="r_usaAIU" onchange="calcFiscal()"> APLICAR RÉGIMEN AIU</label>
-                <div id="boxAIU" style="display:none; padding:10px; border:1px solid var(--gold); border-radius:10px; margin-top:5px;">
-                    <label>% Utilidad (Base para Renta)</label>
-                    <input type="number" id="r_pU" value="3" oninput="calcFiscal()">
+                <label>TASA ICA (X 1000)</label>
+                <input type="number" id="r_ica_tasa" value="11.04" step="0.01" oninput="calcFiscal()">
+
+                <div class="ai-input-area">
+                    <label style="color:var(--blue); margin-bottom: 8px;">🤖 RESULTADO DEL ANÁLISIS IA (PEGAR AQUÍ)</label>
+                    <textarea id="ai_result" rows="4" placeholder="Pegue aquí el resumen de la IA para que SIEL ajuste los cálculos de riesgos..." oninput="calcFiscal()"></textarea>
                 </div>
             </div>
 
             <div class="resumen-fiscal">
-                <h3>Cálculo de Deducciones</h3>
-                <p>Retención Fuente: -$<span id="f_rf">0</span></p>
-                <p>Retención ICA: -$<span id="f_ica">0</span></p>
-                <p>Estampillas/Otros (2.5%): -$<span id="f_est">0</span></p>
-                <hr>
-                <h2 style="color:#22c55e; margin:0;">NETO A RECIBIR: $<span id="f_neto">0</span></h2>
-                <p style="font-size:10px; opacity:0.7; margin-top:10px;">* Cálculo estimado para 2026. Verifique bases UVT según concepto.</p>
+                <h3>Liquidación de Impuestos</h3>
+                <div style="display:flex; justify-content:space-between;"><span>Retención Fuente:</span><span id="f_rf">0</span></div>
+                <div style="display:flex; justify-content:space-between;"><span>Retención ICA:</span><span id="f_ica">0</span></div>
+                <div style="display:flex; justify-content:space-between;"><span>Estampillas/Polizas:</span><span id="f_est">0</span></div>
+                <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 15px 0;">
+                <p style="font-size: 12px; opacity: 0.8; margin-bottom: 5px;">NETO ESTIMADO A RECIBIR:</p>
+                <h2 style="color:#22c55e; margin:0; font-size: 32px;">$<span id="f_neto">0</span></h2>
             </div>
         </div>
     </div>
 
     <div id="tab-reportes" class="card">
         <div style="text-align:center;">
-            <h2>Exportación de Resultados</h2>
+            <h2>Dashboard de Decisión Final</h2>
             <div class="grid">
-                <button class="btn-nav" style="background:var(--green); color:white; height:100px;">📄 GENERAR PDF<br>Veredicto Senior</button>
-                <button class="btn-nav" style="background:var(--blue); color:white; height:100px;">📊 GENERAR EXCEL<br>Dashboard SIEL</button>
+                <div style="padding:20px; background:#f0fdf4; border-radius:15px; border:1px solid #bbf7d0;">
+                    <h3 style="color:#166534;">ÍNDICE DE VIABILIDAD</h3>
+                    <h1 id="viabilidad_score">95%</h1>
+                </div>
+                <div style="padding:20px; background:#fff1f2; border-radius:15px; border:1px solid #fecdd3;">
+                    <h3 style="color:#991b1b;">PUNTO DE EQUILIBRIO</h3>
+                    <h1 id="breakeven">$0</h1>
+                </div>
             </div>
         </div>
     </div>
@@ -148,42 +147,56 @@
 
     function calcFiscal() {
         const base = parseFloat(document.getElementById('r_base').value) || 0;
-        const tIca = parseFloat(document.getElementById('r_municipio').value) || 0;
         const tRf = parseFloat(document.getElementById('r_rf_tipo').value) || 0;
-        const usaAIU = document.getElementById('r_usaAIU').checked;
-        const pU = parseFloat(document.getElementById('r_pU').value) || 0;
-
-        document.getElementById('boxAIU').style.display = usaAIU ? 'block' : 'none';
-
-        // Lógica de Retención en la Fuente: Si es AIU se aplica sobre la Utilidad
-        const baseCalculoRF = usaAIU ? (base * (pU/100)) : base;
-        const vRf = baseCalculoRF * tRf;
+        const tIca = parseFloat(document.getElementById('r_ica_tasa').value) || 0;
         
-        // ICA se aplica sobre el valor total del contrato (Ingreso Bruto)
+        // Cálculo de RF e ICA
+        const vRf = base * tRf;
         const vIca = (base * tIca) / 1000;
-        
-        // Estampillas (Cálculo sugerido del 2.5% sobre total)
-        const vEst = base * 0.025;
+        const vEst = base * 0.03; // Estampillas promedio 3%
         
         const neto = base - (vRf + vIca + vEst);
 
-        document.getElementById('f_rf').innerText = Math.round(vRf).toLocaleString();
-        document.getElementById('f_ica').innerText = Math.round(vIca).toLocaleString();
-        document.getElementById('f_est').innerText = Math.round(vEst).toLocaleString();
+        document.getElementById('f_rf').innerText = "- $" + Math.round(vRf).toLocaleString();
+        document.getElementById('f_ica').innerText = "- $" + Math.round(vIca).toLocaleString();
+        document.getElementById('f_est').innerText = "- $" + Math.round(vEst).toLocaleString();
         document.getElementById('f_neto').innerText = Math.round(neto).toLocaleString();
+        document.getElementById('breakeven').innerText = "$" + Math.round(base * 0.85).toLocaleString();
     }
 
     function updatePrompt() {
-        const prompt = `Actúa como mi Consultora Senior. Datos: Liq ${document.getElementById('e_liq').value}, End ${document.getElementById('e_end').value}%, CT: ${document.getElementById('e_ct').value}. Analiza pliego de ${document.getElementById('tipoProceso').value} sector ${document.getElementById('sector').value}.`;
+        const empresa = {
+            liq: document.getElementById('e_liq').value,
+            end: document.getElementById('e_end').value,
+            ct: document.getElementById('e_ct').value,
+            sector: document.getElementById('sector').value,
+            proceso: document.getElementById('tipoProceso').value
+        };
+
+        const prompt = `Actúa como mi Consultora Senior en Licitaciones. 
+DATOS DE MI EMPRESA:
+- Liquidez: ${empresa.liq}
+- Endeudamiento: ${empresa.end}%
+- Capital de Trabajo: $${empresa.ct}
+- Sector: ${empresa.sector}
+
+INSTRUCCIÓN: Analiza el pliego de ${empresa.proceso} adjunto.
+1. Verifica si cumplo los indicadores habilitantes.
+2. Identifica riesgos en la minuta (multas, cláusulas abusivas).
+3. Calcula el margen de maniobra técnica.
+DAME UN VEREDICTO: GO o NO-GO.`;
+
         document.getElementById('promptDisplay').innerText = prompt;
     }
 
     function copyPrompt() {
-        navigator.clipboard.writeText(document.getElementById('promptDisplay').innerText);
-        alert("Prompt copiado.");
+        const text = document.getElementById('promptDisplay').innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            alert("✅ Prompt maestro copiado. Pégalo ahora en tu chat con la IA.");
+        });
     }
 
-    window.onload = function() { updatePrompt(); calcFiscal(); };
+    window.onload = () => { updatePrompt(); calcFiscal(); };
 </script>
 
 </body>
