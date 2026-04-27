@@ -6,6 +6,7 @@
     <title>SIEL PRO 7.1 ULTIMATE | Briced Edition</title>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
@@ -40,7 +41,6 @@
         label { font-weight: 800; color: #334155; display: block; margin-bottom: 5px; font-size: 11px; }
         input, select, textarea { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 13px; margin-bottom: 12px; box-sizing: border-box; }
 
-        /* Dashboard Excel */
         .excel-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
         .excel-table th { background: var(--excel-green); color: white; padding: 10px; border: 1px solid #ddd; text-align: left; }
         .excel-table td { padding: 10px; border: 1px solid #ddd; background: #fff; }
@@ -48,6 +48,11 @@
         .tax-display { background: var(--dark); color: white; padding: 25px; border-radius: 20px; border-top: 4px solid var(--gold); }
         .tax-row { display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid #1e293b; padding-bottom: 5px; font-family: 'Fira Code', monospace; }
         .tax-total { font-size: 32px; font-weight: 900; color: var(--success); text-align: center; margin-top: 20px; }
+
+        .btn-viability { 
+            width: 100%; padding: 20px; border-radius: 15px; border: none; color: white; font-weight: 900; font-size: 16px; 
+            margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: 0.3s;
+        }
 
         .legal-notice { font-size: 10px; color: #7f1d1d; background: #fef2f2; padding: 15px; border-radius: 12px; border: 1px solid #fee2e2; margin-top: 20px; line-height: 1.5; }
 
@@ -85,10 +90,8 @@
                 <label>Plataformas Públicas</label>
                 <a href="https://www.colombiacompra.gov.co/secop/secop-i/consulte-en-el-secop-i" target="_blank" style="display:block; margin-bottom:8px; text-decoration:none; color:var(--primary); font-weight:bold; padding:8px; border:1px solid #ddd; border-radius:6px;">SECOP I</a>
                 <a href="https://community.secop.gov.co/Public/Tendering/ContractNoticeManagement/Index" target="_blank" style="display:block; margin-bottom:8px; text-decoration:none; color:var(--primary); font-weight:bold; padding:8px; border:1px solid #ddd; border-radius:6px;">SECOP II</a>
-                
-                <label style="margin-top:15px;">Específicos Distrito & PH</label>
-                <a href="https://bogota.gov.co/asi-vamos/contratos-y-obras/participa" target="_blank" style="display:block; margin-bottom:8px; text-decoration:none; color:#1d4ed8; font-weight:bold; padding:8px; border:1px solid #ddd; border-radius:6px;"><i class="fas fa-city"></i> Participa Bogotá (Distrito)</a>
-                <a href="https://leydepropiedadhorizontal.org/category/convocatorias/" target="_blank" style="display:block; margin-bottom:8px; text-decoration:none; color:#7c3aed; font-weight:bold; padding:8px; border:1px solid #ddd; border-radius:6px;"><i class="fas fa-building"></i> Convocatorias Prop. Horizontal</a>
+                <a href="https://bogota.gov.co/asi-vamos/contratos-y-obras/participa" target="_blank" style="display:block; margin-bottom:8px; text-decoration:none; color:#1d4ed8; font-weight:bold; padding:8px; border:1px solid #ddd; border-radius:6px;"><i class="fas fa-city"></i> Participa Bogotá</a>
+                <a href="https://leydepropiedadhorizontal.org/category/convocatorias/" target="_blank" style="display:block; margin-bottom:8px; text-decoration:none; color:#7c3aed; font-weight:bold; padding:8px; border:1px solid #ddd; border-radius:6px;"><i class="fas fa-building"></i> Convocatorias PH</a>
             </div>
             <div class="form-section">
                 <label>Registro de Proceso para Análisis</label>
@@ -107,7 +110,6 @@
                 <div class="form-section">
                     <label>Estatutón (Consulta de Tasas Municipales)</label>
                     <a href="https://sites.google.com/view/estatuton-2024/inicio" target="_blank" style="display:block; background:black; color:var(--gold); text-align:center; padding:10px; border-radius:8px; text-decoration:none; font-weight:bold; margin-bottom:15px;">ABRIR ESTATUTÓN 2024</a>
-                    
                     <label>¿Aplica AIU (Aseo, Vigilancia, Obra)?</label>
                     <select id="t_aplica_aiu" onchange="toggleAIU()">
                         <option value="no">NO - Contrato General</option>
@@ -172,7 +174,6 @@
     <div id="tab-ia" class="card">
         <div class="section-title">Auditoría de Riesgos & Ponderables IA</div>
         <div class="form-section">
-            <p style="color:var(--gray-text); margin-bottom:15px;">Usa este prompt para detectar trampas en los pliegos (procesos amarrados) y evaluar puntajes adicionales:</p>
             <div style="background:#020617; padding:20px; border-radius:12px; border:1px solid var(--gold);">
                 <pre id="prompt_box" style="color:#38bdf8; white-space: pre-wrap; font-family: monospace; font-size:10px;"></pre>
                 <button onclick="copyPrompt()" class="btn-nav" style="background:var(--success); color:white; width:100%; margin-top:15px;">COPIAR PROMPT DE AUDITORÍA</button>
@@ -181,7 +182,10 @@
     </div>
 
     <div id="tab-final" class="card">
-        <div class="section-title">Dashboard Ejecutivo de Auditoría</div>
+        <div class="section-title">Dashboard Ejecutivo & Veredicto SIEL</div>
+        
+        <button id="btn_status_visual" class="btn-viability" style="background: var(--gray-text);">PENDIENTE DE DATOS</button>
+
         <table class="excel-table">
             <thead>
                 <tr>
@@ -194,17 +198,17 @@
                 <tr>
                     <td>Liquidez RUP</td>
                     <td id="ex_liq">0.00</td>
-                    <td id="ex_liq_status">Pendiente</td>
+                    <td id="ex_liq_status">---</td>
                 </tr>
                 <tr>
                     <td>Experiencia Requerida</td>
                     <td id="ex_exp">0 años</td>
-                    <td>Verificar vs Pliego</td>
+                    <td>Validar Pliego</td>
                 </tr>
                 <tr>
                     <td>IVA Proyectado</td>
                     <td id="ex_iva">$0</td>
-                    <td>Carga Tributaria</td>
+                    <td>Carga Fiscal</td>
                 </tr>
                 <tr>
                     <td><b>FLUJO NETO (CAJA)</b></td>
@@ -214,8 +218,12 @@
             </tbody>
         </table>
         
+        <button onclick="exportSIELReport()" class="btn-nav" style="background:var(--primary); color:white; width:100%; margin-top:25px; padding:15px;">
+            <i class="fas fa-file-pdf"></i> DESCARGAR INFORME TÉCNICO SIEL PRO
+        </button>
+
         <div class="legal-notice">
-            <b>SALVEDAD Y TÉRMINOS:</b> SIEL PRO 7.1 es una guía de soporte. La identificación de riesgos y viabilidad es una interpretación de datos. Briced no se hace responsable por decisiones tomadas; el proponente debe realizar la debida diligencia.
+            <b>SALVEDAD Y TÉRMINOS:</b> SIEL PRO 7.1 es una guía de soporte analítico. El usuario reconoce que esta es una herramienta consultiva y no una verdad absoluta. Briced no asume responsabilidad por decisiones tomadas; la validación de pliegos y términos definitivos es responsabilidad del proponente.
         </div>
     </div>
 
@@ -251,7 +259,6 @@
         const icaTarifa = parseFloat(document.getElementById('t_ica').value) || 0;
         const tipo = document.getElementById('t_tipo').value;
 
-        // IVA Dinámico
         let iva = (aplicaAIU === 'si' && u > 0) ? (base * (u/100) * 0.19) : (base * 0.19);
         
         let rfTasa = 0;
@@ -265,23 +272,30 @@
         let vEst = base * (estPct / 100);
         let neto = (base + iva) - (vRf + vIca + vEst);
 
-        // UI Updates
         document.getElementById('res_base').innerText = "$ " + base.toLocaleString();
         document.getElementById('res_iva').innerText = "$ " + Math.round(iva).toLocaleString();
         document.getElementById('res_rets').innerText = "-$ " + Math.round(vRf + vIca + vEst).toLocaleString();
         document.getElementById('res_neto').innerText = "$ " + Math.round(neto).toLocaleString();
 
-        // Excel Dashboard
         document.getElementById('ex_iva').innerText = "$ " + Math.round(iva).toLocaleString();
         document.getElementById('ex_neto').innerText = "$ " + Math.round(neto).toLocaleString();
 
-        // RUP
         const ac = parseFloat(document.getElementById('f_ac').value) || 0;
         const pc = parseFloat(document.getElementById('f_pc').value) || 1;
         const liq = (ac/pc).toFixed(2);
         document.getElementById('res_liq').innerText = liq;
         document.getElementById('ex_liq').innerText = liq;
-        document.getElementById('ex_liq_status').innerText = liq >= 1 ? "HABILITADO" : "REVISAR";
+
+        const btnStatus = document.getElementById('btn_status_visual');
+        if (liq >= 1.0) {
+            btnStatus.innerText = "VIABLE FINANCIERAMENTE";
+            btnStatus.style.background = "var(--success)";
+            document.getElementById('ex_liq_status').innerText = "HABILITADO";
+        } else if (liq > 0) {
+            btnStatus.innerText = "ALTA CARGA / REVISAR";
+            btnStatus.style.background = "var(--danger)";
+            document.getElementById('ex_liq_status').innerText = "NO HABILITA";
+        }
         
         const exp = document.getElementById('p_exp_years').value || 0;
         const smmlv = document.getElementById('p_max_smmlv').value || 0;
@@ -290,21 +304,72 @@
     }
 
     function updatePrompt() {
-        const p = `ACTÚA COMO AUDITOR SENIOR DE CONTRATACIÓN ESTATAL (SIEL PRO).
-OBJETO: ${document.getElementById('r_nombre').value || 'Analizar pliegos'}.
-FINANCIERO: Neto proyectado $${document.getElementById('res_neto').innerText} | Liquidez ${document.getElementById('res_liq').innerText}.
+        const p = `ACTÚA COMO AUDITOR SENIOR SIEL PRO.
+ENTIDAD: ${document.getElementById('r_nombre').value || 'POR DEFINIR'}.
+FINANCIERO: Neto $${document.getElementById('res_neto').innerText} | Liquidez ${document.getElementById('res_liq').innerText}.
 EXPERIENCIA: ${document.getElementById('res_tecnica').innerText}.
 
-TAREA DE AUDITORÍA:
-1. Identifica "PROCESOS AMARRADOS": ¿Hay requisitos de experiencia imposibles o códigos UNSPSC demasiado específicos?
-2. ANALIZA PONDERABLES: ¿Qué puntaje dan por industria nacional, apoyo a Mipymes o trabajadores con discapacidad?
-3. VIABILIDAD TÉCNICA: ¿Nuestra capacidad financiera y técnica cumple con el presupuesto oficial?
-4. DETECTA TRAMPAS: Revisa multas, sanciones y tiempos de entrega irreales.
-ENTREGA: Un resumen ejecutivo GO / NO-GO con matriz de riesgos.`;
+TAREA: 
+1. Detectar "Procesos Amarrados" y trampas en pliego.
+2. Evaluar Ponderables (Mipymes, Discapacidad, Industria Nacional).
+3. Analizar Viabilidad Técnica vs Capacidad RUP.
+REPORTE: Dame un GO/NO-GO sustentado.`;
         document.getElementById('prompt_box').innerText = p;
     }
 
     function copyPrompt() { navigator.clipboard.writeText(document.getElementById('prompt_box').innerText); alert("Prompt Copiado"); }
+
+    function exportSIELReport() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        
+        // Cabecera Briced Edition
+        doc.setFillColor(12, 68, 124);
+        doc.rect(0, 0, 210, 40, 'F');
+        doc.setTextColor(255, 255, 255);
+        doc.setFontSize(22);
+        doc.text("INFORME DE VIABILIDAD SIEL PRO 7.1", 20, 25);
+        doc.setFontSize(10);
+        doc.text("Briced - Líder de Procesos Administrativos | Análisis Estratégico", 20, 35);
+        
+        // Datos del Proceso
+        doc.setTextColor(0, 0, 0);
+        doc.setFontSize(12);
+        doc.text(`Proponente: ${document.getElementById('p_nombre').value}`, 20, 55);
+        doc.text(`Entidad/Proceso: ${document.getElementById('r_nombre').value || 'No definido'}`, 20, 65);
+        
+        // Tabla de Resultados
+        doc.autoTable({
+            startY: 75,
+            head: [['Concepto', 'Valor']],
+            body: [
+                ['Liquidez (RUP)', document.getElementById('ex_liq').innerText],
+                ['Experiencia Reportada', document.getElementById('ex_exp').innerText],
+                ['Base Presupuesto', document.getElementById('res_base').innerText],
+                ['IVA Proyectado', document.getElementById('res_iva').innerText],
+                ['Neto Proyectado a Caja', document.getElementById('res_neto').innerText],
+            ],
+            theme: 'striped',
+            headStyles: { fillColor: [33, 115, 70] }
+        });
+        
+        // Salvedad Legal en PDF
+        doc.setFontSize(8);
+        doc.setTextColor(150, 0, 0);
+        const legal = "SALVEDAD: Este informe es una proyeccion analitica basada en datos suministrados. No constituye una verdad absoluta ni garantia de adjudicacion.";
+        doc.text(legal, 20, doc.lastAutoTable.finalY + 20, { maxWidth: 170 });
+        
+        doc.save(`SIEL_Reporte_${document.getElementById('p_nombre').value}.pdf`);
+    }
+
+    function addRadar() {
+        const nom = document.getElementById('r_nombre').value || "Proceso";
+        const val = parseFloat(document.getElementById('r_valor').value) || 0;
+        const div = document.createElement('div');
+        div.style = "background:white; padding:10px; border-radius:8px; margin-bottom:5px; border-left:4px solid var(--gold); border:1px solid #ddd;";
+        div.innerHTML = `<b>${nom}</b> - $${val.toLocaleString()}`;
+        document.getElementById('radar_list').prepend(div);
+    }
 </script>
 </body>
 </html>
