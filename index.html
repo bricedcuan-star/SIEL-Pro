@@ -34,7 +34,6 @@
         .card { background: var(--white); padding: 30px; border-radius: 20px; border: 1px solid #e2e8f0; display: none; box-shadow: 0 4px 6px rgba(0,0,0,0.05); position: relative; }
         .card.active { display: block; animation: fadeIn 0.3s ease; }
 
-        /* Skeleton / Loading Overlay */
         .loading-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.8); display: none; justify-content: center; align-items: center; border-radius: 20px; z-index: 10; }
         .spinner { width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid var(--primary); border-radius: 50%; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
@@ -45,7 +44,7 @@
         label { font-weight: 800; color: #334155; display: block; margin-bottom: 5px; font-size: 11px; }
         input, select, textarea { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 13px; margin-bottom: 12px; box-sizing: border-box; }
 
-        .tax-display { background: var(--dark); color: white; padding: 25px; border-radius: 20px; border-top: 4px solid var(--gold); }
+        .tax-display { background: var(--dark); color: white; padding: 25px; border-radius: 20px; border-top: 4px solid var(--gold); position: sticky; top: 20px; }
         .tax-row { display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid #1e293b; padding-bottom: 5px; font-family: 'Fira Code', monospace; }
         .tax-total { font-size: 32px; font-weight: 900; color: var(--success); text-align: center; margin-top: 20px; }
 
@@ -55,10 +54,10 @@
             color: var(--primary); text-decoration: none; font-weight: bold; font-size: 11px; margin-bottom: 8px; transition: 0.2s;
         }
 
-        .legal-box { font-size: 10px; color: #7f1d1d; background: #fef2f2; padding: 15px; border-radius: 10px; border: 1px solid #fee2e2; margin-top: 20px; line-height: 1.4; }
+        .legal-notice { font-size: 10px; color: #7f1d1d; background: #fef2f2; padding: 15px; border-radius: 12px; border: 1px solid #fee2e2; margin-top: 20px; line-height: 1.5; }
 
-        footer { margin-top: 40px; text-align: center; padding: 30px; background: var(--dark); color: white; border-radius: 24px 24px 0 0; }
-        .footer-links a { color: var(--gold); text-decoration: none; margin: 0 15px; font-weight: bold; }
+        footer { margin-top: 40px; text-align: center; padding: 40px; background: var(--dark); color: white; border-radius: 24px 24px 0 0; }
+        .footer-links a { color: var(--gold); text-decoration: none; margin: 0 15px; font-weight: bold; font-size: 13px; }
     </style>
 </head>
 <body>
@@ -67,7 +66,7 @@
     <header>
         <div>
             <h1 style="margin:0; letter-spacing: -1px;">SIEL PRO 7.1 <span style="font-weight:300; color: var(--gold);">ULTIMATE</span></h1>
-            <p style="margin:5px 0; font-size:11px; opacity:0.8;"><i class="fas fa-balance-scale"></i> Suite de Ingeniería Contractual</p>
+            <p style="margin:5px 0; font-size:11px; opacity:0.8;"><i class="fas fa-balance-scale"></i> Suite de Ingeniería Contractual & Tributaria</p>
         </div>
         <div style="text-align:right;">
             <div style="background: rgba(255,255,255,0.1); padding: 8px 15px; border-radius: 10px; border: 1px solid var(--gold);">
@@ -81,84 +80,109 @@
         <button class="btn-nav" onclick="showTab('tab-tax', this)"><i class="fas fa-calculator"></i> 2. RETENCOL 360</button>
         <button class="btn-nav" onclick="showTab('tab-rup', this)"><i class="fas fa-id-card"></i> 3. Perfil & RUP</button>
         <button class="btn-nav" onclick="showTab('tab-ia', this)"><i class="fas fa-robot"></i> 4. Cerebro IA</button>
-        <button class="btn-nav" style="background:var(--gold); color:#000;" onclick="showTab('tab-final', this)"><i class="fas fa-check-circle"></i> 5. Veredicto</button>
+        <button class="btn-nav" style="background:var(--gold); color:#000;" onclick="showTab('tab-final', this)"><i class="fas fa-file-invoice-dollar"></i> 5. Veredicto</button>
     </nav>
 
     <div id="tab-radar" class="card active">
         <div class="loading-overlay" id="load-radar"><div class="spinner"></div></div>
-        <div class="section-title">Central de Oportunidades SECOP & PH</div>
+        <div class="section-title">Ecosistema de Oportunidades SECOP & PH</div>
         <div style="display:grid; grid-template-columns: 1fr 2fr; gap:25px;">
             <div>
-                <label>Fuentes Oficiales</label>
-                <a href="https://www.colombiacompra.gov.co/secop/secop-i/consulte-en-el-secop-i" target="_blank" class="btn-link-ext"><i class="fas fa-search"></i> SECOP I (Consulta)</a>
-                <a href="https://community.secop.gov.co/Public/Tendering/ContractNoticeManagement/Index" target="_blank" class="btn-link-ext"><i class="fas fa-mouse-pointer"></i> SECOP II</a>
+                <label>Fuentes de Contratación</label>
+                <a href="https://www.colombiacompra.gov.co/secop/secop-i/consulte-en-el-secop-i" target="_blank" class="btn-link-ext">SECOP I (Histórico)</a>
+                <a href="https://community.secop.gov.co/Public/Tendering/ContractNoticeManagement/Index" target="_blank" class="btn-link-ext">SECOP II (Transaccional)</a>
+                <a href="https://bogota.gov.co/asi-vamos/contratos-y-obras/participa" target="_blank" class="btn-link-ext" style="background:#fffbeb;"><i class="fas fa-city"></i> Participa Bogotá</a>
+                <a href="https://leydepropiedadhorizontal.org/category/convocatorias/" target="_blank" class="btn-link-ext" style="border-color:#7c3aed; color:#7c3aed;"><i class="fas fa-building"></i> Convocatorias PH</a>
                 <a href="https://sites.google.com/view/estatuton-2024/inicio" target="_blank" class="btn-link-ext" style="background:#000; color:var(--warning); border:none;"><i class="fas fa-book"></i> ESTATUTÓN 2024</a>
             </div>
             <div class="form-section">
-                <label>Vincular Proceso al Radar</label>
+                <label>Vincular Proceso al Análisis</label>
                 <input type="text" id="r_nombre" placeholder="Nombre Entidad / Proceso">
-                <input type="number" id="r_valor" placeholder="Presupuesto Base" onkeypress="return isNumberKey(event)">
-                <button onclick="addRadar()" class="btn-nav" style="background:var(--primary); color:white; width:100%;">Añadir al Seguimiento</button>
+                <input type="number" id="r_valor" placeholder="Presupuesto Base ($)" oninput="calcAll()">
+                <button onclick="addRadar()" class="btn-nav" style="background:var(--primary); color:white; width:100%;">Añadir al Radar</button>
                 <div id="radar_list" style="margin-top:15px;"></div>
             </div>
         </div>
-        <div class="legal-box"><i class="fas fa-info-circle"></i> <b>NOTA DE USO:</b> Los datos generados en esta pantalla son una guía preliminar para la evaluación de oportunidades. La decisión final de participar en un proceso es responsabilidad del usuario tras validar los pliegos definitivos.</div>
     </div>
 
     <div id="tab-tax" class="card">
-        <div class="section-title">RETENCOL 360 - Simulador de Impuestos</div>
+        <div class="section-title">Motor Tributario RETENCOL 360</div>
         <div style="display:grid; grid-template-columns: 1.2fr 1fr; gap:25px;">
-            <div>
+            <div style="max-height: 65vh; overflow-y: auto; padding-right: 10px;">
                 <div class="form-section">
-                    <label>Tipo de Proponente</label>
+                    <label>Perfil Tributario (RUT)</label>
                     <select id="t_proponente" onchange="calcAll()">
-                        <option value="PJ">Persona Jurídica (NIT)</option>
-                        <option value="PN_D">Persona Natural Declarante (C.C.)</option>
-                        <option value="PN_ND">Persona Natural No Declarante (C.C.)</option>
+                        <option value="PJ">Persona Jurídica</option>
+                        <option value="PN_D">Persona Natural Declarante</option>
+                        <option value="PN_ND">Persona Natural NO Declarante</option>
                         <option value="RST">Régimen Simple (RST)</option>
                     </select>
                 </div>
                 <div class="form-section">
+                    <label>Tipo de Contrato (Define Retefuente)</label>
+                    <select id="t_tipo" onchange="calcAll()">
+                        <option value="servicios">Servicios Generales (4% / 6%)</option>
+                        <option value="compras">Compras y Suministros (2.5% / 3.5%)</option>
+                        <option value="honorarios">Honorarios / Consultoría (11% / 10%)</option>
+                        <option value="obra">Obra Civil (2%)</option>
+                        <option value="transporte">Transporte de Carga (1%)</option>
+                    </select>
+                    <label>Esquema de IVA</label>
+                    <select id="t_iva_tipo" onchange="calcAll()">
+                        <option value="0.19">Gravado (19%)</option>
+                        <option value="0.05">Gravado Reducido (5%)</option>
+                        <option value="0">Excluido / Exento (0%)</option>
+                    </select>
+                </div>
+                <div class="form-section" style="border-left: 5px solid var(--accent);">
                     <label>Módulo AIU (Aseo, Vigilancia, Obra)</label>
                     <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px;">
-                        <input type="number" id="t_u" placeholder="U %" oninput="calcAll()" onkeypress="return isNumberKey(event)">
-                        <small style="grid-column: span 3; color: var(--gray-text);">El IVA se calcula sobre la Utilidad (U).</small>
+                        <div><label>% A</label><input type="number" id="t_a" value="0" oninput="calcAll()"></div>
+                        <div><label>% I</label><input type="number" id="t_i" value="0" oninput="calcAll()"></div>
+                        <div><label>% U</label><input type="number" id="t_u" value="0" oninput="calcAll()"></div>
                     </div>
                 </div>
                 <div class="form-section">
-                    <label>Estampillas y Otros (%)</label>
-                    <input type="number" id="t_estampillas" value="2.5" oninput="calcAll()" onkeypress="return isNumberKey(event)">
+                    <label>Territorialidad e ICA (Consultar Estatutón)</label>
+                    <input type="number" id="t_ica" value="9.66" oninput="calcAll()" placeholder="Tarifa x 1000">
+                    <label>Estampillas (Cultura, Adulto Mayor, etc) %</label>
+                    <input type="number" id="t_estampillas" value="2.5" oninput="calcAll()">
                 </div>
             </div>
             <div class="tax-display">
-                <div class="tax-row"><span>Base:</span><span id="res_base">$0</span></div>
+                <div class="tax-row"><span>Base Contrato:</span><span id="res_base">$0</span></div>
                 <div class="tax-row"><span>IVA:</span><span id="res_iva">$0</span></div>
-                <div class="tax-row"><span>Deducciones:</span><span id="res_ded">-$0</span></div>
+                <div class="tax-row"><span>Retefuente:</span><span id="res_rf">-$0</span></div>
+                <div class="tax-row"><span>ReteICA:</span><span id="res_rica">-$0</span></div>
+                <div class="tax-row"><span>Estampillas:</span><span id="res_est">-$0</span></div>
                 <div class="tax-total" id="res_neto">$0</div>
-                <p style="text-align:center; font-size:10px; opacity:0.7;">NETO ESTIMADO A CAJA</p>
+                <p style="text-align:center; font-size:10px; opacity:0.7;">NETO DISPONIBLE A CAJA</p>
             </div>
         </div>
     </div>
 
     <div id="tab-rup" class="card">
-        <div class="section-title">Perfil Empresarial e Indicadores RUP</div>
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:25px;">
+        <div class="section-title">Perfil del Proponente & Habilitantes</div>
+        <div style="display:grid; grid-template-columns: 1fr 1.2fr; gap:25px;">
             <div class="form-section">
-                <label>Identificación de Proponente</label>
+                <label>Identificación</label>
                 <select id="p_id_type" onchange="updateIdLabel()">
                     <option value="NIT">NIT (Persona Jurídica)</option>
                     <option value="CC">Cédula de Ciudadanía (Persona Natural)</option>
                 </select>
-                <input type="text" id="p_id_val" placeholder="Número de identificación">
-                <label>Nombre del Proponente</label>
+                <input type="text" id="p_id_val" value="900.000.000-1">
+                <label>Nombre / Razón Social</label>
                 <input type="text" id="p_nombre" value="Consultor Senior SIEL">
+                <label>Representante Legal</label>
+                <input type="text" id="p_rep" value="Briced">
             </div>
             <div class="form-section">
-                <label>Indicadores Habilitantes (RUP)</label>
-                <input type="number" id="f_ac" placeholder="Activo Corriente" oninput="calcAll()">
-                <input type="number" id="f_pc" placeholder="Pasivo Corriente" oninput="calcAll()">
-                <div style="background:var(--primary); color:white; padding:15px; border-radius:10px;">
-                    Liquidez: <b id="res_liq">0.00</b> | Cap. Trabajo: <b id="res_ct">$0</b>
+                <label>Indicadores Financieros (RUP)</label>
+                <input type="number" id="f_ac" value="500000000" oninput="calcAll()">
+                <input type="number" id="f_pc" value="150000000" oninput="calcAll()">
+                <div style="background:var(--primary); color:white; padding:20px; border-radius:15px; margin-top:15px;">
+                    <div class="tax-row"><span>Liquidez (AC/PC):</span><span id="res_liq">0.00</span></div>
+                    <div class="tax-row"><span>Cap. Trabajo:</span><span id="res_ct">$0</span></div>
                 </div>
             </div>
         </div>
@@ -167,46 +191,42 @@
     <div id="tab-ia" class="card">
         <div class="section-title">Cerebro IA Multimodal</div>
         <div class="form-section">
-            <label>Tipo de Insumo</label>
+            <label>Formato del Documento a Analizar</label>
             <select id="ia_mode" onchange="updatePrompt()">
-                <option value="txt">Documento de Texto (PDF/Word)</option>
-                <option value="img">Imagen / Escaneo de Pliegos</option>
+                <option value="txt">Texto Seleccionable (PDF/Word)</option>
+                <option value="img">Imagen / Escaneo Manual (OCR)</option>
             </select>
-            <div style="background:#020617; padding:20px; border-radius:15px; border:1px solid var(--gold);">
+            <div style="background:#020617; padding:25px; border-radius:15px; border: 1px solid var(--gold);">
                 <pre id="prompt_box" style="color:#38bdf8; white-space: pre-wrap; font-family: monospace; font-size:11px;"></pre>
-                <button onclick="copyPrompt()" class="btn-nav" style="background:var(--success); color:white; width:100%; margin-top:15px;">Copiar Prompt Senior</button>
+                <button onclick="copyPrompt()" class="btn-nav" style="background:var(--success); color:white; width:100%; margin-top:20px;">Copiar Prompt Profesional</button>
             </div>
         </div>
     </div>
 
     <div id="tab-final" class="card">
-        <div class="section-title">Generación de Informe Final</div>
-        <div style="text-align:center; padding:40px;">
-            <i class="fas fa-file-pdf fa-4x" style="color:var(--danger); margin-bottom:20px;"></i>
-            <h2>DESCARGAR MATRIZ DE VIABILIDAD</h2>
-            <p style="color:var(--gray-text);">Este informe resume el análisis técnico, financiero y tributario.</p>
-            <button onclick="exportPDF()" class="btn-nav" style="background:var(--success); color:white; padding:15px 50px; font-size:14px;"><i class="fas fa-download"></i> EXPORTAR INFORME (PDF)</button>
+        <div class="section-title">Veredicto Ejecutivo SIEL</div>
+        <div style="text-align:center; padding:50px; border: 3px dashed var(--gold); border-radius: 30px; background: #fffcf0;">
+            <i class="fas fa-award fa-4x" style="color:var(--primary); margin-bottom:20px;"></i>
+            <h2 style="color:var(--primary);">MATRIZ DE VIABILIDAD FINAL</h2>
+            <p style="color:var(--gray-text); margin-bottom:30px;">Consolidado técnico de impuestos, RUP y cumplimiento legal.</p>
+            <button onclick="exportPDF()" class="btn-nav" style="background:var(--success); color:white; padding:18px 60px;"><i class="fas fa-download"></i> DESCARGAR REPORTE SENIOR (PDF)</button>
         </div>
-        <div class="legal-box" style="background:#fff7ed; border-color:#fed7aa; color:#9a3412;">
-            <b>SALVEDAD LEGAL:</b> Los cálculos y análisis presentados por SIEL PRO 7.1 son proyecciones basadas en la información ingresada por el usuario. No constituyen una verdad absoluta ni una garantía de éxito en procesos de contratación. La decisión final es exclusiva del usuario.
+        <div class="legal-notice">
+            <i class="fas fa-exclamation-triangle"></i> <b>SALVEDAD Y TÉRMINOS DE USO:</b> SIEL PRO 7.1 es una herramienta de soporte analítico. Los cálculos son proyecciones basadas en la normativa vigente (Estatuto Tributario, Ley 80). El usuario reconoce que esta es una <b>guía consultiva</b> y no una verdad absoluta; la decisión final de contratación y la veracidad de los datos presentados son responsabilidad exclusiva de quien opera el sistema.
         </div>
     </div>
 
     <footer>
         <div class="footer-links">
             <a href="https://www.linkedin.com/in/bricedcuan-liderdeprocesosadministraivos/" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
-            <a href="https://wa.me/573123506294" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            <a href="https://wa.me/573123506294" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp Directo</a>
         </div>
-        <p style="margin-top:15px;"><b>SIEL PRO 7.1 ULTIMATE</b> | Briced - Líder de Procesos Administrativos | 2026</p>
+        <p style="margin-top:20px;"><b>SIEL PRO 7.1 ULTIMATE</b> | Briced - Líder de Procesos Administrativos</p>
     </footer>
 </div>
 
 <script>
-    function isNumberKey(evt) {
-        var charCode = (evt.which) ? evt.which : evt.keyCode;
-        if (charCode > 31 && (charCode < 48 || charCode > 57)) return false;
-        return true;
-    }
+    const UVT = 52374;
 
     function showTab(id, btn) {
         document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
@@ -217,19 +237,43 @@
     }
 
     function calcAll() {
-        const base = parseFloat(document.getElementById('r_valor').value) || 0;
-        const u = parseFloat(document.getElementById('t_u').value) || 0;
-        const est = parseFloat(document.getElementById('t_estampillas').value) || 0;
+        const baseTotal = parseFloat(document.getElementById('r_valor').value) || 0;
+        const tipoProponente = document.getElementById('t_proponente').value;
+        const tipoContrato = document.getElementById('t_tipo').value;
+        const ivaTasa = parseFloat(document.getElementById('t_iva_tipo').value);
         
-        let iva = (u > 0) ? (base * (u/100) * 0.19) : (base * 0.19);
-        let ded = base * (est/100);
-        let neto = (base + iva) - ded;
+        const a = parseFloat(document.getElementById('t_a').value) || 0;
+        const i = parseFloat(document.getElementById('t_i').value) || 0;
+        const u = parseFloat(document.getElementById('t_u').value) || 0;
+        const estampillasPct = parseFloat(document.getElementById('t_estampillas').value) || 0;
+        const icaTarifa = parseFloat(document.getElementById('t_ica').value) || 0;
 
-        document.getElementById('res_base').innerText = "$ " + base.toLocaleString();
-        document.getElementById('res_iva').innerText = "$ " + Math.round(iva).toLocaleString();
-        document.getElementById('res_ded').innerText = "-$ " + Math.round(ded).toLocaleString();
-        document.getElementById('res_neto').innerText = "$ " + Math.round(neto).toLocaleString();
+        // IVA NORMAL VS AIU
+        let valorIVA = (u > 0) ? (baseTotal * (u / 100) * ivaTasa) : (baseTotal * ivaTasa);
 
+        // RETEFUENTE CON BASES MÍNIMAS
+        let tasaRF = 0;
+        let baseMinimaRF = 0;
+        if (tipoContrato === 'servicios') { baseMinimaRF = 4 * UVT; tasaRF = (tipoProponente === 'PN_ND') ? 6 : 4; }
+        else if (tipoContrato === 'compras') { baseMinimaRF = 27 * UVT; tasaRF = (tipoProponente === 'PN_ND') ? 3.5 : 2.5; }
+        else if (tipoContrato === 'honorarios') { baseMinimaRF = 0; tasaRF = (tipoProponente === 'PN_ND') ? 10 : 11; }
+        else if (tipoContrato === 'obra') { baseMinimaRF = 0; tasaRF = 2; }
+        else if (tipoContrato === 'transporte') { baseMinimaRF = 4 * UVT; tasaRF = 1; }
+        if (tipoProponente === 'RST') tasaRF = 0;
+
+        let valorRF = (baseTotal >= baseMinimaRF) ? (baseTotal * (tasaRF / 100)) : 0;
+        let valorICA = (baseTotal * icaTarifa) / 1000;
+        let valorEstampillas = baseTotal * (estampillasPct / 100);
+
+        // RESULTADOS TAX
+        document.getElementById('res_base').innerText = "$ " + baseTotal.toLocaleString();
+        document.getElementById('res_iva').innerText = "$ " + Math.round(valorIVA).toLocaleString();
+        document.getElementById('res_rf').innerText = "-$ " + Math.round(valorRF).toLocaleString();
+        document.getElementById('res_rica').innerText = "-$ " + Math.round(valorICA).toLocaleString();
+        document.getElementById('res_est').innerText = "-$ " + Math.round(valorEstampillas).toLocaleString();
+        document.getElementById('res_neto').innerText = "$ " + Math.round((baseTotal + valorIVA) - (valorRF + valorICA + valorEstampillas)).toLocaleString();
+
+        // RUP
         const ac = parseFloat(document.getElementById('f_ac').value) || 0;
         const pc = parseFloat(document.getElementById('f_pc').value) || 1;
         document.getElementById('res_liq').innerText = (ac/pc).toFixed(2);
@@ -239,41 +283,41 @@
     function addRadar() {
         document.getElementById('load-radar').style.display = 'flex';
         setTimeout(() => {
-            const n = document.getElementById('r_nombre').value || "Proceso";
-            const v = document.getElementById('r_valor').value || 0;
+            const nom = document.getElementById('r_nombre').value || "Proceso";
+            const val = parseFloat(document.getElementById('r_valor').value) || 0;
             const div = document.createElement('div');
-            div.style = "background:white; padding:10px; border-radius:10px; border-left:5px solid var(--gold); margin-bottom:5px; border:1px solid #ddd;";
-            div.innerHTML = `<b>${n}</b> - $${parseFloat(v).toLocaleString()}`;
+            div.style = "background:white; padding:10px; border-radius:10px; margin-bottom:10px; border-left:5px solid var(--gold); border: 1px solid #ddd; display:flex; justify-content:space-between;";
+            div.innerHTML = `<b>${nom}</b> <span>$${val.toLocaleString()}</span>`;
             document.getElementById('radar_list').prepend(div);
             document.getElementById('load-radar').style.display = 'none';
-        }, 800);
+        }, 600);
     }
 
     function updatePrompt() {
         const mode = document.getElementById('ia_mode').value;
         const p = `ACTÚA COMO CONSULTOR SENIOR SIEL.
-${mode === 'txt' ? '[ANALIZAR TEXTO]' : '[ANALIZAR IMAGEN/OCR]'}
+ESTRATEGIA: ${mode === 'txt' ? 'ANÁLISIS SEMÁNTICO DE TEXTO' : 'OCR Y VISIÓN DE PLIEGOS'}.
 PROPONENTE: ${document.getElementById('p_nombre').value} (${document.getElementById('p_id_type').value}).
 LIQUIDEZ: ${document.getElementById('res_liq').innerText}.
-NETO ESTIMADO: ${document.getElementById('res_neto').innerText}.
-TAREA: Evalúa viabilidad técnica y financiera. Identifica riesgos en pliegos.`;
+NETO RETENCOL: ${document.getElementById('res_neto').innerText}.
+OBJETIVO: Identificar Códigos UNSPSC, riesgos de pliego y viabilidad financiera.`;
         document.getElementById('prompt_box').innerText = p;
     }
 
-    function copyPrompt() { navigator.clipboard.writeText(document.getElementById('prompt_box').innerText); alert("✅ Prompt Copiado"); }
+    function copyPrompt() { navigator.clipboard.writeText(document.getElementById('prompt_box').innerText); alert("Prompt Copiado"); }
 
     function exportPDF() {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
-        doc.setFillColor(12, 68, 124); doc.rect(0, 0, 210, 40, 'F');
-        doc.setTextColor(255, 255, 255); doc.text("SIEL PRO - REPORTE DE VIABILIDAD", 20, 25);
-        doc.setTextColor(0,0,0);
-        doc.text(`Proponente: ${document.getElementById('p_nombre').value}`, 20, 50);
-        doc.text(`Identificación: ${document.getElementById('p_id_val').value}`, 20, 60);
-        doc.text(`Neto Proyectado: ${document.getElementById('res_neto').innerText}`, 20, 70);
-        doc.setFontSize(8);
-        doc.text("SALVEDAD: Este informe es una guía analítica, no una garantía de éxito.", 20, 100);
-        doc.save("Analisis_Briced_SIEL.pdf");
+        doc.setFillColor(12, 68, 124); doc.rect(0, 0, 210, 45, 'F');
+        doc.setTextColor(255, 255, 255); doc.setFontSize(22); doc.text("SIEL PRO - MATRIZ DE VIABILIDAD", 20, 28);
+        doc.setFontSize(10); doc.text(`Briced - Líder de Procesos Administrativos`, 20, 38);
+        doc.setTextColor(0,0,0); doc.setFontSize(12);
+        doc.text(`Entidad: ${document.getElementById('p_nombre').value}`, 20, 60);
+        doc.text(`Identificación: ${document.getElementById('p_id_val').value}`, 20, 70);
+        doc.text(`Proyección Neto: ${document.getElementById('res_neto').innerText}`, 20, 80);
+        doc.setFontSize(8); doc.text("SALVEDAD: Este documento es una guía consultiva basada en proyecciones.", 20, 280);
+        doc.save(`SIEL_Reporte_${document.getElementById('p_nombre').value}.pdf`);
     }
 
     window.onload = () => { calcAll(); updatePrompt(); };
