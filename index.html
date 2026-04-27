@@ -171,17 +171,39 @@
     }
 
     function descargarPDF() {
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-        doc.setFontSize(16); doc.setTextColor(12, 68, 124);
-        doc.text("SIEL PRO - INFORME VEREDICTO SENIOR", 20, 20);
-        doc.setFontSize(12); doc.setTextColor(0);
-        doc.text(`Empresa: ${document.getElementById('e_nombre').value}`, 20, 35);
-        doc.text(`Capital de Trabajo: $${document.getElementById('e_ct').value}`, 20, 42);
-        doc.text("--------------------------------------------------", 20, 50);
-        const splitText = doc.splitTextToSize(document.getElementById('ia_feedback').value || "Sin análisis.", 170);
-        doc.text(splitText, 20, 60);
-        doc.save("SIEL_Veredicto.pdf");
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    const empresa = document.getElementById('e_nombre').value;
+    const veredicto = document.getElementById('ia_feedback').value;
+
+    // Encabezado
+    doc.setFontSize(18);
+    doc.setTextColor(12, 68, 124);
+    doc.text("INFORME DE CONSULTORÍA SENIOR - SIEL PRO", 20, 20);
+    
+    // Datos Proponente
+    doc.setFontSize(10);
+    doc.setTextColor(100);
+    doc.text(`Generado para: ${empresa}`, 20, 30);
+    doc.text(`Fecha: ${new Date().toLocaleDateString()}`, 20, 35);
+    
+    // Veredicto
+    doc.setFontSize(14);
+    doc.setTextColor(0);
+    doc.text("Análisis de Riesgos y Veredicto:", 20, 50);
+    
+    doc.setFontSize(10);
+    const splitText = doc.splitTextToSize(veredicto || "No se ingresó análisis de la IA.", 170);
+    doc.text(splitText, 20, 60);
+
+    // --- CLÁUSULA DE DESCARGO (PIE DE PÁGINA) ---
+    doc.setFontSize(8);
+    doc.setTextColor(150);
+    const disclaimer = "ADVERTENCIA LEGAL: SIEL PRO es una herramienta de asistencia. Los resultados son estimaciones y no constituyen asesoría legal vinculante. Valide con profesionales antes de ofertar.";
+    const splitDisclaimer = doc.splitTextToSize(disclaimer, 170);
+    doc.text(splitDisclaimer, 20, 280);
+
+    doc.save(`Veredicto_SIEL_${empresa}.pdf`);
     }
 
     function descargarExcel() {
