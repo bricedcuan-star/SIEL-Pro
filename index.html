@@ -41,6 +41,7 @@
         label { font-weight: 800; color: #334155; display: block; margin-bottom: 5px; font-size: 11px; }
         input, select, textarea { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 13px; margin-bottom: 12px; box-sizing: border-box; }
 
+        /* Estilo Dashboard Excel */
         .excel-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
         .excel-table th { background: var(--excel-green); color: white; padding: 10px; border: 1px solid #ddd; text-align: left; }
         .excel-table td { padding: 10px; border: 1px solid #ddd; background: #fff; }
@@ -174,9 +175,30 @@
     <div id="tab-ia" class="card">
         <div class="section-title">Auditoría de Riesgos & Ponderables IA</div>
         <div class="form-section">
-            <div style="background:#020617; padding:20px; border-radius:12px; border:1px solid var(--gold);">
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-bottom:15px;">
+                <div>
+                    <label>Plataforma de IA a Utilizar</label>
+                    <select id="ia_platform" onchange="updatePrompt()">
+                        <option value="ChatGPT-4o">ChatGPT-4o (Recomendado)</option>
+                        <option value="Claude 3.5 Sonnet">Claude 3.5 Sonnet</option>
+                        <option value="Gemini 1.5 Pro">Gemini 1.5 Pro</option>
+                        <option value="DeepSeek V3">DeepSeek V3</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Formato del Pliego</label>
+                    <select id="ia_format" onchange="updatePrompt()">
+                        <option value="TEXTO (Nativo Digital)">PDF Texto (Lectura Directa)</option>
+                        <option value="IMAGEN (Escaneado/OCR)">PDF Imagen (Requiere OCR)</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div style="background:#020617; padding:20px; border-radius:12px; border: 1px solid var(--gold);">
                 <pre id="prompt_box" style="color:#38bdf8; white-space: pre-wrap; font-family: monospace; font-size:10px;"></pre>
-                <button onclick="copyPrompt()" class="btn-nav" style="background:var(--success); color:white; width:100%; margin-top:15px;">COPIAR PROMPT DE AUDITORÍA</button>
+                <button onclick="copyPrompt()" class="btn-nav" style="background:var(--success); color:white; width:100%; margin-top:15px;">
+                    <i class="fas fa-copy"></i> COPIAR PROMPT PARA <span id="ia_name_btn">PLATAFORMA</span>
+                </button>
             </div>
         </div>
     </div>
@@ -292,9 +314,9 @@
             btnStatus.style.background = "var(--success)";
             document.getElementById('ex_liq_status').innerText = "HABILITADO";
         } else if (liq > 0) {
-            btnStatus.innerText = "ALTA CARGA / REVISAR";
+            btnStatus.innerText = "ALTA CARGA / NO HABILITA";
             btnStatus.style.background = "var(--danger)";
-            document.getElementById('ex_liq_status').innerText = "NO HABILITA";
+            document.getElementById('ex_liq_status').innerText = "REVISAR";
         }
         
         const exp = document.getElementById('p_exp_years').value || 0;
@@ -304,16 +326,31 @@
     }
 
     function updatePrompt() {
-        const p = `ACTÚA COMO AUDITOR SENIOR SIEL PRO.
-ENTIDAD: ${document.getElementById('r_nombre').value || 'POR DEFINIR'}.
-FINANCIERO: Neto $${document.getElementById('res_neto').innerText} | Liquidez ${document.getElementById('res_liq').innerText}.
-EXPERIENCIA: ${document.getElementById('res_tecnica').innerText}.
+        const platform = document.getElementById('ia_platform').value;
+        const format = document.getElementById('ia_format').value;
+        const entidad = document.getElementById('r_nombre').value || 'POR DEFINIR';
+        const neto = document.getElementById('res_neto').innerText;
+        const liq = document.getElementById('res_liq').innerText;
+        const exp = document.getElementById('res_tecnica').innerText;
 
-TAREA: 
-1. Detectar "Procesos Amarrados" y trampas en pliego.
-2. Evaluar Ponderables (Mipymes, Discapacidad, Industria Nacional).
-3. Analizar Viabilidad Técnica vs Capacidad RUP.
-REPORTE: Dame un GO/NO-GO sustentado.`;
+        document.getElementById('ia_name_btn').innerText = platform.split(' ')[0].toUpperCase();
+
+        const p = `ESTÁS TRABAJANDO DESDE LA PLATAFORMA: ${platform.toUpperCase()}.
+MODALIDAD DE DOCUMENTO: PDF EN FORMATO ${format}.
+
+ACTÚA COMO AUDITOR SENIOR DE CONTRATACIÓN ESTATAL (SIEL PRO 7.1).
+ENTIDAD: ${entidad}.
+CONTEXTO FINANCIERO: Neto Proyectado ${neto} | Liquidez RUP ${liq}.
+EXPERIENCIA REPORTADA: ${exp}.
+
+INSTRUCCIONES DE AUDITORÍA:
+1. IDENTIFICA TRAMPAS/PROCESOS AMARRADOS: Busca si hay requisitos de experiencia o Códigos UNSPSC diseñados para un solo proponente.
+2. ANALIZA PONDERABLES: Detalla puntajes por industria nacional, Mipymes, apoyo a la mujer y personal con discapacidad.
+3. VIABILIDAD TÉCNICA: Cruza mi experiencia (${exp}) vs lo exigido en el pliego.
+4. RIESGOS CONTRACTUALES: Detecta multas, sanciones y tiempos de entrega irreales.
+
+ENTREGA: Un informe ejecutivo GO / NO-GO sustentado técnicamente.`;
+
         document.getElementById('prompt_box').innerText = p;
     }
 
@@ -323,43 +360,38 @@ REPORTE: Dame un GO/NO-GO sustentado.`;
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
         
-        // Cabecera Briced Edition
+        // Estética SIEL
         doc.setFillColor(12, 68, 124);
         doc.rect(0, 0, 210, 40, 'F');
         doc.setTextColor(255, 255, 255);
         doc.setFontSize(22);
         doc.text("INFORME DE VIABILIDAD SIEL PRO 7.1", 20, 25);
         doc.setFontSize(10);
-        doc.text("Briced - Líder de Procesos Administrativos | Análisis Estratégico", 20, 35);
+        doc.text("Briced - Líder de Procesos Administrativos | Auditoría Técnica", 20, 35);
         
-        // Datos del Proceso
         doc.setTextColor(0, 0, 0);
         doc.setFontSize(12);
         doc.text(`Proponente: ${document.getElementById('p_nombre').value}`, 20, 55);
-        doc.text(`Entidad/Proceso: ${document.getElementById('r_nombre').value || 'No definido'}`, 20, 65);
+        doc.text(`Entidad: ${document.getElementById('r_nombre').value || 'No Definida'}`, 20, 65);
         
-        // Tabla de Resultados
         doc.autoTable({
             startY: 75,
-            head: [['Concepto', 'Valor']],
+            head: [['Indicador', 'Valor Actual', 'Estado']],
             body: [
-                ['Liquidez (RUP)', document.getElementById('ex_liq').innerText],
-                ['Experiencia Reportada', document.getElementById('ex_exp').innerText],
-                ['Base Presupuesto', document.getElementById('res_base').innerText],
-                ['IVA Proyectado', document.getElementById('res_iva').innerText],
-                ['Neto Proyectado a Caja', document.getElementById('res_neto').innerText],
+                ['Liquidez RUP', document.getElementById('res_liq').innerText, (parseFloat(document.getElementById('res_liq').innerText) >= 1 ? 'CUMPLE' : 'REVISAR')],
+                ['Experiencia Sector', document.getElementById('ex_exp').innerText, 'A VALIDAR'],
+                ['Base Contrato', document.getElementById('res_base').innerText, 'OFICIAL'],
+                ['Flujo Neto (Caja)', document.getElementById('res_neto').innerText, 'UTILIDAD']
             ],
             theme: 'striped',
             headStyles: { fillColor: [33, 115, 70] }
         });
         
-        // Salvedad Legal en PDF
         doc.setFontSize(8);
         doc.setTextColor(150, 0, 0);
-        const legal = "SALVEDAD: Este informe es una proyeccion analitica basada en datos suministrados. No constituye una verdad absoluta ni garantia de adjudicacion.";
-        doc.text(legal, 20, doc.lastAutoTable.finalY + 20, { maxWidth: 170 });
+        doc.text("SALVEDAD: Este informe es una proyeccion analitica. La responsabilidad final de participacion es del usuario.", 20, doc.lastAutoTable.finalY + 20, { maxWidth: 170 });
         
-        doc.save(`SIEL_Reporte_${document.getElementById('p_nombre').value}.pdf`);
+        doc.save(`SIEL_Auditoria_${document.getElementById('p_nombre').value}.pdf`);
     }
 
     function addRadar() {
@@ -370,6 +402,8 @@ REPORTE: Dame un GO/NO-GO sustentado.`;
         div.innerHTML = `<b>${nom}</b> - $${val.toLocaleString()}`;
         document.getElementById('radar_list').prepend(div);
     }
+
+    window.onload = () => { calcAll(); updatePrompt(); };
 </script>
 </body>
 </html>
