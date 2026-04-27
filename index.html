@@ -3,37 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIEL PRO 7.0 - ESTRUCTURA SENIOR</title>
+    <title>SIEL PRO 7.0 MASTER - CONSULTORÍA SENIOR</title>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    
     <style>
         :root { --blue: #0C447C; --green: #1D9E75; --red: #e11d48; --gold: #b45309; --dark: #1e293b; --slate: #f8fafc; }
         body { background-color: #f1f5f9; font-family: 'Segoe UI', system-ui, sans-serif; margin: 0; padding: 15px; color: var(--dark); font-size: 14px; }
         .container { max-width: 1400px; margin: 0 auto; }
-        
         header { background: var(--blue); color: white; padding: 15px 25px; border-radius: 15px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        
         nav { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; margin-bottom: 20px; background: white; padding: 10px; border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         .btn-nav { padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; background: #e2e8f0; color: #475569; transition: 0.3s; font-size: 11px; text-transform: uppercase; }
         .btn-nav.active { background: var(--blue); color: white; }
         .btn-veredicto { background: #facc15 !important; color: #854d0e !important; border: 1px solid #eab308; }
-
         .card { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); margin-bottom: 20px; display: none; border: 1px solid #e2e8f0; }
         .card.active { display: block; animation: fadeIn 0.3s; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
         .section-title { border-left: 4px solid var(--blue); padding-left: 10px; margin-bottom: 15px; color: var(--blue); font-weight: 800; text-transform: uppercase; font-size: 14px; }
-        
         label { font-weight: 700; font-size: 12px; display: block; margin-top: 12px; color: #475569; }
         input, select, textarea { width: 100%; padding: 10px; margin: 5px 0; border-radius: 8px; border: 1px solid #cbd5e1; background: var(--slate); font-size: 13px; }
-        
         .rut-box { background: #f1f5f9; padding: 15px; border-radius: 12px; border: 1px solid #cbd5e1; }
         .check-item { display: flex; align-items: center; gap: 8px; font-size: 12px; margin-bottom: 5px; }
         .check-item input { width: auto; margin: 0; }
-
-        .prompt-box { background: #1e293b; color: #38bdf8; padding: 20px; border-radius: 12px; font-family: 'Courier New', monospace; font-size: 12px; white-space: pre-wrap; border: 1px solid #334155; max-height: 300px; overflow-y: auto; }
-        
+        .prompt-box { background: #1e293b; color: #38bdf8; padding: 20px; border-radius: 12px; font-family: 'Courier New', monospace; font-size: 12px; white-space: pre-wrap; border: 1px solid #334155; max-height: 250px; overflow-y: auto; }
         .btn-external { background: #e0f2fe; color: #0369a1; padding: 8px; border-radius: 6px; text-decoration: none; font-size: 11px; font-weight: bold; display: inline-block; margin-top: 5px; border: 1px solid #bae6fd; }
-        
         .resumen-fiscal { background: var(--dark); color: white; padding: 25px; border-radius: 15px; border-left: 6px solid var(--green); }
         .neto-big { font-size: 32px; color: var(--green); font-weight: 900; margin: 10px 0; }
     </style>
@@ -42,13 +37,8 @@
 
 <div class="container">
     <header>
-        <div>
-            <h1 style="margin:0; font-size: 20px;">SIEL PRO 7.0 MASTER</h1>
-            <small style="opacity:0.8;">Consultoría de Procesos de Contratación - Colombia</small>
-        </div>
-        <div style="text-align:right">
-            <span style="background:#facc15; color:#000; padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: bold;">UVT 2026: $52.374</span>
-        </div>
+        <div><h1 style="margin:0; font-size: 20px;">SIEL PRO 7.0 MASTER</h1><small style="opacity:0.8;">Consultoría de Procesos de Contratación - Colombia</small></div>
+        <span style="background:#facc15; color:#000; padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: bold;">UVT 2026: $52.374</span>
     </header>
 
     <nav>
@@ -62,135 +52,86 @@
         <div class="grid">
             <div>
                 <div class="section-title">Información Básica</div>
+                <label>Nombre de la Empresa</label><input type="text" id="e_nombre" value="Mi Empresa SAS">
                 <label>Tipo de Empresa / Rol</label>
-                <select id="e_rol">
-                    <option>Contratista de Obra/Suministro</option>
-                    <option>Interventoría Técnica</option>
-                    <option>Consultoría Estudios y Diseños</option>
-                </select>
-                <label>Naturaleza Jurídica</label>
-                <select id="e_nat">
-                    <option>Persona Jurídica (Empresa)</option>
-                    <option>Persona Natural</option>
-                </select>
-                <label>Códigos UNSPSC</label>
-                <input type="text" id="e_unspsc" placeholder="Ej: 72101500, 81101500">
-                <a href="https://www.colombiacompra.gov.co/secop/consulta-codigo-unspsc" target="_blank" class="btn-external">🔍 Buscar Códigos en Colombia Compra</a>
+                <select id="e_rol"><option>Contratista</option><option>Interventoría</option><option>Consultoría</option></select>
+                <label>Códigos UNSPSC</label><input type="text" id="e_unspsc" placeholder="72101500, 81101500">
+                <a href="https://www.colombiacompra.gov.co/secop/consulta-codigo-unspsc" target="_blank" class="btn-external">🔍 Buscar Códigos</a>
             </div>
             <div>
-                <div class="section-title">Estructura Proponente</div>
-                <label>Modalidad de Participación</label>
-                <select id="e_mod" onchange="toggleConsorcio()">
-                    <option value="Sola">Empresa Individual (Sola)</option>
-                    <option value="Consorcio">Consorcio</option>
-                    <option value="UT">Unión Temporal (UT)</option>
-                </select>
-                <div id="box-consorcio" style="display:none; margin-top:10px; background:#f8fafc; padding:15px; border-radius:10px; border:1px dashed #cbd5e1;">
-                    <label>% Participación Mía</label>
-                    <input type="number" id="e_part" value="100">
-                    <label>Aportes Técnicos (Experiencia/Personal)</label>
-                    <textarea id="e_aportes" placeholder="Describa qué aporta cada integrante..."></textarea>
+                <div class="section-title">Estructura y Modalidad</div>
+                <select id="e_mod" onchange="toggleConsorcio()"><option value="Sola">Empresa Individual</option><option value="UT">Unión Temporal / Consorcio</option></select>
+                <div id="box-consorcio" style="display:none; margin-top:10px;">
+                    <label>% Participación</label><input type="number" id="e_part" value="100">
+                    <label>Aportes Técnicos</label><textarea id="e_aportes" placeholder="Personal, experiencia..."></textarea>
                 </div>
             </div>
             <div>
-                <div class="section-title">Habilitantes Financieros</div>
-                <label>Capital de Trabajo ($)</label><input type="number" id="e_ct" value="90000000">
+                <div class="section-title">Habilitantes</div>
+                <label>Capital de Trabajo</label><input type="number" id="e_ct" value="90000000">
                 <label>Liquidez</label><input type="number" id="e_liq" value="1.5">
-                <label>Patrimonio ($)</label><input type="number" id="e_pat">
             </div>
         </div>
     </div>
 
     <div id="tab-ia" class="card">
-        <div class="section-title">Configuración de Análisis Inteligente</div>
+        <div class="section-title">Configuración OCR y Análisis</div>
         <div class="grid">
             <div>
-                <label>Estado del Documento (PDF)</label>
-                <select id="ia_pdf_tipo">
-                    <option value="Texto">PDF Digital (Texto seleccionable)</option>
-                    <option value="Imagen">PDF Escaneado / Imagen (Requiere OCR)</option>
-                </select>
-                <label>IA Recomendada</label>
-                <select id="ia_motor">
-                    <option>Gemini 1.5 Pro (Google) - Recomendado PDF Largo</option>
-                    <option>ChatGPT-4o (OpenAI) - Análisis de Cláusulas</option>
-                </select>
+                <label>Estado del PDF</label>
+                <select id="ia_pdf_tipo"><option value="Texto">Digital (Texto)</option><option value="Imagen">Escaneado (OCR)</option></select>
             </div>
-            <div style="background:#fff7ed; padding:15px; border-radius:12px; border:1px solid #ffedd5;">
-                <p style="margin:0; font-size:12px; color:#9a3412;"><strong>Nota OCR:</strong> Si seleccionas "Imagen", el prompt incluirá instrucciones para que la IA realice un escaneo profundo de caracteres antes del análisis jurídico.</p>
+            <div style="background:#fff7ed; padding:15px; border-radius:12px;">
+                <small>IA Recomendada: Gemini 1.5 Pro o ChatGPT-4o</small>
             </div>
         </div>
-        <label>PROMPT MAESTRO SENIOR (Copiar y pegar en la IA)</label>
-        <div class="prompt-box" id="promptDisplay">Cargando lógica de consultoría...</div>
-        <button class="btn-nav" style="background:var(--blue); color:white; width:100%; margin-top:10px;" onclick="copyPrompt()">📋 COPIAR PROMPT AL PORTAPAPELES</button>
+        <label>PROMPT MAESTRO</label>
+        <div class="prompt-box" id="promptDisplay">Cargando...</div>
+        <button class="btn-nav" style="background:var(--blue); color:white; width:100%; margin-top:10px;" onclick="copyPrompt()">📋 COPIAR PROMPT</button>
     </div>
 
     <div id="tab-retencol" class="card">
         <div class="grid">
             <div class="rut-box">
-                <div class="section-title">Responsabilidades RUT</div>
-                <div class="check-item"><input type="checkbox" id="rut_05" checked> 05. Renta Régimen Ordinario</div>
-                <div class="check-item"><input type="checkbox" id="rut_07" checked> 07. Retención en la Fuente</div>
+                <div class="section-title">RUT y Responsabilidades</div>
+                <div class="check-item"><input type="checkbox" id="rut_05" checked> 05. Renta Ordinario</div>
                 <div class="check-item"><input type="checkbox" id="rut_47"> 47. Régimen Simple (RST)</div>
-                <div class="check-item"><input type="checkbox" id="rut_48" checked> 48. Responsable de IVA</div>
-                <div class="check-item"><input type="checkbox" id="rut_autorret"> Autorretenedor de IVA (15%)</div>
-                
+                <div class="check-item"><input type="checkbox" id="rut_48" checked> 48. Responsable IVA</div>
+                <div class="check-item"><input type="checkbox" id="rut_aut" onchange="calcTotal()"> Autorretenedor IVA 15%</div>
                 <hr>
-                <label>Tipo de Producto/Servicio</label>
-                <select id="r_iva_tipo">
-                    <option value="19">Gravado (19%)</option>
-                    <option value="5">Gravado (5%)</option>
-                    <option value="0">Exento (0%)</option>
-                    <option value="excluido">Excluido de IVA</option>
-                </select>
+                <label>IVA Tipo</label>
+                <select id="r_iva_tipo" onchange="calcTotal()"><option value="0.19">Gravado (19%)</option><option value="0">Exento / Excluido</option></select>
             </div>
-
             <div>
-                <div class="section-title">Liquidación Tributaria</div>
-                <label>Valor Base Contrato</label>
-                <input type="number" id="r_base" oninput="calcTotal()">
-                
-                <label>Municipio (ICA)</label>
-                <select id="r_mun" onchange="calcTotal()">
-                    <option value="11.04">Bogotá - Consultoría/Obra (11.04)</option>
-                    <option value="9.66">Bogotá - Servicios (9.66)</option>
-                    <option value="7.0">Medellín (7.0)</option>
-                    <option value="10.0">Cali (10.0)</option>
-                    <option value="custom">Otro (Ver Estatutón)</option>
-                </select>
-                <a href="https://sites.google.com/view/estatuton-2024/inicio" target="_blank" class="btn-external">📕 Consultar Tarifa en ESTATUTÓN</a>
-
-                <label><input type="checkbox" id="r_aiu_check" onchange="calcTotal()"> Aplica AIU (Obra/Aseo/Vig)</label>
-                <div id="aiu-fields" style="display:none">
-                    <input type="number" id="r_p_u" value="3" placeholder="% Utilidad" oninput="calcTotal()">
-                </div>
+                <div class="section-title">Liquidación</div>
+                <label>Valor Base</label><input type="number" id="r_base" value="10000000" oninput="calcTotal()">
+                <label>Municipio ICA</label>
+                <select id="r_mun" onchange="calcTotal()"><option value="11.04">Bogotá (11.04)</option><option value="7">Medellín (7.0)</option></select>
+                <a href="https://sites.google.com/view/estatuton-2024/inicio" target="_blank" class="btn-external">📕 Estatutón</a>
+                <label><input type="checkbox" id="r_aiu_check" onchange="calcTotal()"> Aplicar AIU</label>
             </div>
-
             <div class="resumen-fiscal">
-                <div class="section-title" style="color:white; border-color:var(--green)">Resultado de Caja</div>
+                <div class="section-title" style="color:white; border-color:var(--green)">Caja Neta</div>
                 <p>Retención Renta: <span id="out_rf">$0</span></p>
                 <p>Retención ICA: <span id="out_ica">$0</span></p>
                 <p>IVA Neto: <span id="out_iva">$0</span></p>
-                <hr>
                 <div class="neto-big" id="out_neto">$0</div>
-                <small>NETO A RECIBIR ESTIMADO</small>
             </div>
         </div>
     </div>
 
     <div id="tab-veredicto" class="card">
-        <h2 style="text-align:center; color:var(--blue);">VALIDACIÓN DE RESULTADOS Y VEREDICTO</h2>
         <div class="grid">
             <div style="background:var(--slate); padding:20px; border-radius:15px; border:2px solid #e2e8f0;">
-                <div class="section-title">Insumo de la IA</div>
-                <textarea id="ia_feedback" rows="10" placeholder="Pegue aquí el análisis GO/NO-GO de la IA para consolidar el informe..."></textarea>
+                <div class="section-title">Pegar Resultado IA</div>
+                <textarea id="ia_feedback" rows="10" placeholder="Pegue aquí el análisis GO/NO-GO de Gemini/ChatGPT..."></textarea>
             </div>
             <div style="text-align:center; display:flex; flex-direction:column; justify-content:center; gap:15px;">
-                <button class="btn-nav" style="background:var(--green); color:white; height:80px; font-size:16px;" onclick="alert('Generando Informe PDF Senior...')">
-                    📄 DESCARGAR INFORME PDF<br><small>Veredicto con Riesgos y Trampas</small>
+                <button class="btn-nav" style="background:var(--green); color:white; height:80px; font-size:14px;" onclick="descargarPDF()">
+                    📄 DESCARGAR INFORME PDF<br><small>Veredicto GO / NO-GO</small>
                 </button>
-                <button class="btn-nav" style="background:var(--blue); color:white; height:80px; font-size:16px;" onclick="alert('Generando Matriz Excel...')">
-                    📊 DESCARGAR DASHBOARD EXCEL<br><small>Sábana de Cálculos Fiscales</small>
+                <button class="btn-nav" style="background:var(--blue); color:white; height:80px; font-size:14px;" onclick="descargarExcel()">
+                    📊 DESCARGAR DASHBOARD EXCEL<br><small>Cálculos Fiscales Completos</small>
                 </button>
             </div>
         </div>
@@ -207,56 +148,60 @@
     }
 
     function toggleConsorcio() {
-        const val = document.getElementById('e_mod').value;
-        document.getElementById('box-consorcio').style.display = (val !== 'Sola') ? 'block' : 'none';
-        updatePrompt();
+        document.getElementById('box-consorcio').style.display = (document.getElementById('e_mod').value !== 'Sola') ? 'block' : 'none';
     }
 
     function calcTotal() {
         const base = parseFloat(document.getElementById('r_base').value) || 0;
-        const usaAIU = document.getElementById('r_aiu_check').checked;
-        const pU = parseFloat(document.getElementById('r_p_u').value) || 0;
-        const tIca = parseFloat(document.getElementById('r_mun').value) || 0;
-        const isRST = document.getElementById('rut_47').checked;
+        const icaT = parseFloat(document.getElementById('r_mun').value) || 0;
+        const rf = document.getElementById('rut_47').checked ? 0 : base * 0.04;
+        const ica = (base * icaT) / 1000;
+        const ivaT = parseFloat(document.getElementById('r_iva_tipo').value) || 0;
+        const aut = document.getElementById('rut_aut').checked ? (base * ivaT * 0.15) : 0;
         
-        document.getElementById('aiu-fields').style.display = usaAIU ? 'block' : 'none';
-
-        // Lógica de Retenciones
-        let rf = 0;
-        if(!isRST) { // Si no es Régimen Simple, aplica retención
-            const baseRF = usaAIU ? (base * (pU/100)) : base;
-            rf = baseRF * 0.04; // Simplificado a Servicios 4%
-        }
-
-        const ica = (base * tIca) / 1000;
-        const neto = base - rf - ica;
-
         document.getElementById('out_rf').innerText = "$" + Math.round(rf).toLocaleString();
         document.getElementById('out_ica').innerText = "$" + Math.round(ica).toLocaleString();
-        document.getElementById('out_neto').innerText = "$" + Math.round(neto).toLocaleString();
+        document.getElementById('out_iva').innerText = "$" + Math.round(aut).toLocaleString();
+        document.getElementById('out_neto').innerText = "$" + Math.round(base - rf - ica).toLocaleString();
     }
 
     function updatePrompt() {
-        const ocr = document.getElementById('ia_pdf_tipo').value;
-        const mod = document.getElementById('e_mod').value;
-        const ct = document.getElementById('e_ct').value;
-        
-        const prompt = `Actúa como mi Consultora Senior de Procesos en Colombia. 
-ESTADO DOCUMENTO: ${ocr} (Aplica OCR si es imagen).
-ESTRUCTURA: Participo como ${mod} con Capital Trabajo de $${ct}.
-
-TAREA: Analiza el pliego adjunto y entrega:
-1. VALIDACIÓN GO/NO GO: Estricta y objetiva.
-2. DETECCIÓN DE TRAMPAS: Busca amarres en UNSPSC, experiencia sastre, o cláusulas abusivas de multas.
-3. RIESGOS CONTRACTUALES: Identifica mañas que sugieran que el contratista ya fue seleccionado.
-4. ALERTAS: Si el proceso es solo por cumplimiento de requisito legal pero ya tiene dueño.`;
-
+        const prompt = `Actúa como Consultora Senior. Analiza el pliego adjunto (${document.getElementById('ia_pdf_tipo').value}). Empresa: ${document.getElementById('e_nombre').value}, CT: ${document.getElementById('e_ct').value}. Dame veredicto GO/NO-GO y busca trampas en cláusulas.`;
         document.getElementById('promptDisplay').innerText = prompt;
     }
 
+    function descargarPDF() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        doc.setFontSize(16); doc.setTextColor(12, 68, 124);
+        doc.text("SIEL PRO - INFORME VEREDICTO SENIOR", 20, 20);
+        doc.setFontSize(12); doc.setTextColor(0);
+        doc.text(`Empresa: ${document.getElementById('e_nombre').value}`, 20, 35);
+        doc.text(`Capital de Trabajo: $${document.getElementById('e_ct').value}`, 20, 42);
+        doc.text("--------------------------------------------------", 20, 50);
+        const splitText = doc.splitTextToSize(document.getElementById('ia_feedback').value || "Sin análisis.", 170);
+        doc.text(splitText, 20, 60);
+        doc.save("SIEL_Veredicto.pdf");
+    }
+
+    function descargarExcel() {
+        const data = [
+            ["SIEL PRO - REPORTE FISCAL"],
+            ["Empresa", document.getElementById('e_nombre').value],
+            ["Base Contrato", document.getElementById('r_base').value],
+            ["Retención Fuente", document.getElementById('out_rf').innerText],
+            ["Retención ICA", document.getElementById('out_ica').innerText],
+            ["Neto Proyectado", document.getElementById('out_neto').innerText]
+        ];
+        const ws = XLSX.utils.aoa_to_sheet(data);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Fiscal");
+        XLSX.writeFile(wb, "SIEL_Dashboard.xlsx");
+    }
+
     function copyPrompt() {
-        const text = document.getElementById('promptDisplay').innerText;
-        navigator.clipboard.writeText(text).then(() => alert("✅ Prompt copiado para Gemini/ChatGPT."));
+        navigator.clipboard.writeText(document.getElementById('promptDisplay').innerText);
+        alert("Prompt copiado.");
     }
 
     window.onload = () => { updatePrompt(); calcTotal(); };
