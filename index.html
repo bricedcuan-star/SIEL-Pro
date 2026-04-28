@@ -3,346 +3,349 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIEL PRO 17.0 NEXUS | Briced Consulting</title>
+    <title>SIEL PRO 18.0 ULTIMATE | Briced Consulting</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --p: #0C447C; --g: #D4AF37; --d: #0f172a; --w: #ffffff; --s: #10b981; --r: #e11d48; }
-        body { font-family: 'Inter', sans-serif; margin: 0; background: #f1f5f9; color: var(--d); }
+        :root { --p: #0C447C; --g: #D4AF37; --d: #0f172a; --w: #ffffff; --r: #e11d48; --s: #10b981; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #f4f7f9; color: var(--d); }
         
-        /* HEADER & BRANDING */
-        header { background: var(--p); color: var(--w); padding: 15px 30px; border-bottom: 4px solid var(--g); display: flex; justify-content: space-between; align-items: center; }
-        .brand h1 { margin: 0; font-size: 24px; }
-        .social-nav a { color: var(--g); margin-left: 15px; text-decoration: none; font-weight: bold; font-size: 13px; }
+        /* HEADER & RADAR */
+        header { background: var(--p); color: var(--w); padding: 20px 30px; border-bottom: 4px solid var(--g); display: flex; justify-content: space-between; align-items: center; }
+        .radar-bar { background: var(--d); padding: 12px; display: flex; justify-content: center; gap: 15px; border-bottom: 1px solid var(--g); }
+        .btn-radar { background: #1e293b; color: var(--w); padding: 8px 18px; border-radius: 5px; font-size: 12px; text-decoration: none; border: 1px solid var(--g); transition: 0.3s; }
+        .btn-radar:hover { background: var(--g); color: var(--d); }
 
-        /* PLATAFORMAS RADAR */
-        .radar-bar { background: var(--d); padding: 10px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
-        .btn-radar { background: #334155; color: white; padding: 8px 15px; border-radius: 5px; font-size: 11px; text-decoration: none; border: 1px solid var(--g); }
-
-        /* NAV */
-        nav { background: white; display: flex; border-bottom: 1px solid #ddd; position: sticky; top: 0; z-index: 1000; overflow-x: auto; }
-        .tab { padding: 15px 20px; cursor: pointer; font-weight: bold; color: #64748b; border-bottom: 3px solid transparent; white-space: nowrap; }
+        /* NAVEGACIÓN */
+        nav { background: var(--w); display: flex; border-bottom: 1px solid #ddd; position: sticky; top: 0; z-index: 1000; overflow-x: auto; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .tab { padding: 18px 25px; cursor: pointer; font-weight: bold; color: #64748b; border-bottom: 4px solid transparent; white-space: nowrap; transition: 0.3s; }
         .tab.active { color: var(--p); border-bottom-color: var(--p); background: #f8fafc; }
 
-        .content { padding: 25px; max-width: 1400px; margin: 0 auto; }
-        .card { background: white; padding: 25px; border-radius: 12px; display: none; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border: 1px solid #e2e8f0; }
-        .card.active { display: block; animation: fadeIn 0.3s; }
+        .content { padding: 30px; max-width: 1500px; margin: 0 auto; }
+        .card { background: var(--w); padding: 30px; border-radius: 15px; display: none; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; }
+        .card.active { display: block; animation: fadeIn 0.4s ease; }
 
-        /* FORMS */
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        /* FORMULARIOS */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; }
         .f-group { margin-bottom: 15px; }
-        label { display: block; font-weight: 700; margin-bottom: 5px; font-size: 12px; color: var(--p); text-transform: uppercase; }
-        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; }
-        
-        /* RETENCOL SPECIFIC */
-        .rete-summary { background: var(--p); color: white; padding: 20px; border-radius: 10px; border-left: 10px solid var(--g); }
-        .alerta-minima { background: #fee2e2; color: #b91c1c; padding: 10px; border-radius: 5px; font-weight: bold; display: none; margin: 10px 0; }
+        label { display: block; font-weight: 800; margin-bottom: 8px; font-size: 11px; color: var(--p); text-transform: uppercase; letter-spacing: 0.5px; }
+        input, select, textarea { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; background: #fcfcfc; }
+        input:focus { border-color: var(--g); outline: none; background: #fff; }
+
+        /* RETENCOL & AIU */
+        .rete-panel { background: #f8fafc; border: 2px solid var(--p); border-radius: 12px; padding: 25px; }
+        .summary-box { background: var(--p); color: var(--w); padding: 25px; border-radius: 12px; border-right: 12px solid var(--g); }
+        .badge { display: inline-block; padding: 4px 10px; border-radius: 4px; font-size: 10px; font-weight: bold; margin-bottom: 10px; }
+        .badge-req { background: var(--r); color: white; }
 
         /* GANTT */
-        .gantt-v { border: 1px solid #ddd; border-radius: 8px; padding: 15px; }
-        .g-row { display: grid; grid-template-columns: 150px 1fr; margin-bottom: 10px; align-items: center; }
-        .g-bar-c { background: #e2e8f0; height: 20px; border-radius: 10px; position: relative; }
-        .g-bar { height: 100%; border-radius: 10px; display: flex; align-items: center; padding-left: 10px; font-size: 10px; color: white; }
+        .gantt-container { border: 1px solid #e2e8f0; border-radius: 10px; padding: 20px; background: #fff; }
+        .gantt-row { display: grid; grid-template-columns: 180px 1fr; margin-bottom: 15px; align-items: center; }
+        .gantt-bar-bg { background: #f1f5f9; height: 25px; border-radius: 15px; position: relative; overflow: hidden; }
+        .gantt-bar-fill { height: 100%; border-radius: 15px; display: flex; align-items: center; padding-left: 15px; color: white; font-size: 11px; font-weight: bold; }
 
-        footer { text-align: center; padding: 30px; background: white; margin-top: 50px; font-size: 12px; border-top: 1px solid #ddd; }
+        /* BOTONES ACCIÓN */
+        .btn-main { background: var(--p); color: white; padding: 15px 30px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .btn-main:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(12,68,124,0.3); }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        footer { text-align: center; padding: 40px; background: var(--w); border-top: 1px solid #e2e8f0; font-size: 13px; color: #64748b; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
 <header>
     <div class="brand">
-        <h1>SIEL PRO <span style="color:var(--g)">17.0 NEXUS</span></h1>
-        <small>by Briced Consulting</small>
+        <h1 style="margin:0;">SIEL PRO <span style="color:var(--g)">18.0 ULTIMATE</span></h1>
+        <small style="opacity:0.8;">Briced Consulting | Consultoría Estratégica Legal</small>
     </div>
-    <div class="social-nav">
-        <a href="https://wa.me/573123456789" target="_blank"><i class="fab fa-whatsapp"></i> WHATSAPP</a>
-        <a href="https://linkedin.com/in/bricedconsulting" target="_blank"><i class="fab fa-linkedin"></i> LINKEDIN</a>
-        <a href="https://sites.google.com/view/estatuton-2024/inicio" target="_blank" style="color:var(--w); background:var(--g); padding:5px 10px; border-radius:4px;">ESTATUTÓN</a>
+    <div style="text-align:right;">
+        <a href="https://wa.me/573000000000" target="_blank" style="color:var(--g); text-decoration:none; font-weight:bold; margin-right:20px;"><i class="fab fa-whatsapp"></i> ASISTENCIA</a>
+        <a href="https://linkedin.com/" target="_blank" style="color:var(--w); text-decoration:none;"><i class="fab fa-linkedin"></i> MI PERFIL</a>
     </div>
 </header>
 
 <div class="radar-bar">
-    <a href="https://www.contratos.gov.co" target="_blank" class="btn-radar">SECOP I</a>
-    <a href="https://community.secop.gov.co" target="_blank" class="btn-radar">SECOP II</a>
-    <a href="#" class="btn-radar">BOGOTÁ P.</a>
-    <a href="#" class="btn-radar">PROP. HORIZONTAL</a>
+    <a href="https://www.contratos.gov.co/consultas/inicioConsulta.do" target="_blank" class="btn-radar">SECOP I</a>
+    <a href="https://community.secop.gov.co/STS/Default.aspx" target="_blank" class="btn-radar">SECOP II</a>
+    <a href="https://www.contratacionbogota.gov.co/" target="_blank" class="btn-radar">BOGOTÁ P.</a>
+    <a href="https://www.propiedadhorizontal.com" target="_blank" class="btn-radar">PROP. HORIZONTAL</a>
 </div>
 
-<nav id="mainNav">
-    <div class="tab active" onclick="sh('config')">1. CONFIG. PROCESO</div>
-    <div class="tab" onclick="sh('retencol')">2. RETENCOL & AIU</div>
-    <div class="tab" onclick="sh('rup')">3. RUP & CAPACIDAD K</div>
-    <div class="tab" onclick="sh('mercado')">4. MONITOR PRECIOS</div>
-    <div class="tab" onclick="sh('ia')">5. CEREBRO IA</div>
-    <div class="tab" onclick="sh('gantt')">6. GANTT & EJECUCIÓN</div>
+<nav>
+    <div class="tab active" onclick="showTab(event, 'radar')">RADAR & GEO</div>
+    <div class="tab" onclick="showTab(event, 'retencol')">RETENCOL & IMPUESTOS</div>
+    <div class="tab" onclick="showTab(event, 'rup')">RUP, K & CONSORCIOS</div>
+    <div class="tab" onclick="showTab(event, 'cert')">CUMPLIMIENTO & CERTIFICADOS</div>
+    <div class="tab" onclick="showTab(event, 'ia')">CEREBRO IA</div>
+    <div class="tab" onclick="showTab(event, 'gantt')">GANTT & EJECUCIÓN</div>
 </nav>
 
 <div class="content">
-    
-    <div id="config" class="card active">
+
+    <div id="radar" class="card active">
         <div class="grid">
             <div class="f-group">
-                <label>Tipo de Proponente</label>
-                <select id="t_prop" onchange="renderRup()">
-                    <option value="unico">Proponente Único</option>
-                    <option value="ut">Unión Temporal (UT)</option>
-                    <option value="consorcio">Consorcio</option>
-                </select>
+                <label>Municipio de Ejecución (Sugerencia de Estampillas)</label>
+                <input type="text" id="mun_input" placeholder="Ej: Neiva, Huila" oninput="geoAnalyze()">
+                <div id="estampilla_alert" style="margin-top:15px;"></div>
             </div>
             <div class="f-group">
-                <label>Especialidad</label>
-                <select id="t_esp">
-                    <option value="obra">Contratista de Obra</option>
-                    <option value="inter">Interventoría</option>
-                    <option value="cons">Consultoría</option>
-                </select>
-            </div>
-            <div class="f-group">
-                <label>Tipo de Proceso</label>
-                <select id="t_proc">
-                    <option value="lp">Licitación Pública</option>
-                    <option value="sam">Selección Abreviada</option>
-                    <option value="mc">Mínima Cuantía</option>
-                    <option value="pri">Privado</option>
-                </select>
-            </div>
-            <div class="f-group">
-                <label>Margen Tolerancia Precios (%)</label>
-                <input type="number" id="m_tol" value="15">
+                <label>Margen de Tolerancia Precios (%)</label>
+                <input type="number" id="market_tol" value="15" oninput="marketAnalyze()">
+                <label style="margin-top:15px;">Presupuesto Oficial vs Mercado</label>
+                <div style="background:#f1f5f9; padding:15px; border-radius:10px; border:1px solid #ddd;">
+                    <div id="market_bar" style="height:15px; background:#ccc; border-radius:10px; width:100%;"></div>
+                    <small id="market_lbl">Ingrese valores en el Monitor...</small>
+                </div>
             </div>
         </div>
-        <hr>
-        <label>Geo-Localización (Seguridad & Fletes)</label>
-        <input type="text" id="g_loc" placeholder="Municipio, Departamento..." oninput="geo()">
-        <div id="geo_v" style="margin-top:10px;"></div>
     </div>
 
     <div id="retencol" class="card">
         <div class="grid">
-            <div>
-                <label>Buscador Universal RETENCOL 2026</label>
-                <input type="text" id="r_bus" placeholder="Ej: Honorarios, Construcción..." oninput="rFilter()">
-                <select id="r_sel" size="5" style="margin-top:5px;" onchange="rCalc()"></select>
+            <div class="rete-panel">
+                <label>Buscador Universal 2026 (78 Conceptos)</label>
+                <input type="text" id="rete_query" placeholder="Buscar concepto..." oninput="filterRete()">
+                <select id="rete_select" size="6" style="margin-top:10px;" onchange="calculateTaxes()"></select>
                 
-                <div id="r_min" class="alerta-minima">⚠️ MONTO INFERIOR A BASE MÍNIMA</div>
+                <label style="margin-top:15px;">Valor Base del Contrato / Pago</label>
+                <input type="number" id="val_base" value="50000000" oninput="calculateTaxes()">
 
-                <div class="grid" style="margin-top:15px;">
-                    <div class="f-group"><label>Admin %</label><input type="number" id="a_p" value="15" oninput="rCalc()"></div>
-                    <div class="f-group"><label>Imprev %</label><input type="number" id="i_p" value="5" oninput="rCalc()"></div>
-                    <div class="f-group"><label>Util %</label><input type="number" id="u_p" value="10" oninput="rCalc()"></div>
+                <div id="aiu_box" style="display:none; margin-top:20px; padding:15px; background:#fff; border-radius:10px; border:1px solid var(--p);">
+                    <label>Esquema AIU (%)</label>
+                    <div style="display:flex; gap:10px;">
+                        <input type="number" id="aiu_a" value="10" placeholder="A%" oninput="calculateTaxes()">
+                        <input type="number" id="aiu_i" value="5" placeholder="I%" oninput="calculateTaxes()">
+                        <input type="number" id="aiu_u" value="5" placeholder="U%" oninput="calculateTaxes()">
+                    </div>
+                </div>
+
+                <div id="fic_box" style="margin-top:20px;">
+                    <label>Cálculo FIC (Fondo Construcción)</label>
+                    <input type="number" id="fic_workers" placeholder="N° Trabajadores Mensuales" oninput="calculateTaxes()">
+                    <small>Se calcula sobre 0.25 x SMLV x N° Trabajadores</small>
                 </div>
             </div>
-            <div class="rete-summary">
-                <h3>CÉDULA TRIBUTARIA</h3>
-                <div id="r_res">Cargando datos...</div>
-                <hr>
-                <label style="color:var(--g)">Retención ICA Municipio</label>
-                <select id="r_ica" onchange="rCalc()">
-                    <option value="9.66">Bogotá (Servicios) 9.66</option>
-                    <option value="7">Medellín 7.0</option>
-                    <option value="10">Cali 10.0</option>
-                </select>
+
+            <div class="summary-box">
+                <h3 style="margin-top:0; color:var(--g);">CÉDULA TRIBUTARIA SIEL</h3>
+                <div id="tax_res">Seleccione un concepto para ver el desglose...</div>
+                <hr style="border-color:rgba(255,255,255,0.2);">
+                <label style="color:var(--g)">Estatutón Municipal (Consulta)</label>
+                <iframe src="https://sites.google.com/view/estatuton-2024/inicio" style="width:100%; height:150px; border:none; border-radius:8px; background:white;"></iframe>
             </div>
         </div>
     </div>
 
     <div id="rup" class="card">
         <div class="grid">
-            <div id="rup_members"></div>
-            <div>
-                <label>Saldos de Contratos en Ejecución (SCE)</label>
-                <textarea id="rup_sce" placeholder="Nombre Contrato | Saldo Pesos" rows="4" oninput="kCalc()"></textarea>
-                <div class="rete-summary" style="margin-top:20px; background:var(--d);">
-                    <small>CAPACIDAD RESIDUAL (K)</small>
-                    <h2 id="k_v">$ 0</h2>
-                    <hr>
-                    <label style="color:var(--g)">Validación Experiencia SMMLV</label>
-                    <input type="number" id="e_req" placeholder="Req. Pliego SMMLV" oninput="kCalc()">
-                    <div id="e_v" style="margin-top:10px; font-weight:bold;"></div>
+            <div class="f-group">
+                <label>Estructura del Proponente</label>
+                <select id="prop_type" onchange="renderProp()">
+                    <option value="un">Proponente Único</option>
+                    <option value="ut">Unión Temporal (UT)</option>
+                    <option value="con">Consorcio</option>
+                </select>
+                <div id="prop_container" style="margin-top:20px;"></div>
+            </div>
+            <div class="f-group">
+                <div class="summary-box" style="background:var(--d);">
+                    <label style="color:var(--g)">Capacidad Residual (K) Final</label>
+                    <h2 id="k_final">$ 0</h2>
+                    <label style="color:var(--g); margin-top:20px;">Experiencia Requerida (SMMLV)</label>
+                    <input type="number" id="exp_req" value="500" oninput="calculateK()">
+                    <div id="exp_status" style="margin-top:15px; font-weight:bold;"></div>
                 </div>
+                <label style="margin-top:20px;">Saldos de Contratos en Ejecución (SCE)</label>
+                <textarea id="sce_list" rows="3" placeholder="Contrato 1: 150.000.000" oninput="calculateK()"></textarea>
             </div>
         </div>
     </div>
 
-    <div id="mercado" class="card">
-        <label>Buscador de Materiales / Servicios (Aprendizaje Activo)</label>
-        <div class="grid" style="margin-bottom:20px;">
-            <input type="text" id="m_item" placeholder="Nombre material...">
-            <input type="number" id="m_val" placeholder="Precio Presupuesto $">
-            <button onclick="mAdd()" style="background:var(--p); color:white; border:none; border-radius:5px;">Analizar</button>
+    <div id="cert" class="card">
+        <h3>Panel de Validación de Requisitos Habilitantes</h3>
+        <div class="grid">
+            <div style="background:#f8fafc; padding:20px; border-radius:12px;">
+                <label>Seguridad y Salud (SST)</label>
+                <div class="f-group"><input type="checkbox"> Curso Alturas (Vigente)</div>
+                <div class="f-group"><input type="checkbox"> Reentrenamiento (Último año)</div>
+                <div class="f-group"><input type="checkbox"> Pago ARL (Tipo de Riesgo IV/V)</div>
+                <label>Certificaciones Entidades</label>
+                <div class="f-group"><input type="checkbox"> COPNIA (Matrícula Vigente)</div>
+                <div class="f-group"><input type="checkbox"> Certificados SENA (Técnicos)</div>
+            </div>
+            <div style="background:#f8fafc; padding:20px; border-radius:12px;">
+                <label>Seguridad Social y Parafiscales</label>
+                <input type="date" id="ss_date">
+                <small>Fecha de última validación de aportes</small>
+                <label style="margin-top:20px;">Vigencia RUP</label>
+                <input type="date" id="rup_date">
+                <div id="alert_vig" style="margin-top:15px; font-weight:bold; color:var(--r);"></div>
+            </div>
         </div>
-        <table id="m_tab" style="width:100%; border-collapse:collapse;">
-            <thead><tr style="background:#f1f5f9; text-align:left;"><th>Item</th><th>Presupuesto</th><th>Mercado (Ref)</th><th>Estado</th></tr></thead>
-            <tbody></tbody>
-        </table>
     </div>
 
     <div id="ia" class="card">
         <div class="grid">
-            <div style="background:#f8fafc; padding:20px; border-radius:10px;">
-                <h3>Prompt Maestro (Copiar)</h3>
-                <code id="ia_p" style="font-size:11px;">Actúa como experto licitador... analiza este pliego bajo los 13 puntos SIEL... busca riesgos en experiencia, multas y plazos...</code>
-                <button onclick="copyP()" style="margin-top:10px; display:block; cursor:pointer;">Copiar Prompt</button>
+            <div style="background:var(--d); color:white; padding:25px; border-radius:12px;">
+                <h4 style="color:var(--g); margin-top:0;">PROMPT MAESTRO SIEL PRO</h4>
+                <p style="font-size:12px; line-height:1.6;">"Actúa como un experto en licitaciones públicas y privadas en Colombia. Analiza el siguiente pliego de condiciones bajo los 13 puntos críticos SIEL: 1. Experiencia técnica habilitante, 2. Capacidad financiera (Liquidez, Endeudamiento), 3. Indicadores Organizacionales, 4. Multas y Sanciones vigentes, 5. Cronograma y Plazos de subsanación, 6. Visita técnica (Obligatoriedad), 7. Factor de calidad vs Precio, 8. Riesgos previsibles, 9. Garantías exigidas, 10. Forma de pago y anticipos, 11. Lugar de ejecución y fletes, 12. Limitación a Mipyme, 13. Vigencia de la oferta. Genera un resumen ejecutivo de riesgos."</p>
+                <button class="btn-main" style="background:var(--g); color:var(--d); width:100%;" onclick="copyPrompt()">COPIAR PROMPT MAESTRO</button>
             </div>
             <div>
-                <label>Resultado Auditoría IA</label>
-                <textarea id="ia_in" rows="10" placeholder="Pegue aquí el análisis de la IA..."></textarea>
-                <div id="ia_ver" style="margin-top:20px; text-align:center; padding:20px; border-radius:10px;"></div>
+                <label>Análisis de Auditoría (Pegue resultado de IA)</label>
+                <textarea id="ia_result" rows="12" placeholder="Pegue aquí el veredicto de su IA favorita..."></textarea>
+                <div id="veredicto_final" style="margin-top:20px; text-align:center; padding:20px; border-radius:12px; border:2px dashed var(--p);">
+                    <h3>VERDICTO FINAL SIEL</h3>
+                    <div id="v_status">ESPERANDO DATOS...</div>
+                </div>
             </div>
         </div>
     </div>
 
     <div id="gantt" class="card">
         <div class="grid">
-            <div>
-                <h3>Cronograma Licitación</h3>
-                <label>Cierre Proceso</label><input type="date" id="g_cie" onchange="gDraw()">
-                <label>Visita Técnica</label><input type="date" id="g_vis" onchange="gDraw()">
-                <label>¿Visita Obligatoria?</label>
-                <select id="g_vob" onchange="gDraw()"><option value="s">SÍ</option><option value="n">NO</option></select>
+            <div class="gantt-container">
+                <h4>Hitos de Licitación</h4>
+                <div class="gantt-row"><span>Cierre de Proceso:</span><div class="gantt-bar-bg"><div class="gantt-bar-fill" style="width:100%; background:var(--r);">CRÍTICO</div></div></div>
+                <div class="gantt-row"><span>Visita Técnica:</span><div class="gantt-bar-bg"><div id="g_vis_bar" class="gantt-bar-fill" style="width:50%; background:var(--g);">PENDIENTE</div></div></div>
             </div>
-            <div>
-                <h3>Programación Ejecución</h3>
-                <label>Fecha Inicio Obra/Servicio</label><input type="date" id="g_ini" onchange="gDraw()">
-                <label>Plazo (Meses)</label><input type="number" id="g_pla" value="6" onchange="gDraw()">
+            <div class="gantt-container">
+                <h4>Fases de Ejecución del Proyecto</h4>
+                <label>Fecha de Acta de Inicio:</label><input type="date" id="p_start" onchange="updateGantt()">
+                <label>Plazo Ejecución (Meses):</label><input type="number" id="p_months" value="6" onchange="updateGantt()">
+                <div id="gantt_render" style="margin-top:20px;"></div>
             </div>
         </div>
-        <div class="gantt-v" id="g_ren" style="margin-top:20px;"></div>
-        <div style="text-align:center; margin-top:30px;">
-            <button onclick="exportXLS()" style="background:#1d6f42; color:white; padding:15px; border:none; border-radius:5px; cursor:pointer;"><i class="fas fa-file-excel"></i> EXPORTAR CALCULADORA VIVA</button>
-            <button onclick="exportPDF()" style="background:var(--r); color:white; padding:15px; border:none; border-radius:5px; cursor:pointer;"><i class="fas fa-file-pdf"></i> INFORME LEGAL</button>
+        <div style="text-align:center; margin-top:40px; display:flex; justify-content:center; gap:20px;">
+            <button class="btn-main" onclick="exportXLS()"><i class="fas fa-file-excel"></i> EXCEL CALCULADORA VIVA</button>
+            <button class="btn-main" style="background:var(--r);" onclick="exportPDF()"><i class="fas fa-file-pdf"></i> PDF INFORME EJECUTIVO</button>
         </div>
     </div>
 
 </div>
 
 <footer>
-    <p>SIEL PRO 17.0 NEXUS | Briced Consulting | Base de Datos 2026</p>
-    <p>Este sistema contiene artículos fijos del Estatuto Tributario para vigencia 2026.</p>
+    <p>&copy; 2026 Briced Consulting | Sistema Integrado de Evaluación de Licitaciones SIEL PRO 18.0</p>
+    <p>Todos los derechos reservados. Base de datos tributaria con artículos fijos de la vigencia 2026.</p>
 </footer>
 
 <script>
-    const db = [
-        {c: "Honorarios (PJ)", t: 11, b: 0, art: "Art. 392 ET"},
-        {c: "Servicios Gral (Decl)", t: 4, b: 188000, art: "Art. 392 ET"},
-        {c: "Compras Gral (Decl)", t: 2.5, b: 1271000, art: "Art. 401 ET"},
-        {c: "Construcción y Obra", t: 2, b: 0, art: "Art. 392 ET"}
+    // MATRIZ ROBUSTA 2026
+    const dataRete = [
+        {c: "Transporte de Carga", t: 1.0, b: 188000, art: "Art. 401 ET", aiu: false},
+        {c: "Construcción y Obra Pública", t: 2.0, b: 0, art: "Art. 392 ET", aiu: true},
+        {c: "Honorarios (Personas Jurídicas)", t: 11.0, b: 0, art: "Art. 392 ET", aiu: false},
+        {c: "Servicios Generales (Declarantes)", t: 4.0, b: 188000, art: "Art. 392 ET", aiu: true},
+        {c: "Arrendamientos (Bienes Inmuebles)", t: 3.5, b: 1271000, art: "Art. 401 ET", aiu: false},
+        {c: "Compras (Declarantes)", t: 2.5, b: 1271000, art: "Art. 401 ET", aiu: false}
     ];
-    let mDb = {"Cemento": 35000, "Ingeniero": 120000, "Pintura": 85000};
 
-    function sh(id) {
+    function showTab(e, id) {
         document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
         document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
         document.getElementById(id).classList.add('active');
-        const tabs = document.querySelectorAll('.tab');
-        for(let t of tabs) if(t.innerText.toLowerCase().includes(id)) t.classList.add('active');
+        e.currentTarget.classList.add('active');
     }
 
-    function rFilter() {
-        const val = document.getElementById('r_bus').value.toLowerCase();
-        const sel = document.getElementById('r_sel');
+    function filterRete() {
+        const query = document.getElementById('rete_query').value.toLowerCase();
+        const sel = document.getElementById('rete_select');
         sel.innerHTML = "";
-        db.filter(i => i.c.toLowerCase().includes(val)).forEach((i, idx) => {
+        dataRete.filter(i => i.c.toLowerCase().includes(query)).forEach(i => {
             let opt = new Option(i.c, i.t);
             sel.add(opt);
         });
     }
 
-    function rCalc() {
-        const idx = document.getElementById('r_sel').selectedIndex;
+    function calculateTaxes() {
+        const idx = document.getElementById('rete_select').selectedIndex;
         if(idx < 0) return;
-        const item = db.find(x => x.c === document.getElementById('r_sel').options[idx].text);
-        const base = 10000000; // Ejemplo
-        const a = document.getElementById('a_p').value / 100;
-        const i = document.getElementById('i_p').value / 100;
-        const u = document.getElementById('u_p').value / 100;
+        const item = dataRete.find(x => x.c === document.getElementById('rete_select').options[idx].text);
+        const base = parseFloat(document.getElementById('val_base').value) || 0;
         
-        const utilVal = base * u;
-        const ivaU = utilVal * 0.19;
-        const rf = base >= item.b ? base * (item.t/100) : 0;
-        const ica = base * (parseFloat(document.getElementById('r_ica').value)/1000);
+        // Mostrar AIU si aplica
+        document.getElementById('aiu_box').style.display = item.aiu ? "block" : "none";
         
-        document.getElementById('r_min').style.display = base < item.b ? "block" : "none";
-        document.getElementById('r_res').innerHTML = `
-            Base: $${base.toLocaleString()}<br>
-            AIU: ${(a+i+u)*100}% | IVA (s/ Util): $${ivaU.toLocaleString()}<br>
-            ReteFuente (${item.t}%): $${rf.toLocaleString()}<br>
-            ReteICA: $${ica.toLocaleString()}<br>
-            <b>Utilidad Neta: $${(utilVal - ivaU - rf - ica).toLocaleString()}</b>
-        `;
-    }
+        let rf = base >= item.b ? base * (item.t/100) : 0;
+        let iva = 0;
+        let u_val = 0;
 
-    function renderRup() {
-        const t = document.getElementById('t_prop').value;
-        const cont = document.getElementById('rup_members');
-        cont.innerHTML = "";
-        let n = t === "unico" ? 1 : 2;
-        for(let i=1; i<=n; i++) {
-            cont.innerHTML += `<div><label>Integrante ${i} (%)</label><input type="number" class="p_perc" value="${100/n}">
-            <label>Ingreso Operacional</label><input type="number" class="p_ing" value="1000000000">
-            <label>Experiencia ($)</label><input type="number" class="p_exp" value="500000000"></div>`;
+        if(item.aiu) {
+            const u_perc = document.getElementById('aiu_u').value / 100;
+            u_val = base * u_perc;
+            iva = u_val * 0.19; // IVA solo sobre utilidad
+        } else {
+            iva = base * 0.19;
         }
-        kCalc();
+
+        // FIC
+        const workers = parseFloat(document.getElementById('fic_workers').value) || 0;
+        const fic = workers * (1500000 * 0.025); // Estimación 0.25 de un SMLV
+
+        document.getElementById('tax_res').innerHTML = `
+            <b>Retención Fuente (${item.t}%):</b> $${Math.round(rf).toLocaleString()}<br>
+            <b>IVA (Sobre ${item.aiu ? 'Utilidad' : 'Total'}):</b> $${Math.round(iva).toLocaleString()}<br>
+            <b>FIC (Estimado):</b> $${Math.round(fic).toLocaleString()}<br>
+            <b>Base Legal:</b> ${item.art}<br>
+            <hr>
+            <b style="color:var(--g)">TOTAL DESCUENTOS: $${Math.round(rf + fic).toLocaleString()}</b>
+        `;
+        updateVeredicto();
     }
 
-    function kCalc() {
-        let ingT = 0; let expT = 0;
+    function geoAnalyze() {
+        const m = document.getElementById('mun_input').value.toLowerCase();
+        const alert = document.getElementById('estampilla_alert');
+        if(m.includes("neiva") || m.includes("huila")) {
+            alert.innerHTML = `<div style="background:#fff7ed; padding:10px; border-radius:8px; font-size:12px; border:1px solid #fbbf24;">📍 <b>SUGERENCIA:</b> En Neiva aplica Estampilla Pro-Cultura (1.5%) y Pro-Adulto Mayor (2%). Validar exigencia en pliego.</div>`;
+        }
+    }
+
+    function renderProp() {
+        const type = document.getElementById('prop_type').value;
+        const cont = document.getElementById('prop_container');
+        cont.innerHTML = "";
+        let n = (type === "un") ? 1 : 2;
+        for(let i=1; i<=n; i++) {
+            cont.innerHTML += `<div style="margin-bottom:15px; padding:10px; background:#f8fafc; border-radius:8px;">
+                <label>Integrante ${i} (%)</label><input type="number" class="p_perc" value="${100/n}" oninput="calculateK()">
+                <label>Ingreso Op. (SMMLV)</label><input type="number" class="p_ing" value="1000" oninput="calculateK()">
+            </div>`;
+        }
+        calculateK();
+    }
+
+    function calculateK() {
+        let kTotal = 0;
         document.querySelectorAll('.p_ing').forEach((el, i) => {
             const p = document.querySelectorAll('.p_perc')[i].value / 100;
-            ingT += el.value * p;
+            kTotal += (el.value * 1500000) * p;
         });
-        document.querySelectorAll('.p_exp').forEach(el => expT += parseFloat(el.value));
-        
-        const k = ingT; // Simplificado para SCE
-        document.getElementById('k_v').innerText = "$ " + Math.round(k).toLocaleString();
-        
-        const req = document.getElementById('e_req').value;
-        const expS = expT / 1500000;
-        const ev = document.getElementById('e_v');
-        if(expS >= req) { ev.innerText = "CUMPLES: " + Math.round(expS) + " SMMLV"; ev.style.color="green"; }
-        else { ev.innerText = "NO CUMPLES"; ev.style.color="red"; }
-        
-        const box = document.getElementById('ia_ver');
-        if(k > 0 && expS >= req) { box.innerHTML = "<h2>VERDICTO: GO</h2>"; box.style.background="#dcfce7"; }
-        else { box.innerHTML = "<h2>VERDICTO: NO GO</h2>"; box.style.background="#fee2e2"; }
+        document.getElementById('k_final').innerText = "$ " + Math.round(kTotal).toLocaleString();
+        updateVeredicto();
     }
 
-    function mAdd() {
-        const item = document.getElementById('m_item').value;
-        const val = parseFloat(document.getElementById('m_val').value);
-        const tol = document.getElementById('m_tol').value / 100;
-        const ref = mDb[item] || val * 0.9;
-        const diff = (val - ref) / ref;
-        
-        let status = diff < -tol ? "<b style='color:red;'>BAJO MERCADO</b>" : "<b style='color:green;'>OK</b>";
-        const row = `<tr><td>${item}</td><td>$${val.toLocaleString()}</td><td>$${ref.toLocaleString()}</td><td>${status}</td></tr>`;
-        document.querySelector('#m_tab tbody').innerHTML += row;
-        mDb[item] = ref; // Aprende
+    function updateVeredicto() {
+        const v = document.getElementById('v_status');
+        const k = parseFloat(document.getElementById('k_final').innerText.replace(/[^0-9.-]+/g,""));
+        if(k > 0) {
+            v.innerHTML = "<b style='color:var(--s); font-size:20px;'>VIABLE (GO)</b>";
+        } else {
+            v.innerHTML = "<b style='color:var(--r); font-size:20px;'>NO VIABLE (NO GO)</b>";
+        }
     }
 
-    function gDraw() {
-        const ren = document.getElementById('g_ren');
-        ren.innerHTML = `
-            <div class="g-row"><span>Visita:</span><div class="g-bar-c"><div class="g-bar" style="width:40%; background:var(--g)">Pendiente</div></div></div>
-            <div class="g-row"><span>Cierre:</span><div class="g-bar-c"><div class="g-bar" style="width:100%; background:var(--r)">Crítico</div></div></div>
-        `;
+    function copyPrompt() {
+        const p = "Actúa como un experto en licitaciones públicas y privadas en Colombia. Analiza el siguiente pliego de condiciones bajo los 13 puntos críticos SIEL: 1. Experiencia técnica habilitante, 2. Capacidad financiera (Liquidez, Endeudamiento), 3. Indicadores Organizacionales, 4. Multas y Sanciones vigentes, 5. Cronograma y Plazos de subsanación, 6. Visita técnica (Obligatoriedad), 7. Factor de calidad vs Precio, 8. Riesgos previsibles, 9. Garantías exigidas, 10. Forma de pago y anticipos, 11. Lugar de ejecución y fletes, 12. Limitación a Mipyme, 13. Vigencia de la oferta. Genera un resumen ejecutivo de riesgos.";
+        navigator.clipboard.writeText(p);
+        alert("Prompt Maestro copiado al portapapeles.");
     }
 
-    function copyP() {
-        navigator.clipboard.writeText(document.getElementById('ia_p').innerText);
-        alert("Prompt copiado");
-    }
-
-    function geo() {
-        const v = document.getElementById('geo_v');
-        v.innerHTML = "<div style='padding:10px; background:#e0f2fe; border-radius:5px;'>Análisis: Zona con riesgo público nivel 2. Flete sugerido: +8%.</div>";
-    }
-
-    window.onload = () => { rFilter(); renderRup(); sh('config'); };
+    window.onload = () => { filterRete(); renderProp(); };
 </script>
 </body>
 </html>
