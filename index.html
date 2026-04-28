@@ -2,34 +2,40 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>SIEL PRO 14.5 | BRICED MAX - Restauración Final</title>
+    <title>SIEL PRO | BRICED MAX EDITION 2026</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
-        :root { --primary: #0C447C; --secondary: #155ea3; --gold: #D4AF37; --dark: #0f172a; --slate: #f8fafc; --white: #ffffff; --border: #cbd5e1; --success: #10b981; }
+        :root { 
+            --primary: #0C447C; --secondary: #155ea3; --gold: #D4AF37; 
+            --dark: #0f172a; --slate: #f8fafc; --white: #ffffff; --border: #cbd5e1;
+            --success: #10b981; --danger: #e11d48;
+        }
         body { background-color: var(--slate); font-family: 'Segoe UI', Arial, sans-serif; margin: 0; font-size: 14px; color: var(--dark); }
         .container { max-width: 1450px; margin: 0 auto; padding: 20px; }
         header { background: linear-gradient(135deg, var(--primary), var(--dark)); color: white; padding: 25px; border-radius: 12px 12px 0 0; border-bottom: 5px solid var(--gold); display: flex; justify-content: space-between; align-items: center; }
-        .estatuton-btn { background: var(--gold); color: black; padding: 12px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
+        .estatuton-btn { background: var(--gold); color: black; padding: 12px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); transition: 0.3s; }
         nav { display: flex; gap: 10px; background: white; padding: 15px; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
         .btn-nav { padding: 12px 24px; border: 1px solid var(--border); border-radius: 6px; cursor: pointer; background: white; font-weight: 600; color: var(--secondary); transition: 0.3s; }
-        .btn-nav.active { background: var(--primary); color: white; }
+        .btn-nav.active { background: var(--primary); color: white; border-color: var(--primary); }
         .card { background: var(--white); padding: 30px; border-radius: 0 0 12px 12px; display: none; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
         .card.active { display: block; animation: fadeIn 0.3s; }
-        .section-title { border-left: 5px solid var(--gold); padding-left: 15px; margin-bottom: 25px; color: var(--primary); text-transform: uppercase; }
+        .section-title { border-left: 5px solid var(--gold); padding-left: 15px; margin-bottom: 25px; color: var(--primary); text-transform: uppercase; font-weight: bold; }
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
         input, select, textarea { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px; margin-top: 5px; box-sizing: border-box; }
-        .rete-scroll { max-height: 350px; overflow-y: auto; border: 1px solid var(--border); border-radius: 8px; }
+        .rete-scroll { max-height: 350px; overflow-y: auto; border: 1px solid var(--border); border-radius: 8px; background: #fff; }
         .rete-table { width: 100%; border-collapse: collapse; font-size: 12px; }
         .rete-table th { background: #f1f5f9; padding: 12px; position: sticky; top: 0; text-align: left; border-bottom: 2px solid var(--border); }
         .rete-table td { padding: 10px; border-bottom: 1px solid #eee; cursor: pointer; }
         .selected-row { background: #fffbeb !important; font-weight: bold; border: 2px solid var(--gold); }
-        .summary-box { background: var(--dark); color: white; padding: 25px; border-radius: 12px; }
+        .summary-box { background: var(--dark); color: white; padding: 25px; border-radius: 12px; height: fit-content; }
         .summary-line { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #334155; }
         .prompt-box { background: #020617; color: #38bdf8; padding: 20px; border-radius: 10px; font-family: 'Courier New', monospace; white-space: pre-wrap; font-size: 13px; border: 1px solid var(--gold); line-height: 1.4; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .geo-badge { padding: 15px; border-radius: 8px; margin-top: 10px; font-size: 13px; line-height: 1.5; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
@@ -37,10 +43,12 @@
 <div class="container">
     <header>
         <div>
-            <h1 style="margin:0;">SIEL PRO 14.5 <span style="color:var(--gold);">BRICED MAX</span></h1>
-            <p style="margin:5px 0;"><i class="fas fa-shield-alt"></i> Control Administrativo y Tributario 2026</p>
+            <h1 style="margin:0; font-size: 28px;">SIEL PRO 2026 <span style="color:var(--gold);">BRICED MAX</span></h1>
+            <p style="margin:5px 0; opacity: 0.9;"><i class="fas fa-shield-alt"></i> Control Administrativo, Territorial y Tributario</p>
         </div>
-        <a href="https://sites.google.com/view/estatuton-2024/inicio" target="_blank" class="estatuton-btn"><i class="fas fa-landmark"></i> ESTATUTÓN MUNICIPAL</a>
+        <a href="https://sites.google.com/view/estatuton-2024/inicio" target="_blank" class="estatuton-btn">
+            <i class="fas fa-landmark"></i> ESTATUTÓN MUNICIPAL
+        </a>
     </header>
 
     <nav>
@@ -52,7 +60,7 @@
     </nav>
 
     <div id="tab-radar" class="card active">
-        <h2 class="section-title">Vigilancia de Plataformas y Geo-Riesgo</h2>
+        <h2 class="section-title">Vigilancia de Plataformas y Geo-Seguridad</h2>
         <div class="grid-2">
             <div>
                 <label>Plataformas Oficiales</label>
@@ -64,30 +72,43 @@
                 </div>
             </div>
             <div>
-                <label>Análisis de Frentes (Localización y Distancia)</label>
-                <input type="text" placeholder="Municipio..." oninput="geoAnalisis(this)">
-                <select onchange="geoAnalisis(this.previousElementSibling)" style="margin-top:10px;">
-                    <option value="buena">Zona Segura / Urbana</option>
-                    <option value="roja">Zona Roja / Vulnerable</option>
-                </select>
-                <div id="geo_res" style="margin-top:15px;"></div>
+                <label>Análisis de Riesgo por Municipio</label>
+                <div id="frentes_box">
+                    <div style="margin-bottom: 15px; border: 1px solid var(--border); padding: 15px; border-radius: 8px;">
+                        <input type="text" placeholder="Municipio de ejecución..." oninput="geoAnalisis(this)" style="margin-bottom:10px;">
+                        <select onchange="geoAnalisis(this.previousElementSibling)">
+                            <option value="buena">Zona Segura / Urbana</option>
+                            <option value="roja">Zona Roja / Vulnerable</option>
+                        </select>
+                        <div class="geo-res"></div>
+                    </div>
+                </div>
+                <button onclick="addFrente()" class="btn-nav" style="width: 100%;">+ Añadir Municipio (Sedes Múltiples)</button>
             </div>
         </div>
     </div>
 
     <div id="tab-rup" class="card">
         <h2 class="section-title">Configuración del Proponente</h2>
-        <select id="tipo_prop" onchange="renderRUP()" style="max-width:400px; margin-bottom:20px;">
-            <option value="unico">Proponente Único</option>
-            <option value="ut">Unión Temporal (UT)</option>
-            <option value="cons">Consorcio</option>
-        </select>
+        <div style="max-width: 400px; margin-bottom: 20px;">
+            <label>Forma de Participación</label>
+            <select id="tipo_prop" onchange="renderRUP()">
+                <option value="unico">Proponente Único</option>
+                <option value="ut">Unión Temporal (UT)</option>
+                <option value="cons">Consorcio</option>
+            </select>
+        </div>
         <div id="rup_grid" class="grid-2"></div>
     </div>
 
     <div id="tab-rut" class="card">
         <h2 class="section-title">Matriz de Responsabilidades RUT</h2>
-        <div class="rete-scroll"><table class="rete-table"><tbody id="rut_tbody"></tbody></table></div>
+        <div class="rete-scroll">
+            <table class="rete-table">
+                <thead><tr><th>Cod.</th><th>Responsabilidad</th><th width="80">Aplica</th></tr></thead>
+                <tbody id="rut_tbody"></tbody>
+            </table>
+        </div>
     </div>
 
     <div id="tab-retencol" class="card">
@@ -96,7 +117,8 @@
             <div>
                 <label>Presupuesto Base</label>
                 <input type="number" id="v_base" value="100000000" oninput="calc()">
-                <label style="margin-top:10px;">Concepto de Retención (Tabla 2026):</label>
+                
+                <label style="margin-top:15px; display:block;">Concepto de Retención (Tabla 2026):</label>
                 <div class="rete-scroll">
                     <table class="rete-table">
                         <thead><tr><th>Concepto</th><th>Tarifa</th><th>Sel.</th></tr></thead>
@@ -105,7 +127,7 @@
                             <tr onclick="selR(this, 3.5)"><td>Compras (No Declarantes)</td><td>3.5%</td><td><input type="radio" name="r"></td></tr>
                             <tr onclick="selR(this, 4.0)"><td>Servicios General</td><td>4.0%</td><td><input type="radio" name="r"></td></tr>
                             <tr onclick="selR(this, 6.0)"><td>Servicios (No Declarantes)</td><td>6.0%</td><td><input type="radio" name="r"></td></tr>
-                            <tr onclick="selR(this, 11.0)"><td>Honorarios (PJ)</td><td>11.0%</td><td><input type="radio" name="r"></td></tr>
+                            <tr onclick="selR(this, 11.0)"><td>Honorarios (Pers. Jurídica)</td><td>11.0%</td><td><input type="radio" name="r"></td></tr>
                             <tr onclick="selR(this, 2.0)"><td>Contratos de Construcción</td><td>2.0%</td><td><input type="radio" name="r"></td></tr>
                         </tbody>
                     </table>
@@ -116,8 +138,9 @@
                 </div>
             </div>
             <div class="summary-box">
-                <div class="summary-line"><span>Costo Directo:</span> <span id="out_dir">$0</span></div>
-                <div class="summary-line"><span>IVA (AIU o Total):</span> <span id="out_iva">$0</span></div>
+                <h3>Resumen Financiero</h3>
+                <div class="summary-line"><span>Costo Directo Est.:</span> <span id="out_dir">$0</span></div>
+                <div class="summary-line"><span>IVA (Sobre Utilidad):</span> <span id="out_iva">$0</span></div>
                 <div class="summary-line"><span>ReteFuente (<span id="rt">2.5</span>%):</span> <span id="out_rf">-$0</span></div>
                 <div class="summary-line"><span>ReteICA (9.66/1000):</span> <span id="out_rica">-$0</span></div>
                 <div class="summary-line" style="border-top:2px solid var(--gold); color:var(--gold); font-size:24px; margin-top:15px; padding-top:10px;">
@@ -128,7 +151,7 @@
     </div>
 
     <div id="tab-final" class="card">
-        <h2 class="section-title">Auditoría IA & Reportes</h2>
+        <h2 class="section-title">Auditoría IA & Reportes Finales</h2>
         <div class="prompt-box" id="prompt_text">
 ACTÚA COMO UN AUDITOR SENIOR DE LICITACIONES EN COLOMBIA. Analiza el pliego adjunto bajo estos 13 puntos críticos:
 1. INFORMACIÓN GENERAL: Presupuesto vs Alcance.
@@ -146,10 +169,10 @@ ACTÚA COMO UN AUDITOR SENIOR DE LICITACIONES EN COLOMBIA. Analiza el pliego adj
 13. ESTATUTÓN MUNICIPAL: Revisa impuestos locales, estampillas o tasas no declaradas.
         </div>
         <button onclick="copyPrompt()" class="btn-nav" style="width:100%; background:var(--success); color:white; margin:20px 0;"><i class="fas fa-copy"></i> COPIAR PROMPT MAESTRO COMPLETO</button>
-        <textarea id="ia_veredicto" rows="8" placeholder="Pega aquí el resultado de la IA para el informe PDF..."></textarea>
+        <textarea id="ia_veredicto" rows="8" placeholder="Pega aquí el resultado de la IA para generar el PDF..."></textarea>
         <div class="grid-2" style="margin-top:20px;">
-            <button onclick="exportPDF()" class="btn-nav" style="background:var(--primary); color:white; height:50px;">DESCARGAR INFORME PDF</button>
-            <button onclick="exportExcel()" class="btn-nav" style="background:#1d6f42; color:white; height:50px;">DESCARGAR EXCEL</button>
+            <button onclick="exportPDF()" class="btn-nav" style="background:var(--primary); color:white; height:50px;"><i class="fas fa-file-pdf"></i> DESCARGAR INFORME PDF</button>
+            <button onclick="exportExcel()" class="btn-nav" style="background:#1d6f42; color:white; height:50px;"><i class="fas fa-file-excel"></i> DESCARGAR MATRIZ EXCEL</button>
         </div>
     </div>
 </div>
@@ -160,7 +183,7 @@ ACTÚA COMO UN AUDITOR SENIOR DE LICITACIONES EN COLOMBIA. Analiza el pliego adj
     function init() {
         const tb = document.getElementById('rut_tbody');
         for(let i=1; i<=66; i++) {
-            tb.innerHTML += `<tr><td><b>${i}</b></td><td>Responsabilidad Código ${i}</td><td><input type="checkbox"></td></tr>`;
+            tb.innerHTML += `<tr><td><b>${i.toString().padStart(2, '0')}</b></td><td>Responsabilidad Código ${i}</td><td align="center"><input type="checkbox"></td></tr>`;
         }
         renderRUP(); calc();
     }
@@ -173,13 +196,23 @@ ACTÚA COMO UN AUDITOR SENIOR DE LICITACIONES EN COLOMBIA. Analiza el pliego adj
     }
 
     function geoAnalisis(inp) {
-        const res = document.getElementById('geo_res');
-        const tipo = inp.nextElementSibling.value;
+        const container = inp.parentElement;
+        const res = container.querySelector('.geo-res');
+        const tipo = container.querySelector('select').value;
         if(inp.value.length > 2) {
             res.innerHTML = tipo === 'roja' ? 
-                `<div style="background:#fee2e2; padding:15px; border-radius:8px; color:#b91c1c;">⚠️ ZONA ROJA: Riesgo detectado. Distancia +300km. Fletes especiales requeridos.</div>` :
-                `<div style="background:#d1fae5; padding:15px; border-radius:8px; color:#065f46;">✅ ZONA SEGURA: Logística estándar.</div>`;
+                `<div class="geo-badge" style="background:#fee2e2; border:1px solid #ef4444; color:#b91c1c;">⚠️ <b>ZONA ROJA:</b> Riesgo detectado. Distancia +300km. Fletes especiales requeridos. Recomendación: Aumentar imprevistos 15%.</div>` :
+                `<div class="geo-badge" style="background:#dcfce7; border:1px solid #10b981; color:#166534;">✅ <b>ZONA SEGURA:</b> Logística estándar. Acceso normal.</div>`;
         }
+    }
+
+    function addFrente() {
+        const div = document.createElement('div');
+        div.style = "margin-bottom: 15px; border: 1px solid var(--border); padding: 15px; border-radius: 8px;";
+        div.innerHTML = `<input type="text" placeholder="Municipio..." oninput="geoAnalisis(this)" style="margin-bottom:10px;">
+                        <select onchange="geoAnalisis(this.previousElementSibling)"><option value="buena">Zona Segura</option><option value="roja">Zona Roja</option></select>
+                        <div class="geo-res"></div>`;
+        document.getElementById('frentes_box').appendChild(div);
     }
 
     function renderRUP() {
@@ -189,28 +222,36 @@ ACTÚA COMO UN AUDITOR SENIOR DE LICITACIONES EN COLOMBIA. Analiza el pliego adj
         let n = (t === 'unico') ? 1 : 2;
         for(let i=1; i<=n; i++) {
             grid.innerHTML += `<div style="border:1px solid #ddd; padding:15px; border-radius:10px;">
-                <h4>Integrante ${i}</h4><label>Liquidez</label><input type="number" step="0.01" value="1.5">
+                <h4>Integrante ${i}</h4>
+                <label>Liquidez</label><input type="number" step="0.01" value="1.5">
                 <label>Endeudamiento</label><input type="number" step="0.01" value="0.5">
-                <label>% Part.</label><input type="number" value="${100/n}"></div>`;
+                <label>% Participación</label><input type="number" value="${100/n}">
+            </div>`;
         }
     }
 
     function selR(row, val) {
         document.querySelectorAll('#tabla_rete tr').forEach(r => r.classList.remove('selected-row'));
-        row.classList.add('selected-row'); row.querySelector('input').checked = true;
-        rete_val = val; document.getElementById('rt').innerText = val; calc();
+        row.classList.add('selected-row'); 
+        row.querySelector('input').checked = true;
+        rete_val = val; 
+        document.getElementById('rt').innerText = val; 
+        calc();
     }
 
     function calc() {
         const base = parseFloat(document.getElementById('v_base').value) || 0;
-        const u = parseFloat(document.getElementById('p_u').value) / 100;
-        const a = parseFloat(document.getElementById('p_a').value) / 100;
-        const costoDirecto = base / (1 + a + u + 0.05);
-        const utilBruta = costoDirecto * u;
+        const uPct = parseFloat(document.getElementById('p_u').value) / 100;
+        const aPct = parseFloat(document.getElementById('p_a').value) / 100;
+        
+        const costoDirecto = base / (1 + aPct + uPct);
+        const utilBruta = costoDirecto * uPct;
+        
         let iva = utilBruta * 0.19; 
         let rf = base * (rete_val / 100);
         let rica = base * 0.00966;
         let neta = utilBruta - iva - rf - rica;
+
         document.getElementById('out_dir').innerText = "$" + Math.round(costoDirecto).toLocaleString();
         document.getElementById('out_iva').innerText = "$" + Math.round(iva).toLocaleString();
         document.getElementById('out_rf').innerText = "-$" + Math.round(rf).toLocaleString();
@@ -226,14 +267,30 @@ ACTÚA COMO UN AUDITOR SENIOR DE LICITACIONES EN COLOMBIA. Analiza el pliego adj
     function exportPDF() {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
-        doc.text("INFORME SIEL PRO - BRICED CONSULTING", 10, 15);
-        doc.text("Utilidad Neta: " + document.getElementById('out_neta').innerText, 10, 30);
-        doc.text("Analisis IA:", 10, 45);
-        doc.text(doc.splitTextToSize(document.getElementById('ia_veredicto').value, 180), 10, 55);
-        doc.save("Informe_SIEL.pdf");
+        doc.setFontSize(18);
+        doc.text("INFORME DE AUDITORÍA SIEL PRO 2026", 10, 20);
+        doc.setFontSize(12);
+        doc.text("Utilidad Neta Calculada: " + document.getElementById('out_neta').innerText, 10, 40);
+        doc.text("Veredicto de la IA:", 10, 55);
+        const splitText = doc.splitTextToSize(document.getElementById('ia_veredicto').value || "Sin veredicto", 180);
+        doc.text(splitText, 10, 65);
+        doc.save("Informe_SIEL_Briced.pdf");
+    }
+
+    function exportExcel() {
+        const wb = XLSX.utils.book_new();
+        const data = [
+            ["Item", "Valor"],
+            ["Presupuesto Base", document.getElementById('v_base').value],
+            ["Utilidad Neta", document.getElementById('out_neta').innerText],
+            ["IVA", document.getElementById('out_iva').innerText]
+        ];
+        const ws = XLSX.utils.aoa_to_sheet(data);
+        XLSX.utils.book_append_sheet(wb, ws, "Calculo");
+        XLSX.writeFile(wb, "Matriz_SIEL.xlsx");
     }
 
     window.onload = init;
 </script>
 </body>
-</html>
+</html> 
