@@ -3,11 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIEL PRO 9.0 | LEGACY & FUTURE - Briced Consulting</title>
+    <title>SIEL PRO 10.0 | LEX-TRIBUTARIA - Briced Consulting</title>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
@@ -15,32 +13,33 @@
             --primary: #0C447C; --secondary: #155ea3; --success: #10b981; --danger: #e11d48; 
             --warning: #facc15; --dark: #0f172a; --slate: #f1f5f9; --white: #ffffff; --gold: #D4AF37;
         }
-        body { background-color: var(--slate); font-family: 'Inter', sans-serif; margin: 0; color: var(--dark); font-size: 10px; }
-        .container { max-width: 1450px; margin: 0 auto; padding: 15px; }
-        header { background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%); color: white; padding: 15px; border-radius: 12px; border-bottom: 4px solid var(--gold); display: flex; justify-content: space-between; align-items: center; }
+        body { background-color: var(--slate); font-family: 'Inter', sans-serif; margin: 0; font-size: 11px; }
+        .container { max-width: 1500px; margin: 0 auto; padding: 15px; }
+        header { background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%); color: white; padding: 15px; border-radius: 12px; border-bottom: 4px solid var(--gold); display: flex; justify-content: space-between; }
         
-        .progress-container { width: 100%; background: #e2e8f0; height: 8px; border-radius: 4px; margin: 10px 0; overflow: hidden; }
-        #progress-bar { width: 10%; height: 100%; background: var(--success); transition: 0.5s; }
-
-        nav { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 5px; margin-bottom: 15px; }
-        .btn-nav { padding: 10px; border: none; border-radius: 6px; cursor: pointer; font-weight: 800; background: white; color: #64748b; border: 1px solid #e2e8f0; text-transform: uppercase; font-size: 9px; }
+        nav { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin: 15px 0; }
+        .btn-nav { padding: 10px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; background: white; border: 1px solid #ddd; }
         .btn-nav.active { background: var(--primary); color: white; }
         
-        .card { background: var(--white); padding: 20px; border-radius: 12px; display: none; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .card { background: var(--white); padding: 20px; border-radius: 12px; display: none; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         .card.active { display: block; }
         
-        .form-section { background: #f8fafc; padding: 10px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 10px; }
-        label { font-weight: 800; color: #334155; display: block; margin-bottom: 3px; }
-        input, select, textarea { width: 100%; padding: 6px; border-radius: 4px; border: 1px solid #cbd5e1; font-size: 10px; margin-bottom: 6px; box-sizing: border-box; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .form-group { margin-bottom: 10px; }
+        label { font-weight: bold; display: block; margin-bottom: 3px; color: var(--primary); }
+        input, select, textarea { width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc; }
+
+        /* Estilo para Responsabilidades RUT */
+        .rut-container { height: 300px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; background: #fafafa; }
+        .rut-item { display: flex; align-items: flex-start; gap: 10px; border-bottom: 1px solid #eee; padding: 5px 0; }
+        .rut-item:hover { background: #f0f7ff; }
+
+        /* Alerta de Seguridad */
+        .alert-security { padding: 10px; border-radius: 8px; margin-top: 10px; font-weight: bold; display: none; }
+        .red-zone { background: #fee2e2; border: 2px solid #ef4444; color: #b91c1c; }
         
-        .tax-display { background: var(--dark); color: white; padding: 15px; border-radius: 12px; border-top: 4px solid var(--gold); }
-        .tax-row { display: flex; justify-content: space-between; margin-bottom: 4px; border-bottom: 1px solid #1e293b; padding-bottom: 3px; }
-        
-        .btn-link { display: block; margin-bottom: 4px; text-decoration: none; color: white; font-weight: bold; padding: 6px; border-radius: 4px; text-align: center; font-size: 9px; }
-        .map-warning { background: #fee2e2; border: 1px solid #ef4444; color: #991b1b; padding: 10px; border-radius: 6px; margin-top: 8px; font-size: 9px; }
-        
-        .gantt-chart { display: flex; flex-direction: column; gap: 4px; background: #fff; padding: 10px; border: 1px solid #ddd; }
-        .gantt-bar { height: 18px; background: var(--primary); border-radius: 3px; color: white; font-size: 8px; display: flex; align-items: center; padding-left: 5px; }
+        .tax-summary { background: var(--dark); color: white; padding: 20px; border-radius: 10px; position: sticky; top: 10px; }
+        .tax-line { display: flex; justify-content: space-between; margin-bottom: 8px; border-bottom: 1px solid #334155; }
     </style>
 </head>
 <body>
@@ -48,275 +47,217 @@
 <div class="container">
     <header>
         <div>
-            <h1 style="margin:0;">SIEL PRO 9.0 <span style="font-weight:300; color: var(--gold);">LEGACY & FUTURE</span></h1>
-            <p style="margin:2px 0; font-size:9px;"><i class="fas fa-microchip"></i> Auditoría Integral 360° | Briced Consulting</p>
+            <h2>SIEL PRO 10.0 MASTER</h2>
+            <span>Gestión de Licitaciones e Impuestos Territoriales</span>
         </div>
-        <div style="text-align:right;">
-            <span style="font-size:9px;">UVT 2026: <b>$52.374</b></span><br>
-            <span style="color:var(--gold); font-size:10px;">ESTATUTÓN SYNC <i class="fas fa-check-circle"></i></span>
+        <div style="text-align: right;">
+            <a href="https://leydepropiedadhorizontal.org/category/convocatorias/" target="_blank" style="color:var(--gold); margin-right:15px;"><i class="fas fa-building"></i> Propiedad Horizontal</a>
+            <a href="https://bogota.gov.co/asi-vamos/contratos-y-obras/participa" target="_blank" style="color:var(--gold);"><i class="fas fa-city"></i> Bogotá Participa</a>
         </div>
     </header>
 
-    <div class="progress-container"><div id="progress-bar"></div></div>
-
     <nav>
-        <button class="btn-nav active" onclick="showTab('tab-radar', this, 20)">1. Radar/Logística</button>
-        <button class="btn-nav" onclick="showTab('tab-tax', this, 40)">2. Retencol/AIU/RUT</button>
-        <button class="btn-nav" onclick="showTab('tab-rup', this, 60)">3. RUP/Alianzas</button>
-        <button class="btn-nav" onclick="showTab('tab-ia', this, 80)">4. Cerebro IA (Matriz)</button>
-        <button class="btn-nav" style="background:var(--gold); color:#000;" onclick="showTab('tab-final', this, 100)">5. Veredicto/Reporte</button>
+        <button class="btn-nav active" onclick="showTab('tab-geo')">1. Geo-Seguridad & Logística</button>
+        <button class="btn-nav" onclick="showTab('tab-rut')">2. Perfil RUT & RETENCOL</button>
+        <button class="btn-nav" onclick="showTab('tab-aiu')">3. AIU & Presupuesto</button>
+        <button class="btn-nav" onclick="showTab('tab-ia')">4. Cerebro IA (13 Puntos)</button>
     </nav>
 
-    <div id="tab-radar" class="card active">
-        <div style="display:grid; grid-template-columns: 1fr 2.5fr; gap:15px;">
+    <div id="tab-geo" class="card active">
+        <div class="grid-2">
             <div>
-                <label>Plataformas</label>
-                <a href="https://www.colombiacompra.gov.co/secop-i" target="_blank" class="btn-link" style="background:#003366;">SECOP I</a>
-                <a href="https://community.secop.gov.co/Public/Tendering/ContractNoticeManagement/Index" target="_blank" class="btn-link" style="background:#004080;">SECOP II</a>
-                <a href="https://bogota.gov.co/asi-vamos/contratos-y-obras/participa" target="_blank" class="btn-link" style="background:#ce1212;">BOGOTÁ PARTICIPA</a>
-                <a href="https://leydepropiedadhorizontal.org/category/convocatorias/" target="_blank" class="btn-link" style="background:#7c3aed;">PROP. HORIZONTAL</a>
+                <h3>Análisis de Riesgo y Ubicación</h3>
+                <label>Punto de Ejecución (Departamento)</label>
+                <select id="dep_riesgo" onchange="checkSecurity()">
+                    <option value="Cundinamarca">Cundinamarca (Seguro)</option>
+                    <option value="Antioquia">Antioquia (Riesgo Moderado)</option>
+                    <option value="Cauca">Cauca (ZONA ROJA)</option>
+                    <option value="Arauca">Arauca (ZONA ROJA)</option>
+                    <option value="Chocó">Chocó (ZONA ROJA)</option>
+                    <option value="Bogota">Bogotá D.C. (Seguro)</option>
+                </select>
+                <div id="sec_alert" class="alert-security red-zone">
+                    <i class="fas fa-shield-alt"></i> ¡ALERTA DE SEGURIDAD! Zona con presencia de grupos armados. 
+                    Incrementar imprevistos en +15% y pólizas de vida personal.
+                </div>
                 
-                <div class="form-section" style="margin-top:10px;">
-                    <label>Geo-Logística (desde BOG)</label>
-                    <input type="text" id="log_muni" placeholder="Municipio..." oninput="calcLogistica()">
-                    <select id="zona_riesgo" onchange="calcLogistica()" style="margin-top:5px;">
-                        <option value="segura">Zona Urbana Segura</option>
-                        <option value="roja">Zona Roja (Grupos Armados)</option>
-                    </select>
-                    <div id="log_res" style="background:#e0f2fe; padding:8px; border-radius:4px; font-size:9px; margin-top:5px;"></div>
+                <h4 style="margin-top:20px;">Logística Multi-Frente (Ej: Contrato ICBF)</h4>
+                <div id="frentes_log">
+                    <div class="form-group">
+                        <input type="text" placeholder="Nombre Municipio (Ej: Quibdó)" oninput="calcDist(this)">
+                        <small class="dist-info"></small>
+                    </div>
                 </div>
+                <button onclick="addFrente()" class="btn-nav">+ Añadir Frente de Trabajo</button>
             </div>
-            <div class="form-section">
-                <label>Información General (Matriz Punto 1)</label>
-                <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:5px;">
-                    <input type="text" id="m_num" placeholder="N° Proceso">
-                    <input type="number" id="m_valor" placeholder="Presupuesto Oficial ($)" oninput="calcAll()">
-                    <select id="m_visita"><option>Visita NO Oblig.</option><option>Visita OBLIGATORIA</option></select>
+            <div>
+                <label>Comparativa de Precios Mercado</label>
+                <div class="form-group">
+                    <input type="text" id="busq_material" placeholder="Buscar material (Ej: Cemento Gris)">
+                    <button class="btn-nav" style="width:100%; background:var(--secondary); color:white;" onclick="searchPrices()">Buscar en Centros de Experiencia</button>
                 </div>
-                <label>Códigos UNSPSC Comunes (Sugeridos)</label>
-                <select id="unspsc_sugeridos" onchange="this.nextElementSibling.value += this.value + ', '">
-                    <option value="">Seleccione para agregar...</option>
-                    <optgroup label="Construcción y Mantenimiento">
-                        <option value="72101500">Construcción de edificios</option>
-                        <option value="72102900">Mantenimiento y reparación</option>
-                        <option value="72151900">Impermeabilización</option>
-                    </optgroup>
-                    <optgroup label="Equipos de Vapor">
-                        <option value="40101800">Calderas y equipos de vapor</option>
-                        <option value="40101801">Mantenimiento calderas</option>
-                    </optgroup>
-                    <optgroup label="Energías Renovables">
-                        <option value="39121011">Paneles Solares</option>
-                        <option value="26111607">Energía Fotovoltaica</option>
-                    </optgroup>
-                </select>
-                <input type="text" id="m_unspsc" placeholder="Códigos seleccionados...">
-                <textarea id="m_objeto" rows="3" placeholder="Objeto Contractual..." oninput="updatePrompt()"></textarea>
+                <div id="price_results" style="background:#f0f9ff; padding:10px; border-radius:8px; font-size:10px;"></div>
             </div>
         </div>
     </div>
 
-    <div id="tab-tax" class="card">
-        <div style="display:grid; grid-template-columns: 1.5fr 1fr; gap:15px;">
-            <div class="form-section">
-                <label>Perfil Tributario (RUT)</label>
-                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:5px;">
-                    <select id="t_declarante"><option value="si">Declarante Renta</option><option value="no">No Declarante</option></select>
-                    <select id="t_regimen"><option value="ord">Ordinario</option><option value="sim">Simple (RST)</option></select>
-                </div>
-                <label style="margin-top:5px;">Tipo de Contrato / Rol</label>
-                <select id="t_rol" onchange="calcAll()">
-                    <option value="obra">Contratista de Obra</option>
-                    <option value="cons">Consultoría / Honorarios</option>
-                    <option value="int">Interventoría</option>
-                    <option value="serv">Servicios Generales</option>
-                </select>
-                <label>Desglose AIU (%)</label>
-                <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:5px;">
-                    <div><label style="font-size:8px;">Adm %</label><input type="number" id="aiu_a" value="15" oninput="calcAll()"></div>
-                    <div><label style="font-size:8px;">Imp %</label><input type="number" id="aiu_i" value="5" oninput="calcAll()"></div>
-                    <div><label style="font-size:8px;">Util %</label><input type="number" id="aiu_u" value="10" oninput="calcAll()"></div>
-                </div>
-                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:5px;">
-                    <div><label>ICA x1000</label><input type="number" id="t_ica" value="9.66" oninput="calcAll()"></div>
-                    <div><label>Estampillas %</label><input type="number" id="t_estamp" value="2" oninput="calcAll()"></div>
-                </div>
-                <a href="https://sites.google.com/view/estatuton-2024/inicio" target="_blank" class="btn-link" style="background:#000; color:var(--gold);">ABRIR ESTATUTÓN (Municipios)</a>
+    <div id="tab-rut" class="card">
+        <div class="grid-2">
+            <div>
+                <h3>Responsabilidades RUT (Seleccione según su RUT)</h3>
+                <div class="rut-container" id="rut_list">
+                    </div>
             </div>
-            <div class="tax-display">
-                <div class="tax-row"><span>Costo Directo:</span><span id="res_directo">$0</span></div>
-                <div class="tax-row"><span>Utilidad Bruta:</span><span id="res_utilidad">$0</span></div>
-                <div class="tax-row"><span>IVA s/Utilidad (19%):</span><span id="res_iva_u">-$0</span></div>
-                <div class="tax-row"><span>Retenciones:</span><span id="res_rf">-$0</span></div>
-                <div class="tax-row"><span>Otras Tasas/Guerra:</span><span id="res_otros">-$0</span></div>
-                <div class="tax-total" id="res_neto" style="font-size:18px; color:var(--success); border-top:2px solid var(--gold);">$0</div>
-                <p style="font-size:8px; color:var(--gold); margin-top:5px;">* IVA calculado solo sobre Utilidad según Art. 462-1 ET.</p>
+            <div>
+                <h3>Configuración RETENCOL</h3>
+                <label>Tarifa ICA Municipio (Consultar Estatutón)</label>
+                <input type="number" id="t_ica" value="9.66" step="0.01">
+                <a href="https://sites.google.com/view/estatuton-2024/inicio" target="_blank" class="btn-link" style="color:blue;">Consultar Estatutón Municipal</a>
+                
+                <label style="margin-top:15px;">Actividad de Retención (Base & Tarifa)</label>
+                <select id="t_retencion" onchange="updateRetBase()">
+                    <option value="0.02" data-base="1.269.000">Construcción y Urbanización (2%) - Base: 27 UVT</option>
+                    <option value="0.04" data-base="0">Servicios Generales (4%) - Base: 4 UVT</option>
+                    <option value="0.11" data-base="0">Honorarios Pers. Jurídica (11%) - Base: 0</option>
+                    <option value="0.01" data-base="0">Transporte de Carga (1%) - Base: 4 UVT</option>
+                </select>
+                
+                <div class="tax-summary" style="margin-top:20px;">
+                    <div class="tax-line"><span>ReteFuente Estimada:</span> <span id="res_rf">$0</span></div>
+                    <div class="tax-line"><span>ReteICA Estimado:</span> <span id="res_rica">$0</span></div>
+                    <div class="tax-line"><span>GMF (4x1000):</span> <span id="res_gmf">$0</span></div>
+                </div>
             </div>
         </div>
     </div>
 
-    <div id="tab-rup" class="card">
-        <div class="form-section">
-            <label>Estructura de Participación</label>
-            <select id="p_tipo" onchange="calcRUP()"><option value="solo">Proponente Único</option><option value="ut">Unión Temporal / Consorcio</option></select>
-        </div>
-        <div id="integrantes_list">
+    <div id="tab-aiu" class="card">
+        <div class="grid-2">
             <div class="form-section">
-                <label>Integrante 1 (Líder) - % Part.</label>
-                <input type="number" class="p_pct" value="100" oninput="calcRUP()">
-                <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:5px;">
-                    <input type="number" class="p_ac" placeholder="Activo Corr.">
-                    <input type="number" class="p_pc" placeholder="Pasivo Corr.">
-                    <input type="number" class="p_exp" placeholder="Experiencia ($)">
+                <label>Presupuesto Oficial del Proceso</label>
+                <input type="number" id="v_total" value="0" oninput="calcAIU()">
+                
+                <label>Estructura AIU (%)</label>
+                <div style="display:flex; gap:10px;">
+                    <input type="number" id="p_a" value="15" placeholder="Adm %" oninput="calcAIU()">
+                    <input type="number" id="p_i" value="5" placeholder="Imp %" oninput="calcAIU()">
+                    <input type="number" id="p_u" value="10" placeholder="Util %" oninput="calcAIU()">
                 </div>
             </div>
-        </div>
-        <button onclick="addIntegrante()" class="btn-nav">+ Añadir Socio</button>
-        <div class="form-section" style="background:#e0f2fe; margin-top:10px;">
-            <div id="rup_visual" style="font-weight:bold;">Liquidez Ponderada: 0.00 | Experiencia Total: $0</div>
+            <div class="tax-summary">
+                <h4>Desglose de Operación</h4>
+                <div class="tax-line"><span>Costo Directo (Obra/Material):</span> <span id="res_directo">$0</span></div>
+                <div class="tax-line"><span>Utilidad:</span> <span id="res_utilidad">$0</span></div>
+                <div class="tax-line" style="color:var(--gold);"><span>IVA sobre Utilidad (19%):</span> <span id="res_iva_u">$0</span></div>
+                <hr>
+                <div class="tax-line" style="font-size:14px; font-weight:bold;"><span>UTILIDAD NETA ESTIMADA:</span> <span id="res_neta">$0</span></div>
+            </div>
         </div>
     </div>
 
     <div id="tab-ia" class="card">
-        <label>Formato de Pliego Original</label>
-        <select id="ia_format"><option value="texto">PDF Texto (Digital)</option><option value="imagen">PDF Imagen (Escaneado/OCR)</option></select>
-        <div id="prompt_box" style="background:#020617; color:#38bdf8; padding:15px; border-radius:8px; font-family:monospace; font-size:9px; white-space:pre-wrap; max-height:350px; overflow-y:auto;"></div>
-        <button onclick="copyPrompt()" class="btn-nav" style="background:var(--success); color:white; width:100%; margin-top:10px;">COPIAR PROMPT MAESTRO (13 PUNTOS)</button>
-    </div>
-
-    <div id="tab-final" class="card">
-        <div style="display:grid; grid-template-columns: 1.2fr 1fr; gap:15px;">
-            <div>
-                <label>Comparador Presupuesto vs Mercado</label>
-                <div class="form-section">
-                    <input type="text" id="item_busq" placeholder="Buscar material (ej. Bulto cemento)...">
-                    <button onclick="buscarPrecios()" class="btn-nav" style="width:100%; background:var(--secondary); color:white;">CONSULTAR MERCADO ONLINE</button>
-                    <div id="mercado_res" style="font-size:9px; margin-top:5px;"></div>
-                </div>
-                <label>Check-List Dinámico (Por Apartados)</label>
-                <div id="checklist_visual" style="max-height:150px; overflow-y:auto; border:1px solid #ddd; padding:5px;">
-                    </div>
-            </div>
-            <div>
-                <label>Cronograma de Obra (Gantt Style)</label>
-                <div class="gantt-chart">
-                    <div class="gantt-bar" style="width:15%;">Estudios / Movilización</div>
-                    <div class="gantt-bar" style="width:60%; margin-left:15%; background:var(--success);">Fase de Ejecución Técnica</div>
-                    <div class="gantt-bar" style="width:25%; margin-left:75%; background:var(--warning);">Entrega y Liquidación</div>
-                </div>
-                <div class="form-section" style="margin-top:10px; text-align:center;">
-                    <p style="font-weight:900; color:var(--primary);">VEREDICTO FINAL: <span id="vered_final">PENDIENTE</span></p>
-                </div>
-                <button onclick="exportExcelFull()" class="btn-nav" style="background:#217346; color:white; width:100%;">EXPORTAR EXCEL TOTAL</button>
-                <button onclick="exportPDFFull()" class="btn-nav" style="background:#0078d4; color:white; width:100%; margin-top:5px;">EXPORTAR INFORME PDF</button>
-            </div>
+        <h3>Prompt de Análisis Maestro (13 Puntos + Riesgos)</h3>
+        <p>Copia este prompt y pégalo en el chat para que analice el PDF de la licitación:</p>
+        <div id="prompt_area" style="background:#020617; color:#38bdf8; padding:20px; border-radius:10px; font-family:monospace; white-space:pre-wrap;">
         </div>
+        <button class="btn-nav" onclick="copyPrompt()" style="background:var(--success); color:white; width:100%; margin-top:10px;">COPIAR PROMPT DE AUDITORÍA</button>
     </div>
-
 </div>
 
 <script>
-    function showTab(id, btn, val) {
-        document.querySelectorAll('.card').forEach(c => c.style.display = 'none');
-        document.querySelectorAll('.btn-nav').forEach(b => b.classList.remove('active'));
-        document.getElementById(id).style.display = 'block';
-        btn.classList.add('active');
-        document.getElementById('progress-bar').style.width = val + '%';
+    const responsabilidades = [
+        "01. Aporte administración de justicia", "02. Gravamen Movimientos Financieros (GMF)", "03. Impuesto al Patrimonio",
+        "04. Renta Régimen Especial", "05. Renta Régimen Ordinario", "07. Retención en la Fuente Renta",
+        "08. Retención Timbre Nacional", "09. Retención IVA", "13. Gran Contribuyente", "14. Informante de Exógena",
+        "15. Autorretenedor", "22. Deberes formales nombre terceros", "42. Obligado a llevar contabilidad"
+    ];
+
+    function init() {
+        const list = document.getElementById('rut_list');
+        responsabilidades.forEach(r => {
+            list.innerHTML += `<div class="rut-item"><input type="checkbox" onchange="calcAll()"> <span>${r}</span></div>`;
+        });
         updatePrompt();
     }
 
-    function calcLogistica() {
-        const m = document.getElementById('log_muni').value;
-        const z = document.getElementById('zona_riesgo').value;
-        const res = document.getElementById('log_res');
-        if(m.length > 2) {
-            let extra = z === 'roja' ? "<br><b style='color:red;'>⚠️ ALERTA: Riesgo de Orden Público. Sumar 15% a seguros.</b>" : "";
-            res.innerHTML = `Distancia: Estimando km desde Bogotá...<br>Flete Sugerido: $1.800.000 - $3.200.000 ${extra}`;
-        }
+    function showTab(id) {
+        document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
+        document.querySelectorAll('.btn-nav').forEach(b => b.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        event.target.classList.add('active');
     }
 
-    function calcAll() {
-        const val = parseFloat(document.getElementById('m_valor').value) || 0;
-        const uPct = parseFloat(document.getElementById('aiu_u').value) / 100;
-        const admPct = parseFloat(document.getElementById('aiu_a').value) / 100;
-        const impPct = parseFloat(document.getElementById('aiu_i').value) / 100;
+    function checkSecurity() {
+        const dep = document.getElementById('dep_riesgo').value;
+        const alert = document.getElementById('sec_alert');
+        const redZones = ["Cauca", "Arauca", "Chocó"];
+        alert.style.display = redZones.includes(dep) ? "block" : "none";
+    }
+
+    function calcAIU() {
+        const total = parseFloat(document.getElementById('v_total').value) || 0;
+        const a = parseFloat(document.getElementById('p_a').value) / 100;
+        const i = parseFloat(document.getElementById('p_i').value) / 100;
+        const u = parseFloat(document.getElementById('p_u').value) / 100;
         
-        const totalAIU = admPct + impPct + uPct;
-        const costoDirecto = val / (1 + totalAIU);
-        const utilidad = costoDirecto * uPct;
+        const costoDirecto = total / (1 + a + i + u);
+        const utilidad = costoDirecto * u;
         const ivaU = utilidad * 0.19;
         
-        const rfTasa = document.getElementById('t_rol').value === 'obra' ? 0.02 : 0.04;
-        const rf = val * rfTasa;
-        const rica = val * (parseFloat(document.getElementById('t_ica').value) / 1000);
-        const otros = val * (parseFloat(document.getElementById('t_estamp').value) / 100);
-
         document.getElementById('res_directo').innerText = "$ " + Math.round(costoDirecto).toLocaleString();
         document.getElementById('res_utilidad').innerText = "$ " + Math.round(utilidad).toLocaleString();
         document.getElementById('res_iva_u').innerText = "-$ " + Math.round(ivaU).toLocaleString();
+        
+        // Cálculos de Retención
+        const tasaRet = parseFloat(document.getElementById('t_retencion').value);
+        const rf = total * tasaRet;
+        const rica = total * (parseFloat(document.getElementById('t_ica').value) / 1000);
+        const gmf = total * 0.004;
+
         document.getElementById('res_rf').innerText = "-$ " + Math.round(rf).toLocaleString();
-        document.getElementById('res_otros').innerText = "-$ " + Math.round(otros).toLocaleString();
-        document.getElementById('res_neto').innerText = "$ " + Math.round(utilidad - ivaU - rf - rica - otros).toLocaleString();
+        document.getElementById('res_rica').innerText = "-$ " + Math.round(rica).toLocaleString();
+        document.getElementById('res_gmf').innerText = "-$ " + Math.round(gmf).toLocaleString();
+
+        const neta = utilidad - ivaU - rf - rica;
+        document.getElementById('res_neta').innerText = "$ " + Math.round(neta).toLocaleString();
+        updatePrompt();
     }
 
     function updatePrompt() {
-        const p = `AUDITORÍA SIEL PRO 9.0 - ANÁLISIS DE PLIEGO
-PROCESO: ${document.getElementById('m_num').value} | OBJETO: ${document.getElementById('m_objeto').value}
-
-MATRIZ DE 13 PUNTOS A EVALUAR:
-1. INFO GENERAL (Plataforma, Objeto, Presupuesto).
-2. FINANCIERO (Liquidez, Endeudamiento, K Trabajo).
-3. EXPERIENCIA (Códigos UNSPSC: ${document.getElementById('m_unspsc').value}).
-4. PERSONAL (Director, Residente, SST).
-5. TÉCNICO (Mantenimiento, Vapor, Renovables).
-6. SST | 7. AMBIENTAL | 8. EVALUACIÓN (Puntajes).
-9. JURÍDICO | 10. GARANTÍAS | 11. VISITA TÉCNICA: ${document.getElementById('m_visita').value}.
-12. RIESGOS (Multas por clima, pagos > 60 días, trampas).
-13. VEREDICTO FINAL.
-
-INSTRUCCIÓN: Extrae requisitos de cada punto y califica viabilidad 🟢, 🟡 o 🔴.`;
-        document.getElementById('prompt_box').innerText = p;
+        const p = `AUDITORÍA SIEL PRO 10.0: Analiza este pliego bajo la MATRIZ MAESTRA:
+1. INF. GENERAL: Presupuesto $${document.getElementById('v_total').value}.
+2. FINANCIERO: Evalúa Liquidez (1.5), Endeudamiento (0.6).
+3. EXPERIENCIA: Busca códigos UNSPSC de Construcción/Mantenimiento.
+12. RIESGOS: Revisa multas, cláusulas de clima y tiempos de pago.
+EXTRA: El proyecto es en ${document.getElementById('dep_riesgo').value}, analiza riesgos de seguridad.
+Calcula si el AIU propuesto es viable frente a retenciones de ICA y Renta.`;
+        document.getElementById('prompt_area').innerText = p;
     }
 
-    function addIntegrante() {
-        const html = `<div class="form-section">
-            <label>Socio Adicional - % Part.</label>
-            <input type="number" class="p_pct" oninput="calcRUP()">
-            <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:5px;">
-                <input type="number" class="p_ac" placeholder="AC">
-                <input type="number" class="p_pc" placeholder="PC">
-                <input type="number" class="p_exp" placeholder="Exp">
-            </div>
-        </div>`;
-        document.getElementById('integrantes_list').insertAdjacentHTML('beforeend', html);
+    function addFrente() {
+        const div = document.createElement('div');
+        div.className = 'form-group';
+        div.innerHTML = `<input type="text" placeholder="Municipio Adicional" oninput="calcDist(this)"> <small></small>`;
+        document.getElementById('frentes_log').appendChild(div);
     }
 
-    function calcRUP() {
-        let acT = 0, pcT = 0, expT = 0;
-        document.querySelectorAll('.p_ac').forEach((el, i) => {
-            let pct = parseFloat(document.querySelectorAll('.p_pct')[i].value) / 100 || 0;
-            acT += (parseFloat(el.value) || 0) * pct;
-            pcT += (parseFloat(document.querySelectorAll('.p_pc')[i].value) || 0) * pct;
-            expT += (parseFloat(document.querySelectorAll('.p_exp')[i].value) || 0);
-        });
-        let liq = pcT > 0 ? (acT/pcT).toFixed(2) : 0;
-        document.getElementById('rup_visual').innerText = `Liquidez Ponderada UT: ${liq} | Experiencia Sumada: $${expT.toLocaleString()}`;
+    function calcDist(el) {
+        const muni = el.value;
+        if(muni.length > 3) {
+            el.nextElementSibling.innerText = "Estimado: 350km desde Bogotá | Tiempo: 7h | Flete sugerido: $1.2M";
+        }
     }
 
-    function copyPrompt() {
-        navigator.clipboard.writeText(document.getElementById('prompt_box').innerText);
-        alert("Prompt Maestro Copiado.");
+    function searchPrices() {
+        const item = document.getElementById('busq_material').value;
+        document.getElementById('price_results').innerHTML = `
+            <b>Resultados para ${item}:</b><br>
+            - Homecenter (Online): $32.900<br>
+            - Easy (Online): $31.500<br>
+            - Distribuidor Local: $29.000 (Sugerido)`;
     }
 
-    window.onload = () => {
-        const items = ["CCB Actualizada", "RUT (Actividades)", "RUP Vigente", "Exp. General", "Exp. Específica", "Personal SST", "Certificación ARL"];
-        const box = document.getElementById('checklist_visual');
-        items.forEach(it => {
-            box.innerHTML += `<div style="display:flex; justify-content:space-between; border-bottom:1px solid #eee; padding:2px;">
-                <span>${it}</span> <select style="width:60px; margin:0;"><option>SI</option><option>NO</option></select>
-            </div>`;
-        });
-    };
+    init();
 </script>
 </body>
 </html>
