@@ -233,6 +233,59 @@ ACTÚA COMO AUDITOR SENIOR. Analiza el pliego adjunto bajo estos 13 puntos:
         alert("Prompt Maestro Copiado.");
     }
 
+    <div id="tab-final" class="card">
+        <h2 class="section-title">PROMPT MAESTRO DE AUDITORÍA</h2>
+        <div class="prompt-box" id="prompt_text">
+ACTÚA COMO AUDITOR SENIOR DE LICITACIONES EN COLOMBIA. Analiza el pliego adjunto bajo estos 13 puntos críticos:
+1. INFORMACIÓN GENERAL: Presupuesto vs Alcance.
+2. INDICADORES RUP: Verifica Liquidez, Endeudamiento y Razón Ácida exigida.
+3. EXPERIENCIA: Códigos UNSPSC requeridos.
+4. PERSONAL: Perfiles de Ingenieros, SST y años de experiencia.
+5. PLAZOS: Cronograma de ejecución y entrega.
+6. FORMA DE PAGO: Anticipos, actas parciales o pago único.
+7. PÓLIZAS: Porcentajes de Cumplimiento, Salarios y Calidad.
+8. MULTAS: Detecta cláusulas de sanciones por retrasos.
+9. TRAMPAS: Busca condiciones que favorezcan a un proponente específico.
+10. LUGAR: Evalúa condiciones de transporte y logística.
+11. VISITA TÉCNICA: ¿Es obligatoria para participar?
+12. RIESGOS: Matriz de riesgos y equilibrio económico.
+13. ESTATUTÓN: Revisa si hay impuestos locales o estampillas no declaradas.
+        </div>
+        <button onclick="copyPrompt()" class="btn-nav" style="width:100%; background:var(--success); color:white; margin-bottom:25px;">
+            <i class="fas fa-copy"></i> COPIAR PROMPT PARA LA IA
+        </button>
+
+        <h2 class="section-title" style="color: #e11d48;">
+            <i class="fas fa-robot"></i> RECEPTOR DE RESULTADOS IA
+        </h2>
+        <p><b>Instrucciones:</b> Una vez Gemini te dé el veredicto de los 13 puntos, pégalo aquí abajo para integrarlo al informe oficial.</p>
+        <textarea id="ia_veredicto" rows="12" 
+            style="border: 2px solid var(--primary); background: #f0f7ff;" 
+            placeholder="Pega aquí el resultado del análisis de la IA..."></textarea>
+
+        <div class="grid-2" style="margin-top:20px;">
+            <button onclick="exportPDF()" class="btn-nav" style="background:var(--primary); color:white; height: 60px;">
+                <i class="fas fa-file-pdf"></i> GENERAR INFORME PDF SIEL
+            </button>
+            <button onclick="exportExcel()" class="btn-nav" style="background:#1d6f42; color:white; height: 60px;">
+                <i class="fas fa-file-excel"></i> GENERAR MATRIZ EXCEL
+            </button>
+        </div>
+
+        <h2 class="section-title" style="margin-top:40px;">Cronograma de Programación (Estilo MS Project)</h2>
+        <div class="gantt-container">
+            <div class="gantt-header">
+                <div class="gantt-task">Tarea / Actividad</div>
+                <script>for(let i=1;i<=12;i++) document.write(`<div>Mes ${i}</div>`);</script>
+            </div>
+            <div class="gantt-row"><div class="gantt-task">1. Legalización y Pólizas</div><div class="gantt-bar bar-blue" style="grid-column: 2 / span 1;"></div></div>
+            <div class="gantt-row"><div class="gantt-task">2. Ejecución de Obra / Servicio</div><div class="gantt-bar bar-gold" style="grid-column: 3 / span 8;"></div></div>
+            <div class="gantt-row"><div class="gantt-task">3. Liquidación y Cierre</div><div class="gantt-bar bar-blue" style="grid-column: 11 / span 2;"></div></div>
+        </div>
+    </div>
+    
+    }
+    
     function exportExcel() {
         let wb = XLSX.utils.book_new();
         let ws = XLSX.utils.aoa_to_sheet([["BRICED CONSULTING - MATRIZ DE COSTOS"], ["Base", document.getElementById('v_base').value], ["Utilidad Neta", document.getElementById('out_neta').innerText]]);
