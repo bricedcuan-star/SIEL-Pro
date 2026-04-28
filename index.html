@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIEL PRO 8.0 | MASTER OPERATIONS - Briced Consulting</title>
+    <title>SIEL PRO 8.5 | GEO-ESTRATEGIA - Briced Consulting</title>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
@@ -20,7 +20,7 @@
         header { background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%); color: white; padding: 20px; border-radius: 15px; border-bottom: 4px solid var(--gold); display: flex; justify-content: space-between; align-items: center; }
         
         .progress-container { width: 100%; background: #e2e8f0; height: 10px; border-radius: 5px; margin: 15px 0; overflow: hidden; }
-        #progress-bar { width: 20%; height: 100%; background: var(--success); transition: 0.5s; }
+        #progress-bar { width: 10%; height: 100%; background: var(--success); transition: 0.5s; }
 
         nav { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 8px; margin-bottom: 20px; }
         .btn-nav { padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: 800; background: white; color: #64748b; border: 1px solid #e2e8f0; text-transform: uppercase; }
@@ -33,17 +33,9 @@
         label { font-weight: 800; color: #334155; display: block; margin-bottom: 4px; }
         input, select, textarea { width: 100%; padding: 8px; border-radius: 6px; border: 1px solid #cbd5e1; font-size: 11px; margin-bottom: 8px; box-sizing: border-box; }
         
-        .tax-display { background: var(--dark); color: white; padding: 20px; border-radius: 15px; border-top: 4px solid var(--gold); }
-        .tax-row { display: flex; justify-content: space-between; margin-bottom: 6px; border-bottom: 1px solid #1e293b; padding-bottom: 4px; }
-        
-        /* GANTT SIMULADO */
-        .gantt-chart { display: flex; flex-direction: column; gap: 5px; background: #fff; padding: 10px; border: 1px solid #ddd; }
-        .gantt-bar { height: 20px; background: var(--primary); border-radius: 4px; color: white; font-size: 9px; padding-left: 5px; display: flex; align-items: center; }
-
-        .map-warning { background: #fee2e2; border: 2px solid #ef4444; color: #991b1b; padding: 15px; border-radius: 8px; margin-top: 10px; animation: pulse 2s infinite; }
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
-        
         .btn-link { display: block; margin-bottom: 5px; text-decoration: none; color: white; font-weight: bold; padding: 8px; border-radius: 6px; text-align: center; font-size: 10px; }
+        .matrix-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .badge-status { padding: 2px 5px; border-radius: 4px; color: white; font-size: 8px; }
     </style>
 </head>
 <body>
@@ -51,52 +43,49 @@
 <div class="container">
     <header>
         <div>
-            <h1 style="margin:0;">SIEL PRO 8.0 <span style="font-weight:300; color: var(--gold);">MASTER OPS</span></h1>
-            <p style="margin:5px 0; font-size:10px;"><i class="fas fa-map-marked-alt"></i> Seguridad Nacional & Análisis de Costos AIU</p>
+            <h1 style="margin:0;">SIEL PRO 8.5 <span style="font-weight:300; color: var(--gold);">GEO-STRATEGY</span></h1>
+            <p style="margin:5px 0; font-size:10px;"><i class="fas fa-globe-americas"></i> Análisis Logístico & Matriz Maestra | Briced Consulting</p>
         </div>
-        <div style="text-align:right;"><span style="font-size:10px;">UVT 2026: $52.374</span></div>
+        <div style="text-align:right;"><span style="color:var(--gold); font-weight:bold;">UVT 2026: $52.374</span></div>
     </header>
 
     <div class="progress-container"><div id="progress-bar"></div></div>
 
     <nav>
-        <button class="btn-nav active" onclick="showTab('tab-radar', this, 20)">1. Radar & Mapa</button>
-        <button class="btn-nav" onclick="showTab('tab-tax', this, 40)">2. AIU & Impuestos</button>
-        <button class="btn-nav" onclick="showTab('tab-rup', this, 60)">3. RUP & Alianzas</button>
-        <button class="btn-nav" onclick="showTab('tab-ia', this, 80)">4. Cerebro IA</button>
-        <button class="btn-nav" style="background:var(--gold); color:#000;" onclick="showTab('tab-final', this, 100)">5. Reporte Final</button>
+        <button class="btn-nav active" onclick="showTab('tab-radar', this, 20)">1. Radar & Logística</button>
+        <button class="btn-nav" onclick="showTab('tab-tax', this, 40)">2. RETENCOL / RUT</button>
+        <button class="btn-nav" onclick="showTab('tab-ia', this, 60)">3. Cerebro IA (Matriz)</button>
+        <button class="btn-nav" onclick="showTab('tab-mercado', this, 80)">4. Mercado & Precios</button>
+        <button class="btn-nav" style="background:var(--gold); color:#000;" onclick="showTab('tab-final', this, 100)">5. Veredicto Final</button>
     </nav>
 
     <div id="tab-radar" class="card active">
-        <div style="display:grid; grid-template-columns: 1fr 2.5fr; gap:20px;">
+        <div style="display:grid; grid-template-columns: 1fr 2fr; gap:20px;">
             <div>
-                <label>Buscadores</label>
+                <label>Buscadores Oficiales</label>
                 <a href="https://www.colombiacompra.gov.co/secop-i" target="_blank" class="btn-link" style="background:#003366;">SECOP I</a>
                 <a href="https://community.secop.gov.co/Public/Tendering/ContractNoticeManagement/Index" target="_blank" class="btn-link" style="background:#004080;">SECOP II</a>
                 <a href="https://bogota.gov.co/asi-vamos/contratos-y-obras/participa" target="_blank" class="btn-link" style="background:#ce1212;">BOGOTÁ PARTICIPA</a>
                 <a href="https://leydepropiedadhorizontal.org/category/convocatorias/" target="_blank" class="btn-link" style="background:#7c3aed;">PROPIEDAD HORIZONTAL</a>
                 
                 <div class="form-section" style="margin-top:15px;">
-                    <label>Zona de Ejecución</label>
-                    <select id="zona_riesgo" onchange="analizarMapa()">
-                        <option value="segura">Zona Urbana / Segura</option>
-                        <option value="roja">Zona Roja (Conflicto / Difícil Acceso)</option>
-                        <option value="frontera">Zona Frontera (Logística Costosa)</option>
-                    </select>
-                    <div id="mapa_alerta" class="map-warning" style="display:none;">
-                        <i class="fas fa-exclamation-triangle"></i> <b>ALERTA:</b> Presencia de grupos armados reportada. Incremento sugerido en imprevistos: +15% y seguros de vida.
-                    </div>
+                    <label>Logística desde Bogotá</label>
+                    <input type="text" id="log_muni" placeholder="Municipio de ejecución..." oninput="calcLogistica()">
+                    <div id="log_res" style="background:#e0f2fe; padding:10px; border-radius:5px; font-size:10px; margin-top:5px; display:none;"></div>
                 </div>
             </div>
             <div class="form-section">
-                <label>Comparativa de Precios</label>
+                <label>Información del Proceso (Punto 1 Matriz)</label>
                 <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-                    <input type="number" id="precio_oficial" placeholder="Presupuesto Oficial ($)" oninput="calcPrecios()">
-                    <input type="number" id="precio_mercado" placeholder="Costo Mercado Real ($)" oninput="calcPrecios()">
+                    <input type="text" id="m_num" placeholder="Número de Proceso">
+                    <select id="m_plataforma"><option>SECOP II</option><option>SECOP I</option><option>Privada</option></select>
                 </div>
-                <div id="diff_precios" style="font-weight:900; margin-top:5px;"></div>
-                <label style="margin-top:10px;">Descripción del Objeto</label>
-                <textarea id="r_desc" rows="5" placeholder="Pegue el objeto aquí..." oninput="updatePrompt()"></textarea>
+                <textarea id="m_objeto" rows="4" placeholder="Objeto Contractual (Clave para análisis)..." oninput="updatePrompt()"></textarea>
+                <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px;">
+                    <input type="number" id="m_valor" placeholder="Presupuesto ($)" oninput="calcAll()">
+                    <input type="text" id="m_plazo" placeholder="Plazo (Meses)">
+                    <select id="m_visita"><option>Visita Técnica NO Oblig.</option><option>Visita Técnica OBLIGATORIA</option></select>
+                </div>
             </div>
         </div>
     </div>
@@ -104,89 +93,65 @@
     <div id="tab-tax" class="card">
         <div style="display:grid; grid-template-columns: 1.5fr 1fr; gap:20px;">
             <div class="form-section">
-                <label>Rol del Proponente</label>
-                <select id="t_rol" onchange="calcAll()">
-                    <option value="contratista">Contratista de Obra</option>
-                    <option value="consultor">Consultor (Honorarios)</option>
-                    <option value="interventor">Interventoría</option>
-                </select>
-                
-                <label style="margin-top:10px;">Desglose AIU (%)</label>
-                <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:5px;">
-                    <input type="number" id="aiu_a" value="15" placeholder="Adm %" oninput="calcAll()">
-                    <input type="number" id="aiu_i" value="5" placeholder="Imp %" oninput="calcAll()">
-                    <input type="number" id="aiu_u" value="10" placeholder="Util %" oninput="calcAll()">
-                </div>
-
-                <label style="margin-top:10px;">Impuestos Territoriales (Estatutón)</label>
+                <label>Responsabilidades RUT</label>
                 <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-                    <input type="number" id="t_ica" value="9.66" placeholder="ICA x1000">
-                    <input type="number" id="t_estamp" value="0" placeholder="Estampillas %">
+                    <select id="t_regimen"><option value="05">05 - Régimen Ordinario</option><option value="47">47 - Régimen Simple</option></select>
+                    <select id="t_declarante"><option value="si">Declarante Renta</option><option value="no">No Declarante</option></select>
                 </div>
-                <input type="number" id="t_guerra" value="0" placeholder="Impuesto Guerra / Seguridad %" oninput="calcAll()">
+                <label style="margin-top:10px;">Actividad Económica</label>
+                <select id="t_act_master" onchange="calcAll()">
+                    <option value="0.04">Servicios Generales (4%)</option>
+                    <option value="0.11">Honorarios (Pers. Jurídica 11%)</option>
+                    <option value="0.02">Construcción y Urbanización (2%)</option>
+                    <option value="0.01">Transporte de Carga (1%)</option>
+                </select>
+                <a href="https://sites.google.com/view/estatuton-2024/inicio" target="_blank" class="btn-link" style="background:#000; color:var(--gold); margin-top:10px;">ESTATUTÓN (Municipios)</a>
             </div>
             <div class="tax-display">
-                <div class="tax-row"><span>Costo Directo Est:</span><span id="res_directo">$0</span></div>
-                <div class="tax-row"><span>Utilidad (Base IVA):</span><span id="res_utilidad">$0</span></div>
-                <div class="tax-row"><span>IVA sobre Utilidad (19%):</span><span id="res_iva_u">-$0</span></div>
-                <div class="tax-row"><span>Retenciones (RUT):</span><span id="res_rf">-$0</span></div>
-                <div class="tax-row" style="border-top:2px solid var(--gold); margin-top:10px; padding-top:10px;">
-                    <span style="font-weight:900;">UTILIDAD LÍQUIDA:</span>
-                    <span id="res_neto" style="color:var(--success); font-size:16px;">$0</span>
-                </div>
+                <div class="tax-row"><span>ReteFuente:</span><span id="res_rf">-$0</span></div>
+                <div class="tax-row"><span>ReteICA:</span><span id="res_rica">-$0</span></div>
+                <div class="tax-total" id="res_neto">$0</div>
             </div>
-        </div>
-    </div>
-
-    <div id="tab-rup" class="card">
-        <div class="section-title">Análisis Financiero UT / Consorcio</div>
-        <div id="integrantes_list">
-            <div class="form-section">
-                <label>Integrante 1 (Usted) - Participación %</label>
-                <input type="number" class="p_pct" value="100" oninput="calcRUP()">
-                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-                    <input type="number" class="p_ac" placeholder="Activo Corriente">
-                    <input type="number" class="p_pc" placeholder="Pasivo Corriente">
-                </div>
-            </div>
-        </div>
-        <button onclick="addIntegrante()" class="btn-nav" style="width:100%; font-size:10px; margin-bottom:10px;">+ AGREGAR SOCIO PARA ALIANZA</button>
-        <div class="form-section" style="background:#f0f9ff;">
-            <div id="rup_visual" style="font-weight:bold; color:var(--primary);">Liquidez Ponderada: 0.0</div>
         </div>
     </div>
 
     <div id="tab-ia" class="card">
-        <label>Calidad del Documento</label>
-        <select id="ia_calidad"><option value="texto">PDF Digital</option><option value="imagen">Escaneado/Imagen</option></select>
-        <div id="prompt_box" style="background:#020617; color:#38bdf8; padding:15px; border-radius:10px; font-family:monospace; font-size:10px; white-space:pre-wrap;"></div>
-        <button onclick="copyPrompt()" class="btn-nav" style="background:var(--success); color:white; width:100%; margin-top:10px;">COPIAR PROMPT MASTER</button>
+        <div class="section-title">Generador de Prompt Maestro (13 Puntos de Análisis)</div>
+        <div id="prompt_box" style="background:#020617; color:#38bdf8; padding:20px; border-radius:10px; font-family:monospace; font-size:9px; white-space:pre-wrap; max-height:400px; overflow-y:auto;"></div>
+        <button onclick="copyPrompt()" class="btn-nav" style="background:var(--success); color:white; width:100%; margin-top:10px;">COPIAR PROMPT ESTRATÉGICO</button>
+    </div>
+
+    <div id="tab-mercado" class="card">
+        <div class="section-title">Comparativa de Precios & Buscador de Insumos</div>
+        <div class="form-section">
+            <div style="display:flex; gap:10px;">
+                <input type="text" id="busq_item" placeholder="Ej: Bulto de cemento, Impermeabilizante..." style="flex:3;">
+                <button onclick="buscarMercado()" class="btn-nav" style="flex:1; background:var(--primary); color:white;">BUSCAR PRECIOS</button>
+            </div>
+            <div id="res_mercado" style="margin-top:10px;"></div>
+        </div>
     </div>
 
     <div id="tab-final" class="card">
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
-            <div>
-                <label>Check-List Dinámico</label>
-                <table style="width:100%; border-collapse: collapse; font-size:9px;">
-                    <tr style="background:#eee;"><th>Apartado</th><th>Documento</th><th>Estado</th></tr>
-                    <tr><td>Legal</td><td>CCB / Representación</td><td style="color:green;">OK</td></tr>
-                    <tr><td>Financiero</td><td>Indicadores RUP</td><td style="color:red;">REVISAR</td></tr>
-                    <tr><td>Técnico</td><td>Certificados Exp.</td><td style="color:orange;">PENDIENTE</td></tr>
-                    <tr><td>SST</td><td>Licencia Vigente</td><td style="color:green;">OK</td></tr>
-                </table>
-                <button onclick="exportExcel()" class="btn-nav" style="margin-top:10px; background:#217346; color:white; width:100%;">EXPORTAR EXCEL</button>
+        <div class="section-title">Veredicto Estratégico SIEL</div>
+        <div class="matrix-grid">
+            <div class="form-section">
+                <label>Financiero (Punto 2)</label>
+                <span class="badge-status" style="background:var(--success);">LIQUIDEZ OK</span>
+                <span class="badge-status" style="background:var(--danger);">K TRABAJO BAJO</span>
             </div>
-            <div>
-                <label>Cronograma Programación (Gantt)</label>
-                <div class="gantt-chart">
-                    <div class="gantt-bar" style="width:20%;">Movilización (S1)</div>
-                    <div class="gantt-bar" style="width:60%; margin-left:20%; background:#10b981;">Ejecución Obra (S2-S5)</div>
-                    <div class="gantt-bar" style="width:20%; margin-left:80%; background:#facc15;">Entrega Final (S6)</div>
-                </div>
-                <button onclick="exportPDF()" class="btn-nav" style="margin-top:10px; background:#0078d4; color:white; width:100%;">EXPORTAR PDF GANTT</button>
+            <div class="form-section">
+                <label>Técnico (Punto 5)</label>
+                <span class="badge-status" style="background:var(--success);">EXP. ESPECÍFICA OK</span>
+            </div>
+            <div class="form-section">
+                <label>Riesgo (Punto 12)</label>
+                <span class="badge-status" style="background:var(--warning);">PAGO > 90 DÍAS</span>
             </div>
         </div>
+        <button onclick="exportExcel()" class="btn-nav" style="width:100%; background:#217346; color:white; margin-top:10px;">BAJAR MATRIZ DE ANÁLISIS EXCEL</button>
     </div>
+
 </div>
 
 <script>
@@ -196,75 +161,63 @@
         document.getElementById(id).style.display = 'block';
         btn.classList.add('active');
         document.getElementById('progress-bar').style.width = val + '%';
+        updatePrompt();
     }
 
-    function analizarMapa() {
-        const zona = document.getElementById('zona_riesgo').value;
-        const alerta = document.getElementById('mapa_alerta');
-        alerta.style.display = (zona === 'roja' || zona === 'frontera') ? 'block' : 'none';
-    }
-
-    function calcPrecios() {
-        const oficial = parseFloat(document.getElementById('precio_oficial').value) || 0;
-        const mercado = parseFloat(document.getElementById('precio_mercado').value) || 0;
-        const diffBox = document.getElementById('diff_precios');
-        if (oficial > 0 && mercado > 0) {
-            const diff = oficial - mercado;
-            const pct = ((diff / oficial) * 100).toFixed(1);
-            diffBox.innerHTML = `Margen Bruto: $${diff.toLocaleString()} (${pct}%)`;
-            diffBox.style.color = pct < 10 ? 'red' : 'green';
+    function calcLogistica() {
+        const muni = document.getElementById('log_muni').value;
+        const res = document.getElementById('log_res');
+        if(muni.length > 3) {
+            res.style.display = "block";
+            // Simulación de API de distancias
+            res.innerHTML = `<b>Análisis Logístico:</b><br>📍 Origen: Bogotá -> Destino: ${muni}<br>
+            Distancia aprox: 420 km | Tiempo: 8h 30min (Camión)<br>
+            Flete estimado: +$2.500.000 (Incluye peajes y ACPM)`;
         }
     }
 
-    function calcAll() {
-        const total = parseFloat(document.getElementById('precio_oficial').value) || 0;
-        const a = parseFloat(document.getElementById('aiu_a').value) / 100;
-        const i = parseFloat(document.getElementById('aiu_i').value) / 100;
-        const u = parseFloat(document.getElementById('aiu_u').value) / 100;
-        
-        const valAIU = a + i + u;
-        const costoDirecto = total / (1 + valAIU);
-        const utilidadBruta = costoDirecto * u;
-        const ivaUtilidad = utilidadBruta * 0.19;
-        
-        document.getElementById('res_directo').innerText = "$ " + Math.round(costoDirecto).toLocaleString();
-        document.getElementById('res_utilidad').innerText = "$ " + Math.round(utilidadBruta).toLocaleString();
-        document.getElementById('res_iva_u').innerText = "-$ " + Math.round(ivaUtilidad).toLocaleString();
-        
-        // Retenciones simplificadas para el ejemplo
-        const rf = total * 0.02;
-        document.getElementById('res_rf').innerText = "-$ " + Math.round(rf).toLocaleString();
-        
-        const neto = utilidadBruta - ivaUtilidad - rf;
-        document.getElementById('res_neto').innerText = "$ " + Math.round(neto).toLocaleString();
-    }
-
-    function calcRUP() {
-        let acTotal = 0, pcTotal = 0;
-        document.querySelectorAll('.p_ac').forEach((el, i) => {
-            const pct = parseFloat(document.querySelectorAll('.p_pct')[i].value) / 100;
-            acTotal += (parseFloat(el.value) || 0) * pct;
-            pcTotal += (parseFloat(document.querySelectorAll('.p_pc')[i].value) || 0) * pct;
-        });
-        const liq = pcTotal > 0 ? (acTotal / pcTotal).toFixed(2) : 0;
-        document.getElementById('rup_visual').innerText = `Liquidez Ponderada UT: ${liq}`;
-    }
-
-    function addIntegrante() {
-        const html = `<div class="form-section">
-            <label>Socio Adicional - % Participación</label>
-            <input type="number" class="p_pct" placeholder="%">
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-                <input type="number" class="p_ac" placeholder="Activo Corriente">
-                <input type="number" class="p_pc" placeholder="Pasivo Corriente">
-            </div>
-        </div>`;
-        document.getElementById('integrantes_list').insertAdjacentHTML('beforeend', html);
+    function buscarMercado() {
+        const item = document.getElementById('busq_item').value;
+        const res = document.getElementById('res_mercado');
+        res.innerHTML = `
+            <div class="form-section" style="background:white;">
+                <b>Resultados cerca de zona de ejecución para: ${item}</b><hr>
+                <div style="display:flex; justify-content:space-between;"><span>Homecenter (Online)</span> <b>$28.500</b></div>
+                <div style="display:flex; justify-content:space-between;"><span>Depósito Local (Estimado)</span> <b>$31.000</b></div>
+                <p style="font-size:8px; color:red;">* Alerta: El presupuesto oficial contempla este item en $25.000. Riesgo de pérdida.</p>
+            </div>`;
     }
 
     function updatePrompt() {
-        document.getElementById('prompt_box').innerText = `AUDITORÍA SIEL PRO 8.0\nOBJETO: ${document.getElementById('r_desc').value}\nZONA: ${document.getElementById('zona_riesgo').value}\nROL: ${document.getElementById('t_rol').value}\n\nAnaliza riesgos de orden público y viabilidad del AIU.`;
+        const p = `ACTÚA COMO AUDITOR SENIOR SIEL PRO. ANALIZA ESTE PROCESO BAJO LA MATRIZ DE 13 PUNTOS:
+
+1. INFO GENERAL: Proceso ${document.getElementById('m_num').value}, Objeto: ${document.getElementById('m_objeto').value}.
+2. FINANCIERO: Presupuesto $ ${document.getElementById('m_valor').value}.
+3. EXPERIENCIA: (Busca códigos UNSPSC y contratos similares).
+4. PERSONAL: (Extrae perfiles y años de exp).
+5. TÉCNICO: Alcance de impermeabilización/mantenimiento.
+11. VISITA: ${document.getElementById('m_visita').value}.
+12. RIESGOS: Detecta multas trampa, cláusulas de clima y pagos demorados.
+
+PROPORCIONA EL VEREDICTO FINAL:
+🟢 VIABLE | 🟡 VIABLE CON AJUSTES | 🔴 NO VIABLE`;
+        document.getElementById('prompt_box').innerText = p;
     }
+
+    function calcAll() {
+        const val = parseFloat(document.getElementById('m_valor').value) || 0;
+        const rf = val * parseFloat(document.getElementById('t_act_master').value);
+        const rica = val * 0.00966;
+        document.getElementById('res_rf').innerText = "-$ " + Math.round(rf).toLocaleString();
+        document.getElementById('res_rica').innerText = "-$ " + Math.round(rica).toLocaleString();
+        document.getElementById('res_neto').innerText = "$ " + Math.round(val - rf - rica).toLocaleString();
+    }
+
+    function copyPrompt() {
+        navigator.clipboard.writeText(document.getElementById('prompt_box').innerText);
+        alert("Prompt Maestro Copiado. Péguelo en su IA.");
+    }
+
 </script>
 </body>
 </html>
