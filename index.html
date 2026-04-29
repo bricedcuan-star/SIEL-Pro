@@ -1,169 +1,153 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>SIEL PRO V7 | SIEL BASICO </title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;700;900&display=swap" rel="stylesheet">
-    <style>
-        :root { --azul-profundo: #061624; --azul-briced: #0C2D48; --oro: #D4AF37; --fondo: #f8fafc; --blanco: #ffffff; --rojo: #e11d48; }
-        body { font-family: 'Lexend', sans-serif; margin: 0; background-color: var(--fondo); color: #1e293b; }
-        header { background: linear-gradient(135deg, var(--azul-profundo) 0%, var(--azul-briced) 100%); color: var(--blanco); padding: 20px 50px; border-bottom: 5px solid var(--oro); display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 24px; font-weight: 900; letter-spacing: 2px; }
-        .logo span { color: var(--oro); }
-        .container { max-width: 1100px; margin: -30px auto 50px auto; padding: 0 20px; }
-        .glass-card { background: var(--blanco); border-radius: 20px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 25px; border-left: 6px solid var(--azul-briced); }
-        .form-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 30px; margin-top: 15px; }
-        label { display: block; font-size: 11px; font-weight: 800; color: #64748b; margin-bottom: 5px; text-transform: uppercase; }
-        input, textarea, select { width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 10px; font-family: inherit; font-weight: 600; box-sizing: border-box; background: #fcfcfc; }
-        .prompt-box { background: var(--azul-profundo); color: #a5b4fc; padding: 15px; border-radius: 12px; border: 1px dashed var(--oro); margin-top: 10px; }
-        .btn-copy { background: var(--oro); color: var(--azul-profundo); border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: 900; font-size: 11px; margin-top: 5px; }
-        .decision-hero { border-radius: 20px; padding: 35px; text-align: center; color: var(--blanco); transition: 0.5s; }
-        .status-go { background: linear-gradient(135deg, #059669 0%, #10b981 100%); }
-        .status-cond { background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%); }
-        .status-nogo { background: linear-gradient(135deg, #be123c 0%, #e11d48 100%); }
-        .btn-premium { background: var(--oro); color: var(--azul-profundo); padding: 18px 40px; border-radius: 50px; border: none; font-weight: 900; cursor: pointer; text-transform: uppercase; margin-top: 20px; box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3); }
-    </style>
-</head>
-<body>
+🧾 RESUMEN EJECUTIVO
 
-<header>
-    <div class="logo">SIEL PRO <span>V7</span></div>
-    <div style="text-align: right;">
-        <div style="font-weight: 900; font-size: 14px;">BRICED CONSULTING</div>
-        <div style="font-size: 10px; color: var(--oro);">SISTEMA MULTIPÁGINA PRO</div>
-    </div>
-</header>
+El pliego corresponde a una convocatoria privada (no estatal) para contratar servicios de aseo, mantenimiento y servicios generales por 12 meses en una copropiedad.
 
-<div style="height: 60px; background: linear-gradient(180deg, var(--azul-briced) 0%, transparent 100%);"></div>
+Modalidad: invitación abierta a empresas (no licitación pública Ley 80).
+Objeto: prestación integral con personal operativo (aseadora + todero).
+Duración: 12 meses.
+Evaluación: mezcla de precio + valor agregado.
+Riesgo dominante: subestimación de costos laborales (SMMLV 2026 + recargos).
 
-<div class="container">
-    <div class="glass-card">
-        <h3><i class="fas fa-file-contract" style="color: var(--oro);"></i> Identificación del Proceso</h3>
-        <div class="form-grid">
-            <div>
-                <label>Título del Proyecto</label>
-                <input type="text" id="proc_nombre" placeholder="Ej: Servicios de Aseo y Cafetería">
-                <label style="margin-top:15px">Entidad / Copropiedad</label>
-                <input type="text" id="proc_entidad" placeholder="Ej: Edificio La Riviera P.H.">
-                <div class="prompt-box">
-                    <p id="promptText" style="margin:0; font-size: 10px; line-height: 1.3;">"Genera un análisis técnico bajo los 13 puntos SIEL. Evita emojis complejos, usa viñetas claras."</p>
-                    <button class="btn-copy" onclick="copyPrompt()">COPIAR PROMPT</button>
-                </div>
-            </div>
-            <div>
-                <label>Resultado Análisis IA (Sin límites de texto)</label>
-                <textarea id="proc_resumen" rows="12" placeholder="Pega aquí el análisis largo de la IA..."></textarea>
-            </div>
-        </div>
-    </div>
+🔴 Conclusión ejecutiva:
+El pliego es funcional pero débil en estructuración técnica, financiera y jurídica, lo que puede generar:
 
-    <div class="glass-card">
-        <h3><i class="fas fa-tasks" style="color: var(--oro);"></i> Validación de Cumplimiento</h3>
-        <div style="display: flex; gap: 20px;">
-            <div style="flex:1">
-                <label>Administrativo</label>
-                <select onchange="updateUI()" class="status-sel"><option value="ok">✔ CUMPLE</option><option value="no">❌ NO CUMPLE</option></select>
-            </div>
-            <div style="flex:1">
-                <label>Experiencia</label>
-                <select onchange="updateUI()" class="status-sel"><option value="ok">✔ CUMPLE</option><option value="no">❌ NO CUMPLE</option></select>
-            </div>
-            <div style="flex:1">
-                <label>Financiero</label>
-                <select onchange="updateUI()" class="status-sel"><option value="ok">✔ CUMPLE</option><option value="no">❌ NO CUMPLE</option></select>
-            </div>
-        </div>
-    </div>
+selección subjetiva,
+riesgos laborales para la copropiedad,
+posibles conflictos contractuales.
+🔍 ANÁLISIS BAJO LOS 13 PUNTOS SIEL
+1. Experiencia técnica
+Se exige experiencia general en aseo y mantenimiento.
+No hay:
+número mínimo de contratos,
+certificaciones verificables,
+requisitos de tamaño o complejidad.
 
-    <div id="decision_hero" class="decision-hero status-go">
-        <h1 id="decision_txt" style="font-size: 36px; font-weight: 900; margin: 0;">🟢 GO - PRESENTARSE</h1>
-        <button class="btn-premium" onclick="genReport()"><i class="fas fa-file-pdf"></i> DESCARGAR INFORME COMPLETO</button>
-    </div>
-</div>
+🔴 Alerta: riesgo de adjudicar a empresas sin músculo operativo.
 
-<script>
-    function copyPrompt() {
-        const text = document.getElementById('promptText').innerText;
-        navigator.clipboard.writeText(text);
-        alert("Copiado.");
-    }
+2. Capacidad financiera
+No se evidencian estados financieros obligatorios ni indicadores.
 
-    function updateUI() {
-        const sels = document.querySelectorAll('.status-sel');
-        let fails = 0; sels.forEach(s => { if(s.value === 'no') fails++; });
-        const hero = document.getElementById('decision_hero');
-        const txt = document.getElementById('decision_txt');
-        if(fails === 0) { hero.className = "decision-hero status-go"; txt.innerText = "🟢 GO - PRESENTARSE"; }
-        else if(fails === 1) { hero.className = "decision-hero status-cond"; txt.innerText = "🟡 GO CONDICIONADO"; }
-        else { hero.className = "decision-hero status-nogo"; txt.innerText = "🔴 NO GO - NO VIABLE"; }
-    }
+🔴 Crítico:
+En Colombia esto es un vacío grave → la empresa puede:
 
-    // FUNCIÓN PARA LIMPIAR TEXTO DE SÍMBOLOS RAROS
-    function cleanText(str) {
-        return str.replace(/[^\x00-\x7F]/g, "").replace(/\n\s*\n/g, '\n');
-    }
+incumplir nómina,
+entrar en insolvencia durante el contrato.
+3. Indicadores
+No hay indicadores como:
+liquidez,
+endeudamiento,
+capital de trabajo.
 
-    function genReport() {
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-        const nombre = cleanText(document.getElementById('proc_nombre').value || "PROCESO");
-        const entidad = cleanText(document.getElementById('proc_entidad').value || "ENTIDAD");
-        const resumen = cleanText(document.getElementById('proc_resumen').value || "Sin datos");
-        const decision = document.getElementById('decision_txt').innerText;
+🔴 Alerta alta: no hay filtro objetivo de riesgo financiero.
 
-        // PAGINA 1: ENCABEZADO
-        doc.setFillColor(6, 22, 36); doc.rect(0, 0, 210, 40, 'F');
-        doc.setTextColor(212, 175, 55); doc.setFontSize(18); doc.setFont("helvetica", "bold");
-        doc.text("SIEL PRO - REPORTE EJECUTIVO", 105, 20, { align: 'center' });
-        doc.setTextColor(255); doc.setFontSize(9); doc.text("BRICED CONSULTING - INTELIGENCIA ESTRATÉGICA", 105, 28, { align: 'center' });
+4. Multas / cláusulas sancionatorias
+No se observan esquemas claros de:
+multas por incumplimiento,
+niveles de servicio (SLA),
+penalidades progresivas.
 
-        // SECCIÓN 1
-        doc.setTextColor(6, 22, 36); doc.setFontSize(12); doc.text("1. IDENTIFICACIÓN", 20, 55);
-        doc.setDrawColor(212, 175, 55); doc.line(20, 57, 190, 57);
-        
-        doc.setFontSize(10); doc.setFont("helvetica", "bold"); doc.text("Proyecto:", 20, 65);
-        doc.setFont("helvetica", "normal"); doc.text(nombre, 45, 65);
-        
-        doc.setFont("helvetica", "bold"); doc.text("Entidad:", 20, 72);
-        doc.setFont("helvetica", "normal"); doc.text(entidad, 45, 72);
+🔴 Crítico: sin multas → contrato difícil de hacer cumplir.
 
-        doc.setFont("helvetica", "bold"); doc.text("Decisión:", 20, 79);
-        doc.text(decision, 45, 79);
+5. Cronograma
+Sí existe cronograma básico (publicación, visita, cierre, resultados).
+Es corto y lineal.
 
-        // SECCIÓN 2: ANÁLISIS (CON CONTROL DE PÁGINAS)
-        doc.setFontSize(12); doc.setFont("helvetica", "bold"); doc.text("2. ANÁLISIS ESTRATÉGICO DETALLADO", 20, 95);
-        doc.setDrawColor(200); doc.line(20, 97, 190, 97);
+🟡 Observación:
 
-        doc.setFontSize(9); doc.setFont("helvetica", "normal");
-        const splitResumen = doc.splitTextToSize(resumen, 175);
-        
-        let cursorY = 105;
-        const pageHeight = 275;
+No hay fase de subsanación ni aclaraciones formales.
+6. Visita técnica
+Se incluye visita al sitio.
 
-        splitResumen.forEach(line => {
-            if (cursorY > pageHeight) {
-                doc.addPage();
-                cursorY = 20; // Reset Y en nueva página
-                doc.setFontSize(8); doc.setTextColor(150);
-                doc.text("Continuación Análisis - " + nombre, 20, 10);
-                doc.setFontSize(9); doc.setTextColor(0);
-            }
-            doc.text(line, 20, cursorY);
-            cursorY += 5;
-        });
+🟢 Correcto, pero:
 
-        // PIE DE PÁGINA
-        const totalPages = doc.internal.getNumberOfPages();
-        for(let i = 1; i <= totalPages; i++) {
-            doc.setPage(i);
-            doc.setFontSize(8); doc.setTextColor(150);
-            doc.text("Página " + i + " de " + totalPages + " | SIEL PRO Briced Consulting", 105, 290, { align: 'center' });
-        }
+no queda claro si es obligatoria o habilitante.
+7. Relación Calidad / Precio
+Se menciona “valor agregado suma puntos”.
 
-        doc.save("Informe_SIEL_" + nombre.substring(0,15) + ".pdf");
-    }
-</script>
-</body>
-</html>
+🔴 Problema:
+
+No hay fórmula de evaluación.
+No hay ponderación (%).
+
+➡️ Alto riesgo de subjetividad o direccionamiento.
+
+8. Riesgos
+No hay matriz de riesgos.
+
+🔴 Crítico:
+Faltan riesgos clave:
+
+laborales (solidaridad art. 34 CST),
+accidentes,
+rotación de personal,
+incumplimiento SG-SST.
+9. Garantías
+No se evidencian pólizas exigidas (cumplimiento, salarios, RC).
+
+🔴 Gravísimo:
+Esto expone a la copropiedad a:
+
+demandas laborales,
+responsabilidad solidaria.
+10. Forma de pago
+No está claramente estructurada (mensual, contra informe, etc.).
+
+🟡 Alerta:
+
+puede generar conflictos por flujo de caja y cumplimiento.
+11. Lugar de ejecución
+Definido (instalaciones del conjunto).
+
+🟢 Correcto.
+
+12. Mipyme
+No hay incentivos ni enfoque diferencial.
+
+🟡 Neutral (no obligatorio en PH, pero recomendable).
+
+13. Vigencia
+12 meses claramente definidos.
+
+🟢 Adecuado.
+
+🚨 ALERTAS CRÍTICAS (PRIORIDAD ALTA)
+1. ❌ Ausencia de garantías contractuales
+Sin pólizas → riesgo directo para la copropiedad.
+2. ❌ No hay evaluación objetiva
+Falta matriz de puntaje → posible direccionamiento.
+3. ❌ Vacío financiero
+No se valida capacidad económica del proveedor.
+4. ❌ Riesgo laboral elevado
+En Colombia, la copropiedad es solidariamente responsable:
+salarios,
+prestaciones,
+seguridad social.
+5. ❌ Sin régimen sancionatorio
+No hay herramientas para exigir cumplimiento.
+6. ❌ Perfil del personal restrictivo (edad 25–50)
+Puede ser discriminatorio laboralmente.
+⚖️ CONCEPTO FINAL (EXPERTO)
+
+El pliego es operativamente básico pero jurídicamente débil.
+Funciona para una convocatoria informal, pero:
+
+👉 NO está blindado contractualmente
+👉 NO garantiza selección objetiva
+👉 NO protege a la copropiedad frente a riesgos laborales
+
+🧠 RECOMENDACIONES CLAVE
+Incluir pólizas obligatorias:
+cumplimiento (20%)
+salarios y prestaciones (10–20%)
+responsabilidad civil
+Definir matriz de evaluación:
+Precio (40–60%)
+Experiencia (20–30%)
+Calidad/valor agregado (20–30%)
+Exigir:
+estados financieros
+certificaciones de contratos similares
+Crear:
+matriz de riesgos
+esquema de multas (SLA)
+Eliminar criterios discriminatorios (edad).
