@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>SIEL PRO V7.2 | FASE 1 - BRICED CONSULTING</title>
+    <title>SIEL PRO V7 | INFORME EJECUTIVO PREMIUM</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -10,7 +10,7 @@
     <style>
         :root { --azul-profundo: #061624; --azul-briced: #0C2D48; --oro: #D4AF37; --fondo: #f8fafc; --blanco: #ffffff; --rojo: #e11d48; --verde: #10b981; --naranja: #f59e0b; }
         body { font-family: 'Lexend', sans-serif; margin: 0; background-color: var(--fondo); color: #1e293b; }
-        header { background: linear-gradient(135deg, var(--azul-profundo) 0%, var(--azul-briced) 100%); color: var(--blanco); padding: 20px 50px; border-bottom: 5px solid var(--oro); display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+        header { background: linear-gradient(135deg, var(--azul-profundo) 0%, var(--azul-briced) 100%); color: var(--blanco); padding: 20px 50px; border-bottom: 5px solid var(--oro); display: flex; justify-content: space-between; align-items: center; }
         .logo { font-size: 24px; font-weight: 900; letter-spacing: 2px; }
         .logo span { color: var(--oro); }
         .container { max-width: 1200px; margin: -30px auto 50px auto; padding: 0 20px; }
@@ -18,34 +18,31 @@
         .fuente-card { flex: 1; text-align: center; padding: 15px; border-radius: 12px; transition: 0.3s; background: #fdfdfd; border: 1px solid #f1f5f9; }
         .fuente-card:hover { background: var(--azul-briced); color: white; transform: translateY(-3px); }
         .fuente-card i { font-size: 24px; color: var(--azul-briced); margin-bottom: 8px; }
-        .fuente-card h4 { margin: 5px 0; font-size: 13px; }
         .btn-link { text-decoration: none; font-size: 10px; font-weight: 900; color: var(--azul-briced); border: 1.5px solid var(--azul-briced); padding: 5px 12px; border-radius: 20px; display: inline-block; }
-        .fuente-card:hover .btn-link { border-color: var(--oro); color: var(--oro); }
         .glass-card { background: var(--blanco); border-radius: 25px; padding: 35px; box-shadow: 0 20px 50px rgba(0,0,0,0.06); margin-bottom: 30px; border-left: 8px solid var(--azul-briced); }
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 15px; }
         label { display: block; font-size: 11px; font-weight: 800; color: #64748b; margin-bottom: 5px; text-transform: uppercase; }
         input, textarea, select { width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 10px; font-family: inherit; font-weight: 600; box-sizing: border-box; background: #fcfcfc; }
-        input:focus, textarea:focus { border-color: var(--oro); outline: none; background: #fff; }
         .prompt-box { background: var(--azul-profundo); color: #a5b4fc; padding: 15px; border-radius: 12px; border: 1px dashed var(--oro); margin-top: 10px; }
         .btn-copy { background: var(--oro); color: var(--azul-profundo); border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: 900; font-size: 11px; margin-top: 10px; }
         .check-table { width: 100%; border-collapse: separate; border-spacing: 0 8px; }
         .check-table tr { background: #f8fafc; }
         .check-table td { padding: 12px; }
-        .check-table td:first-child { border-radius: 10px 0 0 10px; font-weight: 800; color: var(--azul-briced); font-size: 14px; }
-        .decision-hero { border-radius: 25px; padding: 40px; text-align: center; color: var(--blanco); transition: 0.5s; margin-top: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+        .check-table td:first-child { border-radius: 10px 0 0 10px; font-weight: 800; color: var(--azul-briced); }
+        .decision-hero { border-radius: 25px; padding: 40px; text-align: center; color: var(--blanco); transition: 0.5s; margin-top: 30px; }
         .status-go { background: linear-gradient(135deg, #059669 0%, #10b981 100%); }
         .status-cond { background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%); }
         .status-nogo { background: linear-gradient(135deg, #be123c 0%, #e11d48 100%); }
-        .btn-premium { background: var(--oro); color: var(--azul-profundo); padding: 18px 35px; border-radius: 50px; border: none; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; margin-top: 20px; }
+        .btn-premium { background: var(--oro); color: var(--azul-profundo); padding: 18px 35px; border-radius: 50px; border: none; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; margin-top: 20px; box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3); }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="logo">SIEL PRO <span>V7.2</span></div>
+    <div class="logo">SIEL PRO <span>V7</span></div>
     <div style="text-align: right;">
         <div style="font-weight: 900; font-size: 14px;">BRICED CONSULTING</div>
-        <div style="font-size: 10px; color: var(--oro);">SISTEMA DE INTELIGENCIA ESTRATÉGICA</div>
+        <div style="font-size: 10px; color: var(--oro);">INFORME EJECUTIVO PREMIUM</div>
     </div>
 </header>
 
@@ -61,38 +58,38 @@
     </div>
 
     <div class="glass-card">
-        <h3><i class="fas fa-brain" style="color: var(--oro);"></i> Análisis del Proceso</h3>
+        <h3><i class="fas fa-file-alt" style="color: var(--oro);"></i> Datos del Proceso</h3>
         <div class="form-grid">
             <div>
-                <label>Nombre del Proceso / Objeto</label>
-                <input type="text" id="proc_nombre" placeholder="Ej: Servicio Aseo La Riviera P.H." oninput="syncObjeto()">
-                
-                <label style="margin-top:20px">🧠 PROMPT PARA LA IA</label>
+                <label>Título Ejecutivo del Proyecto</label>
+                <input type="text" id="proc_nombre" placeholder="Ej: AUDITORÍA INTEGRAL - ASEO Y CAFETERÍA">
+                <label style="margin-top:20px">Nombre de la Entidad / P.H.</label>
+                <input type="text" id="proc_entidad" placeholder="Ej: Edificio La Riviera P.H.">
                 <div class="prompt-box">
-                    <p id="promptText" style="margin:0; font-size: 11px; line-height: 1.4;">"Analiza este pliego bajo los 13 puntos SIEL: Experiencia, Financiero, Indicadores, Multas, Cronograma, Visita técnica, Calidad/Precio, Riesgos, Garantías, Pago, Lugar, Mipyme y Vigencia. Detecta alertas críticas."</p>
-                    <button class="btn-copy" onclick="copyPrompt()">COPIAR PROMPT</button>
+                    <p id="promptText" style="margin:0; font-size: 11px; line-height: 1.4;">"Genera un informe ejecutivo de viabilidad para este pliego basado en los 13 puntos SIEL. Destaca alertas y decisión final."</p>
+                    <button class="btn-copy" onclick="copyPrompt()">COPIAR PROMPT MAESTRO</button>
                 </div>
             </div>
             <div>
-                <label>Pega aquí el resultado de la IA</label>
-                <textarea id="proc_resumen" rows="10" placeholder="Pega el resumen ejecutivo y los 13 puntos aquí..."></textarea>
+                <label>Contenido del Análisis Estratégico (IA)</label>
+                <textarea id="proc_resumen" rows="12" placeholder="Pega aquí el resultado detallado de la IA..."></textarea>
             </div>
         </div>
     </div>
 
     <div class="glass-card">
-        <h3><i class="fas fa-list-check" style="color: var(--oro);"></i> Validación de Habilitantes (Tu Decisión)</h3>
+        <h3><i class="fas fa-check-double" style="color: var(--oro);"></i> Validación de Criterios Habilitantes</h3>
         <table class="check-table">
-            <tr><td>REQUISITOS ADMINISTRATIVOS</td><td><select onchange="updateUI()" class="status-sel"><option value="ok">✔ CUMPLE</option><option value="no">❌ NO CUMPLE</option></select></td></tr>
-            <tr><td>EXPERIENCIA TÉCNICA</td><td><select onchange="updateUI()" class="status-sel"><option value="ok">✔ CUMPLE</option><option value="no">❌ NO CUMPLE</option></select></td></tr>
-            <tr><td>CAPACIDAD FINANCIERA / OTROS</td><td><select onchange="updateUI()" class="status-sel"><option value="ok">✔ CUMPLE</option><option value="no">❌ NO CUMPLE</option></select></td></tr>
+            <tr><td>CAPACIDAD JURÍDICA Y ADMINISTRATIVA</td><td><select onchange="updateUI()" class="status-sel"><option value="ok">✔ CUMPLE</option><option value="no">❌ NO CUMPLE</option></select></td></tr>
+            <tr><td>EXPERIENCIA TÉCNICA REQUERIDA</td><td><select onchange="updateUI()" class="status-sel"><option value="ok">✔ CUMPLE</option><option value="no">❌ NO CUMPLE</option></select></td></tr>
+            <tr><td>REQUISITOS FINANCIEROS Y SST</td><td><select onchange="updateUI()" class="status-sel"><option value="ok">✔ CUMPLE</option><option value="no">❌ NO CUMPLE</option></select></td></tr>
         </table>
     </div>
 
     <div id="decision_hero" class="decision-hero status-go">
         <h1 id="decision_txt" style="font-size: 40px; font-weight: 900; margin: 0;">🟢 GO - PRESENTARSE</h1>
-        <p id="justifica_txt" style="font-size: 16px; opacity: 0.9;">Basado en el checklist, el proceso es viable.</p>
-        <button class="btn-premium" onclick="genReport()"><i class="fas fa-file-pdf"></i> Descargar Informe Final</button>
+        <p id="justifica_txt" style="font-size: 16px; opacity: 0.9;">Proceso con alta viabilidad según criterios analizados.</p>
+        <button class="btn-premium" onclick="genReport()"><i class="fas fa-download"></i> DESCARGAR INFORME EJECUTIVO</button>
     </div>
 </div>
 
@@ -100,7 +97,7 @@
     function copyPrompt() {
         const text = document.getElementById('promptText').innerText;
         navigator.clipboard.writeText(text);
-        alert("🚀 Prompt copiado. Pégalo en ChatGPT con tu pliego.");
+        alert("🚀 Prompt copiado exitosamente.");
     }
 
     function updateUI() {
@@ -109,36 +106,86 @@
         const hero = document.getElementById('decision_hero');
         const txt = document.getElementById('decision_txt');
         const just = document.getElementById('justifica_txt');
-
-        if(fails === 0) { hero.className = "decision-hero status-go"; txt.innerText = "🟢 GO - PRESENTARSE"; just.innerText = "Cumple con los requisitos habilitantes revisados."; }
-        else if(fails === 1) { hero.className = "decision-hero status-cond"; txt.innerText = "🟡 GO CONDICIONADO"; just.innerText = "Existen requisitos por subsanar o mejorar."; }
-        else { hero.className = "decision-hero status-nogo"; txt.innerText = "🔴 NO GO - NO VIABLE"; just.innerText = "No cumple con habilitantes críticos."; }
+        if(fails === 0) { hero.className = "decision-hero status-go"; txt.innerText = "🟢 GO - PRESENTARSE"; just.innerText = "Proceso con alta viabilidad según criterios analizados."; }
+        else if(fails === 1) { hero.className = "decision-hero status-cond"; txt.innerText = "🟡 GO CONDICIONADO"; just.innerText = "Existen observaciones que deben ser subsanadas."; }
+        else { hero.className = "decision-hero status-nogo"; txt.innerText = "🔴 NO GO - NO VIABLE"; just.innerText = "El proceso presenta riesgos críticos inaceptables."; }
     }
 
     function genReport() {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
-        const objeto = document.getElementById('proc_nombre').value || "No especificado";
-        const resumen = document.getElementById('proc_resumen').value || "No se ingresó análisis de IA.";
+        const nombre = document.getElementById('proc_nombre').value || "PROCESO SIN TÍTULO";
+        const entidad = document.getElementById('proc_entidad').value || "ENTIDAD NO DEFINIDA";
+        const resumen = document.getElementById('proc_resumen').value || "Sin contenido de análisis.";
         const decision = document.getElementById('decision_txt').innerText;
 
-        // Header PDF
-        doc.setFillColor(6, 22, 36); doc.rect(0, 0, 210, 40, 'F');
-        doc.setTextColor(212, 175, 55); doc.setFontSize(20); doc.text("INFORME ESTRATÉGICO SIEL", 105, 25, { align: 'center' });
+        // BANNER CABECERA (AZUL PROFUNDO)
+        doc.setFillColor(6, 22, 36);
+        doc.rect(0, 0, 210, 45, 'F');
         
-        // Cuerpo
-        doc.setTextColor(0); doc.setFontSize(14); doc.setFont(undefined, 'bold');
-        doc.text("RESULTADO: " + decision, 20, 55);
+        // LOGO / TÍTULO
+        doc.setTextColor(212, 175, 55); // DORADO
+        doc.setFontSize(22);
+        doc.setFont("helvetica", "bold");
+        doc.text("SIEL PRO - REPORTE EJECUTIVO", 105, 20, { align: 'center' });
         
-        doc.setFontSize(11); doc.text("OBJETO DEL PROCESO:", 20, 65);
-        doc.setFont(undefined, 'normal');
-        doc.text(doc.splitTextToSize(objeto, 170), 20, 72);
+        doc.setTextColor(255, 255, 255);
+        doc.setFontSize(10);
+        doc.setFont("helvetica", "normal");
+        doc.text("INTELIGENCIA ESTRATÉGICA PARA LICITACIONES | BRICED CONSULTING", 105, 30, { align: 'center' });
 
-        doc.setFont(undefined, 'bold'); doc.text("ANÁLISIS ESTRATÉGICO (IA):", 20, 90);
-        doc.setFont(undefined, 'normal'); doc.setFontSize(9);
-        doc.text(doc.splitTextToSize(resumen, 170), 20, 97);
+        // INFORMACIÓN GENERAL
+        doc.setTextColor(6, 22, 36);
+        doc.setFontSize(14);
+        doc.setFont("helvetica", "bold");
+        doc.text("1. IDENTIFICACIÓN DEL PROCESO", 20, 60);
+        
+        doc.setDrawColor(212, 175, 55);
+        doc.line(20, 62, 190, 62);
 
-        doc.save("Informe_SIEL_" + objeto.substring(0,15) + ".pdf");
+        doc.setFontSize(11);
+        doc.text("Proyecto:", 20, 72);
+        doc.setFont("helvetica", "normal");
+        doc.text(nombre, 50, 72);
+        
+        doc.setFont("helvetica", "bold");
+        doc.text("Entidad:", 20, 80);
+        doc.setFont("helvetica", "normal");
+        doc.text(entidad, 50, 80);
+
+        // DECISIÓN SEMÁFORO
+        doc.setFont("helvetica", "bold");
+        doc.text("ESTADO DE VIABILIDAD:", 20, 95);
+        
+        if(decision.includes("🟢")) doc.setTextColor(16, 185, 129); // Verde
+        else if(decision.includes("🟡")) doc.setTextColor(245, 158, 11); // Naranja
+        else doc.setTextColor(225, 29, 72); // Rojo
+        
+        doc.setFontSize(16);
+        doc.text(decision, 75, 95);
+
+        // CUADRO DE ANÁLISIS ESTRATÉGICO
+        doc.setTextColor(6, 22, 36);
+        doc.setFontSize(14);
+        doc.setFont("helvetica", "bold");
+        doc.text("2. RESUMEN DE ANÁLISIS ESTRATÉGICO", 20, 115);
+        
+        doc.setFillColor(248, 250, 252);
+        doc.rect(20, 120, 170, 130, 'F'); // Fondo gris claro para el contenido
+        doc.setDrawColor(226, 232, 240);
+        doc.rect(20, 120, 170, 130, 'S'); // Borde
+
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(9);
+        const textLines = doc.splitTextToSize(resumen, 160);
+        doc.text(textLines, 25, 128);
+
+        // PIE DE PÁGINA
+        doc.setFontSize(8);
+        doc.setTextColor(150);
+        doc.text("Este informe es un análisis preliminar generado por SIEL PRO. Briced Consulting © 2026", 105, 285, { align: 'center' });
+
+        doc.save("Reporte_Ejecutivo_SIEL_" + nombre.substring(0,10) + ".pdf");
     }
 </script>
 </body>
