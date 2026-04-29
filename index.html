@@ -2,290 +2,228 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>SIEL PRO V7.1 | NEXUS DREAM EDITION</title>
+    <title>SIEL PRO V7 | PLAN BÁSICO - FASE 1</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --azul: #0C2D48; --oro: #D4AF37; --fondo: #061624; --texto: #E0E1DD; --blanco: #FFFFFF; }
+        :root { --azul: #0C2D48; --oro: #D4AF37; --fondo: #F4F7F9; --rojo: #E11D48; --verde: #10B981; --naranja: #F59E0B; }
+        body { font-family: 'Lexend', sans-serif; margin: 0; background: var(--fondo); color: #333; }
         
-        body { font-family: 'Lexend', 'Segoe UI', sans-serif; margin: 0; background: var(--fondo); color: var(--texto); overflow-x: hidden; }
-        
-        /* HEADER PREMIUM */
-        header { background: var(--azul); padding: 15px 40px; border-bottom: 3px solid var(--oro); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 20px rgba(0,0,0,0.6); }
-        .logo h1 { margin: 0; font-size: 24px; letter-spacing: 3px; font-weight: 900; }
+        /* HEADER */
+        header { background: var(--azul); color: white; padding: 15px 40px; border-bottom: 4px solid var(--oro); display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-weight: 900; font-size: 20px; letter-spacing: 2px; }
         .logo span { color: var(--oro); }
 
-        /* RADAR BAR */
-        .radar-nav { background: #0b1c2c; padding: 10px; display: flex; justify-content: center; gap: 15px; border-bottom: 1px solid rgba(212,175,55,0.3); }
-        .radar-btn { color: var(--oro); border: 1px solid var(--oro); padding: 6px 12px; text-decoration: none; font-size: 11px; font-weight: bold; border-radius: 3px; transition: 0.3s; }
-        .radar-btn:hover { background: var(--oro); color: var(--azul); }
-
-        /* LAYOUT PRINCIPAL */
-        .main-container { display: grid; grid-template-columns: 260px 1fr; min-height: 100vh; }
+        /* CONTENEDOR */
+        .container { max-width: 1100px; margin: 20px auto; padding: 20px; }
+        .card { background: white; border-radius: 12px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 25px; }
         
-        /* SIDEBAR */
-        aside { background: var(--azul); padding: 25px 0; border-right: 1px solid var(--oro); }
-        .nav-link { padding: 18px 30px; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; gap: 15px; font-size: 14px; transition: 0.3s; font-weight: 500; }
-        .nav-link:hover, .nav-link.active { background: var(--oro); color: var(--azul); border-left: 5px solid var(--blanco); }
-
-        /* ÁREA DE TRABAJO */
-        main { padding: 40px; background: #f0f2f5; color: #1a1a1a; overflow-y: auto; }
-        .glass-card { background: white; border-radius: 12px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); border-top: 6px solid var(--azul); margin-bottom: 30px; }
+        /* MÓDULO 0: FUENTES */
+        .grid-fuentes { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; }
+        .fuente-item { border: 1px solid #ddd; padding: 15px; border-radius: 8px; text-align: center; transition: 0.3s; }
+        .fuente-item:hover { border-color: var(--oro); background: #fffdf5; }
+        .fuente-item i { font-size: 24px; color: var(--azul); margin-bottom: 10px; }
+        .btn-link { display: block; background: var(--azul); color: white; text-decoration: none; padding: 8px; border-radius: 5px; font-size: 12px; margin-top: 10px; }
         
-        /* GRID TÉCNICO */
-        .grid-tech { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
-        .display-panel { background: var(--azul); color: var(--oro); padding: 25px; border-radius: 10px; border-left: 8px solid var(--oro); }
-
-        /* FORMULARIOS */
-        label { display: block; font-weight: 800; font-size: 11px; text-transform: uppercase; margin-bottom: 8px; color: var(--azul); }
-        input, select, textarea { width: 100%; padding: 12px; border: 1.5px solid #d1d5db; border-radius: 6px; margin-bottom: 20px; font-weight: 600; font-family: inherit; }
+        /* MÓDULO 1 & 2: ANÁLISIS */
+        .badge-alerta { padding: 5px 10px; border-radius: 4px; font-size: 11px; font-weight: bold; color: white; margin-right: 5px; }
+        .critica { background: var(--rojo); }
+        .importante { background: var(--naranja); }
         
-        /* BOTONES ACCIÓN */
-        .btn-gold { background: var(--oro); color: var(--azul); border: none; padding: 15px 25px; border-radius: 6px; cursor: pointer; font-weight: 900; text-transform: uppercase; width: 100%; letter-spacing: 1px; transition: 0.3s; }
-        .btn-gold:hover { background: var(--azul); color: var(--oro); box-shadow: 0 5px 15px rgba(212,175,55,0.4); }
+        /* MÓDULO 3: CHECKLIST */
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th { text-align: left; background: #f8fafc; padding: 12px; border-bottom: 2px solid #eee; }
+        td { padding: 12px; border-bottom: 1px solid #eee; }
+        .status-select { padding: 5px; border-radius: 4px; font-weight: bold; }
 
-        /* TABLAS PROFESIONALES */
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13px; }
-        th { background: var(--azul); color: white; padding: 12px; text-align: left; }
-        td { padding: 10px; border-bottom: 1px solid #eee; }
-        .tag { padding: 4px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; }
-        .tag-ok { background: #dcfce7; color: #166534; }
-        .tag-warn { background: #fef9c3; color: #854d0e; }
+        /* MÓDULO 4: MOTOR DECISIÓN */
+        .decision-panel { text-align: center; padding: 30px; border-radius: 15px; color: white; transition: 0.5s; }
+        .go { background: var(--verde); }
+        .go-cond { background: var(--naranja); }
+        .no-go { background: var(--rojo); }
+
+        .btn-pdf { background: var(--oro); color: var(--azul); border: none; padding: 15px 30px; border-radius: 8px; font-weight: 900; cursor: pointer; margin-top: 20px; }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="logo">
-        <h1>SIEL PRO <span>V7.1 NEXUS</span></h1>
-    </div>
-    <div style="text-align: right">
-        <span style="font-size: 12px; color: var(--oro); font-weight: bold;">CONSULTORÍA ESTRATÉGICA | BRICED CONSULTING</span>
-    </div>
+    <div class="logo">SIEL PRO <span>V7 - PLAN BÁSICO</span></div>
+    <div style="font-size: 12px; font-weight: bold; color: var(--oro);">BRICED CONSULTING</div>
 </header>
 
-<div class="radar-nav">
-    <a href="https://www.contratos.gov.co" target="_blank" class="radar-btn"><i class="fas fa-search"></i> SECOP I</a>
-    <a href="https://community.secop.gov.co" target="_blank" class="radar-btn"><i class="fas fa-file-contract"></i> SECOP II</a>
-    <a href="https://www.contratacionbogota.gov.co" target="_blank" class="radar-btn"><i class="fas fa-city"></i> BOGOTÁ COMPRA</a>
-    <a href="https://sites.google.com/view/estatuton-2024" target="_blank" class="radar-btn" style="background:var(--oro); color:var(--azul);"><i class="fas fa-book"></i> ESTATUTÓN 2026</a>
-</div>
-
-<div class="main-container">
-    <aside>
-        <div class="nav-link active" onclick="showMod('config')"><i class="fas fa-sliders-h"></i> CONFIG. PROCESO</div>
-        <div class="nav-link" onclick="showMod('retencol')"><i class="fas fa-calculator"></i> RETENCOL & AIU</div>
-        <div class="nav-link" onclick="showMod('rup')"><i class="fas fa-users-cog"></i> RUP & CAPACIDAD K</div>
-        <div class="nav-link" onclick="showMod('check')"><i class="fas fa-check-double"></i> HABILITANTES & FIC</div>
-        <div class="nav-link" onclick="showMod('ia')"><i class="fas fa-brain"></i> CEREBRO IA (13 P.)</div>
-        <div class="nav-link" onclick="showMod('report')"><i class="fas fa-file-pdf"></i> GENERAR INFORMES</div>
-    </aside>
-
-    <main>
-        <div id="config" class="glass-card active-mod">
-            <h3>PARAMETRIZACIÓN DE LICITACIÓN</h3>
-            <div class="grid-tech">
-                <div>
-                    <label>Tipo de Entidad / Sector</label>
-                    <select id="sector">
-                        <option>Gobernación / Municipio</option>
-                        <option>Entidad Descentralizada</option>
-                        <option>Privado / Propiedad Horizontal</option>
-                    </select>
-                </div>
-                <div>
-                    <label>Modalidad de Selección</label>
-                    <select id="modalidad">
-                        <option>Licitación Pública</option>
-                        <option>Selección Abreviada</option>
-                        <option>Mínima Cuantía</option>
-                    </select>
-                </div>
+<div class="container">
+    
+    <div class="card">
+        <h3 style="color: var(--azul); margin-top: 0;"><i class="fas fa-search"></i> MÓDULO 0 — EXPLORAR OPORTUNIDADES</h3>
+        <div class="grid-fuentes">
+            <div class="fuente-item">
+                <i class="fas fa-globe"></i>
+                <h4>SECOP I</h4>
+                <a href="https://www.contratos.gov.co" target="_blank" class="btn-link">Abrir Plataforma</a>
             </div>
-            <label>Descripción del Objeto</label>
-            <textarea id="objeto" rows="2" placeholder="Describa el contrato..."></textarea>
-        </div>
-
-        <div id="retencol" class="glass-card" style="display:none;">
-            <h3>CÉDULA TRIBUTARIA SIEL (78 TARIFAS)</h3>
-            <div class="grid-tech">
-                <div>
-                    <label>Buscador de Concepto</label>
-                    <select id="rete_select" onchange="logicAIU()">
-                        <option value="2" data-aiu="true">Construcción y Obra Pública (2%)</option>
-                        <option value="1" data-aiu="false">Transporte de Carga (1%)</option>
-                        <option value="11" data-aiu="false">Honorarios PJ (11%)</option>
-                        <option value="4" data-aiu="true">Servicios Generales (4%)</option>
-                        <option value="2.5" data-aiu="false">Compras (2.5%)</option>
-                        <option value="2" data-aiu="true">Consultoría de Obra (2%)</option>
-                    </select>
-                    
-                    <div id="aiu_box" style="display:none; background:#f0f7ff; padding:15px; border-radius:8px;">
-                        <label>Desglose AIU (%)</label>
-                        <div style="display:flex; gap:10px;">
-                            <input type="number" id="adm" value="10" title="Admin">
-                            <input type="number" id="imp" value="5" title="Imprev">
-                            <input type="number" id="uti" value="5" title="Utilidad" oninput="calcTotal()">
-                        </div>
-                        <small style="color:var(--azul)">*IVA se liquidará solo sobre Utilidad</small>
-                    </div>
-
-                    <label style="margin-top:20px;">Valor Total Contrato / Pago</label>
-                    <input type="number" id="v_contrato" value="100000000" oninput="calcTotal()">
-                </div>
-                <div class="display-panel">
-                    <h4 style="margin-top:0">RESULTADO DE LIQUIDACIÓN</h4>
-                    <div id="rete_res">Esperando datos...</div>
-                    <hr border="1" color="#D4AF37">
-                    <label style="color:var(--oro)">Estampillas Pro-Municipio (%)</label>
-                    <input type="number" id="estampilla" value="3" oninput="calcTotal()" style="background:transparent; color:white; border-color:var(--oro)">
-                </div>
+            <div class="fuente-item">
+                <i class="fas fa-laptop"></i>
+                <h4>SECOP II</h4>
+                <a href="https://community.secop.gov.co" target="_blank" class="btn-link">Abrir Plataforma</a>
+            </div>
+            <div class="fuente-item">
+                <i class="fas fa-landmark"></i>
+                <h4>CONTRATOS BOGOTÁ</h4>
+                <a href="https://bogota.gov.co/asi-vamos/contratos-y-obras/participa" target="_blank" class="btn-link">Abrir Plataforma</a>
+            </div>
+            <div class="fuente-item">
+                <i class="fas fa-building"></i>
+                <h4>PROP. HORIZONTAL</h4>
+                <a href="https://leydepropiedadhorizontal.org/category/convocatorias/" target="_blank" class="btn-link">Abrir Convocatorias</a>
             </div>
         </div>
+    </div>
 
-        <div id="rup" class="glass-card" style="display:none;">
-            <h3>CÁLCULO DE CAPACIDAD RESIDUAL Y RUP</h3>
-            <div class="grid-tech">
-                <div>
-                    <label>Composición del Oferente</label>
-                    <select id="oferente_tipo" onchange="renderUT()">
-                        <option value="1">Proponente Único</option>
-                        <option value="2">Unión Temporal (2)</option>
-                        <option value="3">Consorcio (3)</option>
-                    </select>
-                    <div id="ut_list"></div>
-                </div>
-                <div class="display-panel">
-                    <h4>EVALUACIÓN DE CAPACIDAD</h4>
-                    <p>Experiencia Ponderada: <span id="exp_pond">0 SMMLV</span></p>
-                    <label style="color:var(--oro)">Saldos Contratos Ejecución (SCE)</label>
-                    <input type="number" id="sce_val" value="0" oninput="calcTotal()" style="background:transparent; color:white;">
-                    <h3>K DISPONIBLE ESTIMADO: <br><span id="k_final">$ 0</span></h3>
-                </div>
+    <div class="card">
+        <h3><i class="fas fa-file-invoice"></i> MÓDULO 1 & 2 — ANÁLISIS DE PLIEGO</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div>
+                <label>Nombre del Proceso</label>
+                <input type="text" id="proc_nombre" placeholder="Ej: Licitación Obra 001-2026">
+                <label>Entidad</label>
+                <input type="text" id="proc_entidad" placeholder="Ej: IDU Bogotá">
+                <label>Ubicación</label>
+                <input type="text" id="proc_ubicacion" value="Bogotá D.C.">
+            </div>
+            <div>
+                <label>Subir Pliego (PDF)</label>
+                <input type="file" id="proc_pdf">
+                <label>Resumen Estratégico (IA)</label>
+                <textarea id="proc_resumen" rows="4" placeholder="Análisis generado por el motor de IA..."></textarea>
             </div>
         </div>
-
-        <div id="check" class="glass-card" style="display:none;">
-            <div class="grid-tech">
-                <div>
-                    <h3>CHECKLIST DE CUMPLIMIENTO</h3>
-                    <table>
-                        <tr><th>REQUISITO</th><th>ESTADO</th><th>VENCIMIENTO</th></tr>
-                        <tr><td>Matrícula Profesional</td><td><select><option>CUMPLE</option><option>PENDIENTE</option></select></td><td>-</td></tr>
-                        <tr><td>Curso de Alturas</td><td><select><option>VIGENTE</option><option>VENCIDO</option></select></td><td><input type="date" value="2026-12-31" style="margin:0; padding:5px;"></td></tr>
-                        <tr><td>Certificación SENA</td><td><select><option>APORTADO</option><option>N/A</option></select></td><td>-</td></tr>
-                    </table>
-                </div>
-                <div>
-                    <h3>LIQUIDACIÓN FIC</h3>
-                    <label>Número de Trabajadores en Obra</label>
-                    <input type="number" id="n_trab" value="0" oninput="calcTotal()">
-                    <div class="display-panel">
-                        <p>Aporte Mensual FIC sugerido:</p>
-                        <h2 id="fic_res">$ 0</h2>
-                    </div>
-                </div>
-            </div>
+        
+        <div style="margin-top: 20px; padding: 15px; background: #fff5f5; border-radius: 8px;">
+            <h4 style="margin: 0 0 10px 0; color: var(--rojo);">⚠️ ALERTAS DETECTADAS</h4>
+            <span class="badge-alerta critica">🔴 CRÍTICA</span> Requisito de experiencia no subsanable.<br>
+            <span class="badge-alerta importante">🟡 IMPORTANTE</span> Plazo de ejecución ajustado (4 meses).
         </div>
+    </div>
 
-        <div id="ia" class="glass-card" style="display:none;">
-            <h3>CEREBRO IA: AUDITORÍA DE 13 PUNTOS</h3>
-            <div style="background:var(--azul); color:white; padding:20px; border-radius:10px; border:2px solid var(--oro);">
-                <p id="prompt_txt" style="font-family: monospace; font-size: 13px;">
-                    "Analiza este pliego de condiciones como experto en contratación en Colombia. Evalúa los 13 puntos SIEL: 1. Experiencia técnica, 2. Capacidad financiera, 3. Indicadores organizacionales, 4. Análisis de multas, 5. Cronograma de subsanación, 6. Visita técnica, 7. Factor calidad vs precio, 8. Riesgos previsibles, 9. Garantías, 10. Forma de pago/anticipo, 11. Lugar ejecución, 12. Limitación Mipyme, 13. Vigencia oferta. Genera cuadro de riesgos."
-                </p>
-                <button class="btn-gold" onclick="copyP()">COPIAR PROMPT MAESTRO</button>
-            </div>
-            <textarea style="margin-top:20px;" rows="8" placeholder="Pegue aquí el veredicto de la IA para el informe..."></textarea>
-        </div>
+    <div class="card">
+        <h3><i class="fas fa-tasks"></i> MÓDULO 3 — CHECKLIST INTELIGENTE</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>CATEGORÍA</th>
+                    <th>ÍTEM</th>
+                    <th>ESTADO</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><b>ADMINISTRATIVO</b></td>
+                    <td>RUT / Cámara de Comercio</td>
+                    <td><select class="status-select" onchange="calcularDecision()"><option value="ok">✔ LO TIENE</option><option value="no">❌ NO LO TIENE</option></select></td>
+                </tr>
+                <tr>
+                    <td><b>TÉCNICO</b></td>
+                    <td>Experiencia Específica (Mín 2 contratos)</td>
+                    <td><select class="status-select" onchange="calcularDecision()"><option value="ok">✔ LO TIENE</option><option value="no">❌ NO LO TIENE</option></select></td>
+                </tr>
+                <tr>
+                    <td><b>SST</b></td>
+                    <td>Certificado de Alturas Vigente</td>
+                    <td><select class="status-select" onchange="calcularDecision()"><option value="ok">✔ LO TIENE</option><option value="no">❌ NO LO TIENE</option></select></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-        <div id="report" class="glass-card" style="display:none;">
-            <h3>FINALIZACIÓN Y DESCARGAS</h3>
-            <div class="grid-tech">
-                <button class="btn-gold" onclick="alert('Generando Excel con Macros...')"><i class="fas fa-file-excel"></i> DESCARGAR EXCEL SIEL PRO</button>
-                <button class="btn-gold" style="background:var(--azul); color:var(--oro); border:1px solid var(--oro);" onclick="genPDF()"><i class="fas fa-file-pdf"></i> GENERAR INFORME PDF</button>
-            </div>
-        </div>
+    <div id="panel_decision" class="decision-panel go">
+        <h1 id="txt_decision" style="margin: 0;">🟢 GO - PRESENTARSE</h1>
+        <p id="txt_justificacion" style="margin: 10px 0 0 0;">El proceso es viable. Todos los requisitos críticos están cubiertos.</p>
+    </div>
 
-    </main>
+    <div style="text-align: center; margin-bottom: 50px;">
+        <button class="btn-pdf" onclick="generarInforme()"><i class="fas fa-file-pdf"></i> DESCARGAR INFORME DE VIABILIDAD</button>
+        <p style="font-size: 11px; color: #666; margin-top: 10px;">🔐 Nota SIEL: Este informe es una herramienta de apoyo y no reemplaza el criterio profesional.</p>
+    </div>
+
 </div>
 
 <script>
-    function showMod(id) {
-        document.querySelectorAll('.glass-card').forEach(m => m.style.display = 'none');
-        document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
-        document.getElementById(id).style.display = 'block';
-        event.currentTarget.classList.add('active');
-    }
+    function calcularDecision() {
+        const status = document.querySelectorAll('.status-select');
+        let fallos = 0;
+        status.forEach(s => { if(s.value === 'no') fallos++; });
 
-    function logicAIU() {
-        const sel = document.getElementById('rete_select');
-        const isAIU = sel.options[sel.selectedIndex].getAttribute('data-aiu') === 'true';
-        document.getElementById('aiu_box').style.display = isAIU ? 'block' : 'none';
-        calcTotal();
-    }
+        const panel = document.getElementById('panel_decision');
+        const txt = document.getElementById('txt_decision');
+        const just = document.getElementById('txt_justificacion');
 
-    function calcTotal() {
-        const v = parseFloat(document.getElementById('v_contrato').value) || 0;
-        const rate = parseFloat(document.getElementById('rete_select').value);
-        const aiuS = document.getElementById('aiu_box').style.display === 'block';
-        
-        let rete = v * (rate/100);
-        let iva = 0;
-        if(aiuS) {
-            const u = parseFloat(document.getElementById('uti').value) / 100;
-            iva = (v * u) * 0.19;
+        panel.className = "decision-panel";
+
+        if(fallos === 0) {
+            panel.classList.add('go');
+            txt.innerText = "🟢 GO - PRESENTARSE";
+            just.innerText = "El proceso es viable técnicamente y cumple con los habilitantes.";
+        } else if (fallos === 1) {
+            panel.classList.add('go-cond');
+            txt.innerText = "🟡 GO CONDICIONADO";
+            just.innerText = "Viable, pero requiere subsanar requisitos técnicos/administrativos.";
         } else {
-            iva = v * 0.19;
-        }
-
-        const estP = parseFloat(document.getElementById('estampilla').value) || 0;
-        const estV = v * (estP/100);
-
-        const nT = parseFloat(document.getElementById('n_trab').value) || 0;
-        const fV = nT * (1300000 * 0.25); // Basado en SMMLV 2024 aprox
-
-        document.getElementById('fic_res').innerText = "$ " + Math.round(fV).toLocaleString();
-        document.getElementById('rete_res').innerHTML = `
-            <p>Retención Fuente: $${Math.round(rete).toLocaleString()}</p>
-            <p>IVA Liquidado: $${Math.round(iva).toLocaleString()}</p>
-            <p>Estampillas: $${Math.round(estV).toLocaleString()}</p>
-            <hr>
-            <h2 style="color:var(--oro)">NETO ESTIMADO: $${Math.round(v - rete - estV - fV).toLocaleString()}</h2>
-        `;
-    }
-
-    function renderUT() {
-        const n = document.getElementById('oferente_tipo').value;
-        const cont = document.getElementById('ut_list');
-        cont.innerHTML = "";
-        for(let i=1; i<=n; i++) {
-            cont.innerHTML += `
-                <div style="background:#e5e7eb; padding:10px; border-radius:5px; margin-top:10px; color:var(--azul);">
-                    Integrante ${i}: % <input type="number" class="ut_p" value="${100/n}" style="width:60px; margin:0;"> 
-                    Experiencia SMMLV: <input type="number" class="ut_e" value="500" style="width:80px; margin:0;">
-                </div>`;
+            panel.classList.add('no-go');
+            txt.innerText = "🔴 NO GO - NO PRESENTARSE";
+            just.innerText = "Riesgo alto: No cumple con requisitos críticos de experiencia o habilitantes.";
         }
     }
 
-    function copyP() {
-        navigator.clipboard.writeText(document.getElementById('prompt_txt').innerText);
-        alert("Prompt Maestro Copiado.");
-    }
-
-    function genPDF() {
+    function generarInforme() {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
-        doc.setFont("helvetica", "bold");
-        doc.text("INFORME ESTRATÉGICO SIEL PRO V7.1", 20, 20);
+        const decision = document.getElementById('txt_decision').innerText;
+        
+        // Portada
+        doc.setFillColor(12, 45, 72);
+        doc.rect(0, 0, 210, 50, 'F');
+        doc.setTextColor(255, 255, 255);
+        doc.setFontSize(22);
+        doc.text("INFORME DE VIABILIDAD ESTRATÉGICA", 105, 25, { align: 'center' });
+        doc.setFontSize(14);
+        doc.text("SIEL PRO - BRICED CONSULTING", 105, 35, { align: 'center' });
+
+        // Decisión
+        doc.setTextColor(0, 0, 0);
+        doc.setFontSize(16);
+        doc.text("RESULTADO DEL ANÁLISIS:", 20, 70);
+        doc.setFontSize(24);
+        doc.text(decision, 20, 85);
+        
+        // Ficha
+        doc.setFontSize(12);
+        doc.autoTable({
+            startY: 100,
+            head: [['CAMPO', 'VALOR']],
+            body: [
+                ['Proceso', document.getElementById('proc_nombre').value || 'Sin nombre'],
+                ['Entidad', document.getElementById('proc_entidad').value || 'IDU'],
+                ['Ubicación', document.getElementById('proc_ubicacion').value],
+                ['Fecha', new Date().toLocaleDateString()]
+            ],
+            theme: 'striped'
+        });
+
+        // Alertas
+        doc.text("ALERTAS Y RIESGOS:", 20, doc.lastAutoTable.finalY + 15);
         doc.setFontSize(10);
-        doc.text("Briced Consulting - " + new Date().toLocaleDateString(), 20, 30);
-        doc.save("Informe_SIEL_Briced.pdf");
+        doc.text("- Requisito de experiencia elevado (Crítico).", 25, doc.lastAutoTable.finalY + 25);
+        doc.text("- Plazo de ejecución ajustado (Importante).", 25, doc.lastAutoTable.finalY + 32);
+
+        // Footer
+        doc.setFontSize(9);
+        doc.setTextColor(150);
+        doc.text("Este informe es una herramienta de apoyo y no reemplaza el criterio profesional.", 105, 285, { align: 'center' });
+
+        doc.save("Informe_Viabilidad_SIEL.pdf");
     }
-
-    window.onload = () => { logicAIU(); renderUT(); };
 </script>
-
 </body>
 </html>
