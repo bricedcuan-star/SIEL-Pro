@@ -2,115 +2,167 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>SIEL PRO V8.2 | BRICED CONSULTING DEFINITIVA</title>
+    <title>SIEL PRO V9.0 | THE CLOSER - FASE 1 FINAL</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
-        :root { --azul-p: #061624; --azul-s: #0C2D48; --oro: #D4AF37; --gris-f: #f1f5f9; --blanco: #ffffff; }
-        body { font-family: 'Lexend', sans-serif; margin: 0; background: var(--gris-f); color: #334155; }
-        header { background: linear-gradient(135deg, var(--azul-p) 0%, var(--azul-s) 100%); color: white; padding: 20px 40px; border-bottom: 4px solid var(--oro); display: flex; justify-content: space-between; align-items: center; }
-        .container { max-width: 1000px; margin: 20px auto; padding: 0 20px; }
-        .card { background: white; border-radius: 15px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px; border: 1px solid #e2e8f0; }
-        .prompt-zone { background: var(--azul-p); color: #e2e8f0; padding: 15px; border-radius: 10px; font-size: 11px; margin-top: 10px; border-left: 4px solid var(--oro); }
-        label { display: block; font-weight: 800; font-size: 12px; color: var(--azul-s); margin-bottom: 8px; text-transform: uppercase; }
-        input, textarea, select { width: 100%; padding: 12px; border: 2px solid #cbd5e1; border-radius: 8px; font-family: inherit; margin-bottom: 15px; box-sizing: border-box; }
-        .btn-main { background: var(--oro); color: var(--azul-p); padding: 15px 30px; border-radius: 50px; border: none; font-weight: 800; cursor: pointer; width: 100%; font-size: 16px; transition: 0.3s; }
-        .search-bar { display: flex; gap: 10px; margin-bottom: 20px; }
-        .search-btn { flex: 1; padding: 10px; border-radius: 8px; background: white; border: 1px solid var(--oro); color: var(--azul-s); text-decoration: none; font-size: 10px; font-weight: 700; text-align: center; }
+        :root { --critico: #e11d48; --importante: #f59e0b; --observacion: #3b82f6; --go: #10b981; --azul-p: #061624; --oro: #D4AF37; }
+        body { font-family: 'Lexend', sans-serif; background: #f8fafc; margin: 0; padding-bottom: 50px; }
+        
+        /* HEADER */
+        header { background: var(--azul-p); color: white; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--oro); }
+        
+        .container { max-width: 1100px; margin: 20px auto; padding: 0 20px; }
+
+        /* 2. BLOQUE DE DECISIÓN (UX CRÍTICO) */
+        .decision-master { background: white; border-radius: 15px; padding: 30px; text-align: center; border: 2px solid #e2e8f0; margin-bottom: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+        .badge-decision { font-size: 32px; font-weight: 800; padding: 10px 40px; border-radius: 50px; display: inline-block; margin-bottom: 15px; color: white; }
+        .bg-go { background: var(--go); }
+        .bg-cond { background: var(--importante); }
+        .bg-nogo { background: var(--critico); }
+
+        /* 3. CHECKLIST INTELIGENTE */
+        .checklist-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: #f1f5f9; padding: 20px; border-radius: 12px; margin-top: 15px; }
+        .check-item { display: flex; align-items: center; gap: 10px; background: white; padding: 10px; border-radius: 8px; font-size: 13px; font-weight: 600; }
+
+        /* 4. ALERTAS CLASIFICADAS */
+        .alert-box { border-left: 5px solid; padding: 15px; margin-bottom: 10px; border-radius: 8px; background: #fff; }
+        .alert-red { border-color: var(--critico); background: #fff1f2; }
+        .alert-orange { border-color: var(--importante); background: #fffbeb; }
+        .alert-blue { border-color: var(--observacion); background: #eff6ff; }
+
+        .card { background: white; border-radius: 15px; padding: 25px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        label { display: block; font-weight: 800; font-size: 12px; color: var(--azul-p); margin-bottom: 8px; text-transform: uppercase; }
+        textarea, input, select { width: 100%; padding: 12px; border: 2px solid #cbd5e1; border-radius: 8px; font-family: inherit; margin-bottom: 10px; box-sizing: border-box; }
+        
+        .btn-analizar { background: var(--azul-p); color: white; padding: 15px; border: none; border-radius: 8px; width: 100%; font-weight: 800; cursor: pointer; margin-top: 10px; }
+        .btn-pdf { background: var(--oro); color: var(--azul-p); padding: 18px; border: none; border-radius: 50px; width: 100%; font-weight: 800; cursor: pointer; font-size: 16px; box-shadow: 0 8px 20px rgba(212,175,55,0.3); }
     </style>
 </head>
 <body>
 
 <header>
-    <div><span style="font-weight: 800; font-size: 20px;">SIEL PRO</span> <span style="color: var(--oro); font-weight: 300;">V8.2</span></div>
-    <div style="text-align: right; font-size: 12px;">BRICED CONSULTING<br><span style="color: var(--oro);">AUDITORÍA EXPERTA</span></div>
+    <div style="font-weight: 800; font-size: 22px;">SIEL PRO <span style="color:var(--oro)">V9.0</span></div>
+    <div style="text-align: right; font-size: 12px;">BRICED CONSULTING<br><b>FASE 1: AFINACIÓN TOTAL</b></div>
 </header>
 
 <div class="container">
-    <div class="search-bar">
-        <a href="https://www.contratos.gov.co" target="_blank" class="search-btn">SECOP I</a>
-        <a href="https://community.secop.gov.co" target="_blank" class="search-btn">SECOP II</a>
-        <a href="https://bogota.gov.co" target="_blank" class="search-btn">BOGOTÁ</a>
-        <a href="https://leydepropiedadhorizontal.org" target="_blank" class="search-btn">P.H.</a>
+    
+    <div class="decision-master">
+        <label>1. ESTADO DE VIABILIDAD ESTRATÉGICA</label>
+        <select id="v_dec" onchange="updateUI()" style="font-size: 20px; text-align: center; font-weight: 800;">
+            <option value="GO">🟢 GO - PRESENTARSE</option>
+            <option value="COND">🟡 GO CONDICIONADO</option>
+            <option value="NOGO">🔴 NO GO - NO VIABLE</option>
+        </select>
+        <input type="text" id="v_motivo" placeholder="Motivo corto: Ej. Proceso viable pero con alta subjetividad..." style="text-align: center;">
     </div>
 
-    <div class="card">
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-            <div>
-                <label>Proyecto / Objeto</label>
-                <input type="text" id="p_nombre" placeholder="Nombre de la licitación">
-                <label>Entidad</label>
-                <input type="text" id="p_entidad" placeholder="Entidad contratante">
-                <div class="prompt-zone">
-                    <p id="pText" style="margin:0;">"Actúa como experto senior. Analiza este pliego bajo los 13 puntos SIEL (Experiencia, Financiero, Indicadores, Multas, Cronograma, Visita, Calidad/Precio, Riesgos, Garantías, Pago, Lugar, Mipyme, Vigencia). Divide en: 1. HALLAZGOS y 2. RECOMENDACIONES. Usa tildes y ñ con normalidad."</p>
-                    <button onclick="copyP()" style="background:var(--oro); border:none; padding:5px 10px; border-radius:5px; cursor:pointer; margin-top:5px; font-size:9px; font-weight:800;">COPIAR PROMPT MAESTRO</button>
-                </div>
+    <div style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 20px;">
+        <div class="card">
+            <label>Nombre del Proceso</label>
+            <input type="text" id="v_nom" placeholder="Ej: Aseo y Cafetería">
+            <label>Entidad</label>
+            <input type="text" id="v_ent" placeholder="Ej: La Riviera PH">
+            
+            <label>Resumen Ejecutivo (Máx 5 líneas)</label>
+            <textarea id="v_res" rows="4" placeholder="Breve descripción para gerencia..."></textarea>
+            
+            <label>Análisis de Alertas (Pega aquí)</label>
+            <textarea id="v_alertas" rows="6" placeholder="🔴 Críticas: ... &#10;🟡 Importantes: ... &#10;🔵 Observaciones: ..."></textarea>
+        </div>
+
+        <div class="card">
+            <label>3. CHECKLIST DE REQUISITOS (¿ESTAMOS LISTOS?)</label>
+            <div class="checklist-grid">
+                <div class="check-item"><input type="checkbox" class="ck"> Experiencia</div>
+                <div class="check-item"><input type="checkbox" class="ck"> Indicadores Fin.</div>
+                <div class="check-item"><input type="checkbox" class="ck"> Capacidad Jurídica</div>
+                <div class="check-item"><input type="checkbox" class="ck"> Visita Técnica</div>
+                <div class="check-item"><input type="checkbox" class="ck"> Pólizas / Garantías</div>
+                <div class="check-item"><input type="checkbox" class="ck"> Equipo Técnico</div>
+                <div class="check-item"><input type="checkbox" class="ck"> Muestras / Catálogo</div>
+                <div class="check-item"><input type="checkbox" class="ck"> Matriz de Riesgos</div>
             </div>
-            <div>
-                <label>Análisis de la IA</label>
-                <textarea id="p_analisis" rows="12" placeholder="Pega el resultado aquí..."></textarea>
+            
+            <div style="margin-top: 20px;">
+                <label>Detalle de los 13 Puntos SIEL</label>
+                <textarea id="v_13p" rows="8" placeholder="Resultados de los 13 puntos..."></textarea>
             </div>
         </div>
     </div>
 
-    <div class="card">
-        <label>Concepto de Viabilidad</label>
-        <select id="p_go"><option value="GO - PRESENTARSE">🟢 GO - PRESENTARSE</option><option value="NO GO - NO VIABLE">🔴 NO GO - NO VIABLE</option></select>
-        <button class="btn-main" onclick="generatePDF()">GENERAR INFORME PROFESIONAL V8.2</button>
-    </div>
+    <button class="btn-pdf" onclick="genFinalPDF()"><i class="fas fa-file-pdf"></i> 6. DESCARGAR INFORME PROFESIONAL DE DECISIÓN</button>
 </div>
 
 <script>
-    function copyP() { navigator.clipboard.writeText(document.getElementById('pText').innerText); alert("Prompt Maestro Copiado"); }
+    function updateUI() {
+        const d = document.getElementById('v_dec').value;
+        const master = document.querySelector('.decision-master');
+        if(d === 'GO') master.style.borderColor = '#10b981';
+        else if(d === 'COND') master.style.borderColor = '#f59e0b';
+        else master.style.borderColor = '#e11d48';
+    }
 
-    function generatePDF() {
+    function genFinalPDF() {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
         
-        const nombre = (document.getElementById('p_nombre').value || "PROCESO").toUpperCase();
-        const entidad = (document.getElementById('p_entidad').value || "ENTIDAD").toUpperCase();
-        const analisis = document.getElementById('p_analisis').value || "";
-        const go = document.getElementById('p_go').value;
+        const nom = document.getElementById('v_nom').value.toUpperCase();
+        const ent = document.getElementById('v_ent').value.toUpperCase();
+        const dec = document.getElementById('v_dec').options[document.getElementById('v_dec').selectedIndex].text;
+        const mot = document.getElementById('v_motivo').value;
+        const res = document.getElementById('v_res').value;
+        const alertStr = document.getElementById('v_alertas').value;
+        const p13 = document.getElementById('v_13p').value;
 
-        // Header Profesional
-        doc.setFillColor(6, 22, 36); doc.rect(0, 0, 210, 40, 'F');
-        doc.setTextColor(212, 175, 55); doc.setFontSize(18); doc.setFont("helvetica", "bold");
-        doc.text("REPORTE DE AUDITORIA ESTRATEGICA SIEL", 105, 20, { align: 'center' });
-        doc.setTextColor(255); doc.setFontSize(10); doc.text("BRICED CONSULTING - ANALISIS DE LICITACIONES", 105, 28, { align: 'center' });
+        // 1. SEMÁFORO DE DECISIÓN (UX REAL)
+        doc.setFillColor(6, 22, 36); doc.rect(0, 0, 210, 45, 'F');
+        doc.setTextColor(212, 175, 55); doc.setFontSize(20); doc.setFont("helvetica", "bold");
+        doc.text("INFORME DE DECISIÓN ESTRATÉGICA", 105, 20, { align: "center" });
+        
+        doc.setFillColor(255, 255, 255, 0.1); doc.rect(15, 25, 180, 15, 'F');
+        doc.setTextColor(255); doc.setFontSize(14); doc.text(dec, 105, 35, { align: "center" });
 
-        // Ficha Técnica
-        doc.setFillColor(245, 247, 251); doc.rect(15, 50, 180, 25, 'F');
-        doc.setTextColor(12, 45, 72); doc.setFontSize(10); doc.text("OBJETO: " + nombre, 20, 60);
-        doc.text("ENTIDAD: " + entidad, 20, 68);
-        doc.setFont("helvetica", "bold"); doc.text("CONCEPTO: " + go, 120, 65);
+        // 2. RESUMEN EJECUTIVO
+        doc.setTextColor(6, 22, 36); doc.setFontSize(12); doc.text("1. RESUMEN EJECUTIVO (GERENCIA)", 20, 55);
+        doc.setDrawColor(212, 175, 55); doc.line(20, 57, 190, 57);
+        doc.setFontSize(10); doc.setFont("helvetica", "italic");
+        doc.text(doc.splitTextToSize(mot, 170), 20, 65);
+        doc.setFont("helvetica", "normal");
+        doc.text(doc.splitTextToSize(res, 170), 20, 75);
 
-        // Contenido
-        doc.setFontSize(12); doc.text("DESARROLLO DEL ANALISIS (13 PUNTOS SIEL)", 20, 90);
-        doc.setDrawColor(212, 175, 55); doc.line(20, 92, 190, 92);
+        // 3. ALERTAS CLASIFICADAS
+        doc.setFont("helvetica", "bold"); doc.text("2. ALERTAS Y RIESGOS DETECTADOS", 20, 105);
+        doc.line(20, 107, 190, 107);
+        doc.setFont("helvetica", "normal");
+        const aLines = doc.splitTextToSize(alertStr, 170);
+        doc.text(aLines, 20, 115);
 
-        doc.setFontSize(10); doc.setFont("helvetica", "normal"); doc.setTextColor(0);
-        const lines = doc.splitTextToSize(analisis, 170);
-        let cursorY = 100;
-
-        lines.forEach(line => {
-            if (cursorY > 275) { doc.addPage(); cursorY = 25; }
-            if (line.toUpperCase().includes("HALLAZGO") || line.toUpperCase().includes("RECOMENDACION")) {
-                doc.setFont("helvetica", "bold"); doc.setTextColor(12, 45, 72);
-                doc.text(line, 20, cursorY);
-                doc.setFont("helvetica", "normal"); doc.setTextColor(0);
-            } else {
-                doc.text(line, 20, cursorY);
-            }
-            cursorY += 6;
+        // 4. CHECKLIST (ESTADO DE ALISTAMIENTO)
+        let y = 160;
+        doc.setFont("helvetica", "bold"); doc.text("3. CHECKLIST DE ALISTAMIENTO", 20, y);
+        doc.line(20, y+2, 190, y+2);
+        y += 10;
+        doc.setFontSize(9);
+        const checks = document.querySelectorAll('.check-item');
+        checks.forEach((c, index) => {
+            const isChecked = c.querySelector('input').checked ? "[SI]" : "[NO]";
+            const label = c.innerText.trim();
+            doc.text(`${isChecked} ${label}`, 25 + (index % 2 * 80), y);
+            if (index % 2 !== 0) y += 7;
         });
 
-        // Salvedad
-        if (cursorY > 250) { doc.addPage(); cursorY = 25; }
-        doc.setFontSize(8); doc.setTextColor(100); doc.setFont("helvetica", "italic");
-        doc.text("SALVEDAD: Este informe es una herramienta de apoyo y no constituye asesoria juridica vinculante.", 20, cursorY + 15);
+        // 5. ANÁLISIS 13 PUNTOS (PÁGINA 2)
+        doc.addPage();
+        doc.setFontSize(12); doc.setFont("helvetica", "bold");
+        doc.text("4. ANÁLISIS DETALLADO (METODOLOGÍA 13 PUNTOS SIEL)", 20, 20);
+        doc.line(20, 22, 190, 22);
+        doc.setFontSize(9); doc.setFont("helvetica", "normal");
+        doc.text(doc.splitTextToSize(p13, 170), 20, 30);
 
-        doc.save(`INFORME_BRICED_${nombre.substring(0,10)}.pdf`);
+        doc.save(`SIEL_DECISION_${nom.substring(0,10)}.pdf`);
     }
 </script>
 </body>
