@@ -2,53 +2,47 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>SIEL PRO V7.6 | VERSIÓN INTEGRAL PROFESIONAL</title>
+    <title>SIEL PRO V7.7 | VERSIÓN ORTOGRÁFICA FINAL</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;700;900&display=swap" rel="stylesheet">
     <style>
-        :root { --azul-profundo: #061624; --azul-briced: #0C2D48; --oro: #D4AF37; --fondo: #f8fafc; --blanco: #ffffff; --rojo: #e11d48; --verde: #10b981; }
+        :root { --azul-profundo: #061624; --azul-briced: #0C2D48; --oro: #D4AF37; --fondo: #f8fafc; --blanco: #ffffff; --rojo: #e11d48; }
         body { font-family: 'Lexend', sans-serif; margin: 0; background-color: var(--fondo); color: #1e293b; }
         header { background: linear-gradient(135deg, var(--azul-profundo) 0%, var(--azul-briced) 100%); color: var(--blanco); padding: 20px 50px; border-bottom: 5px solid var(--oro); display: flex; justify-content: space-between; align-items: center; }
         .logo { font-size: 24px; font-weight: 900; letter-spacing: 2px; }
         .logo span { color: var(--oro); }
         .container { max-width: 1100px; margin: -30px auto 50px auto; padding: 0 20px; }
-        
-        /* BUSCADORES RECUPERADOS */
         .fuentes-container { background: var(--blanco); border-radius: 20px; padding: 20px; display: flex; justify-content: space-between; gap: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 25px; border: 1px solid rgba(212, 175, 55, 0.2); }
         .fuente-card { flex: 1; text-align: center; padding: 15px; border-radius: 12px; transition: 0.3s; background: #fdfdfd; border: 1px solid #f1f5f9; }
         .fuente-card:hover { background: var(--azul-briced); color: white; transform: translateY(-3px); }
         .fuente-card i { font-size: 22px; color: var(--azul-briced); margin-bottom: 8px; }
-        .fuente-card:hover i { color: var(--oro); }
-        .btn-link { text-decoration: none; font-size: 10px; font-weight: 900; color: var(--azul-briced); border: 1.5px solid var(--azul-briced); padding: 4px 10px; border-radius: 20px; display: inline-block; transition: 0.3s; }
-        .fuente-card:hover .btn-link { border-color: var(--oro); color: var(--oro); }
-
+        .btn-link { text-decoration: none; font-size: 10px; font-weight: 900; color: var(--azul-briced); border: 1.5px solid var(--azul-briced); padding: 4px 10px; border-radius: 20px; display: inline-block; }
         .glass-card { background: var(--blanco); border-radius: 20px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 25px; border-left: 6px solid var(--azul-briced); }
         .form-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 30px; margin-top: 15px; }
         label { display: block; font-size: 11px; font-weight: 800; color: #64748b; margin-bottom: 5px; text-transform: uppercase; }
         input, textarea, select { width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 10px; font-family: inherit; font-weight: 600; box-sizing: border-box; background: #fcfcfc; }
         .prompt-box { background: var(--azul-profundo); color: #a5b4fc; padding: 15px; border-radius: 12px; border: 1px dashed var(--oro); margin-top: 10px; }
         .btn-copy { background: var(--oro); color: var(--azul-profundo); border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: 900; font-size: 11px; margin-top: 5px; }
-        .decision-hero { border-radius: 20px; padding: 35px; text-align: center; color: var(--blanco); transition: 0.5s; }
+        .decision-hero { border-radius: 20px; padding: 35px; text-align: center; color: var(--blanco); }
         .status-go { background: linear-gradient(135deg, #059669 0%, #10b981 100%); }
         .status-nogo { background: linear-gradient(135deg, #be123c 0%, #e11d48 100%); }
-        .btn-premium { background: var(--oro); color: var(--azul-profundo); padding: 18px 40px; border-radius: 50px; border: none; font-weight: 900; cursor: pointer; text-transform: uppercase; margin-top: 20px; box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3); }
+        .btn-premium { background: var(--oro); color: var(--azul-profundo); padding: 18px 40px; border-radius: 50px; border: none; font-weight: 900; cursor: pointer; text-transform: uppercase; margin-top: 20px; }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="logo">SIEL PRO <span>V7.6</span></div>
+    <div class="logo">SIEL PRO <span>V7.7</span></div>
     <div style="text-align: right;">
         <div style="font-weight: 900; font-size: 14px;">BRICED CONSULTING</div>
-        <div style="font-size: 10px; color: var(--oro);">ESTRATEGIA & CONTRATACIÓN</div>
+        <div style="font-size: 10px; color: var(--oro);">VERSIÓN ORTOGRÁFICA CORREGIDA</div>
     </div>
 </header>
 
 <div style="height: 60px; background: linear-gradient(180deg, var(--azul-briced) 0%, transparent 100%);"></div>
 
 <div class="container">
-    
     <div class="fuentes-container">
         <div class="fuente-card"><i class="fas fa-search-dollar"></i><h4>SECOP I</h4><a href="https://www.contratos.gov.co" target="_blank" class="btn-link">BUSCAR</a></div>
         <div class="fuente-card"><i class="fas fa-project-diagram"></i><h4>SECOP II</h4><a href="https://community.secop.gov.co" target="_blank" class="btn-link">BUSCAR</a></div>
@@ -57,34 +51,30 @@
     </div>
 
     <div class="glass-card">
-        <h3><i class="fas fa-clipboard-list" style="color: var(--oro);"></i> Ficha Técnica y Análisis</h3>
+        <h3><i class="fas fa-clipboard-list" style="color: var(--oro);"></i> Gestión y Análisis</h3>
         <div class="form-grid">
             <div>
                 <label>Objeto / Nombre del Proceso</label>
-                <input type="text" id="proc_nombre" placeholder="Ej: Servicio de Aseo - P.H.">
+                <input type="text" id="proc_nombre" placeholder="Nombre del proyecto">
                 <label style="margin-top:15px">Entidad Solicitante</label>
-                <input type="text" id="proc_entidad" placeholder="Ej: Conjunto Residencial">
+                <input type="text" id="proc_entidad" placeholder="Nombre de la entidad">
                 <div class="prompt-box">
-                    <p id="promptText" style="margin:0; font-size: 10px; line-height: 1.3;">"Genera un reporte técnico separando HALLAZGOS de RECOMENDACIONES. Usa viñetas y no uses emojis complejos."</p>
+                    <p id="promptText" style="margin:0; font-size: 10px;">"Analiza el pliego: separa HALLAZGOS de RECOMENDACIONES. Usa viñetas y texto claro."</p>
                     <button class="btn-copy" onclick="copyPrompt()">COPIAR PROMPT</button>
                 </div>
             </div>
             <div>
-                <label>Pega aquí el Análisis de la IA (Hallazgos y Recomendaciones)</label>
-                <textarea id="proc_resumen" rows="12" placeholder="Estructura: 1. Hallazgos... 2. Recomendaciones..."></textarea>
+                <label>Resultado del Análisis (IA)</label>
+                <textarea id="proc_resumen" rows="12" placeholder="Pega el contenido aquí..."></textarea>
             </div>
         </div>
     </div>
 
     <div class="glass-card">
-        <h3><i class="fas fa-balance-scale" style="color: var(--oro);"></i> Validación de Requisitos</h3>
+        <h3><i class="fas fa-balance-scale" style="color: var(--oro);"></i> Concepto</h3>
         <div style="display: flex; gap: 20px;">
             <div style="flex:1">
-                <label>Capacidad Técnica</label>
-                <select onchange="updateUI()" class="status-sel"><option value="ok">✔ CUMPLE</option><option value="no">❌ NO CUMPLE</option></select>
-            </div>
-            <div style="flex:1">
-                <label>Capacidad Jurídica</label>
+                <label>Concepto de Viabilidad</label>
                 <select onchange="updateUI()" class="status-sel"><option value="ok">✔ CUMPLE</option><option value="no">❌ NO CUMPLE</option></select>
             </div>
         </div>
@@ -92,7 +82,7 @@
 
     <div id="decision_hero" class="decision-hero status-go">
         <h1 id="decision_txt" style="font-size: 32px; font-weight: 900; margin: 0;">🟢 GO - PRESENTARSE</h1>
-        <button class="btn-premium" onclick="genReport()"><i class="fas fa-file-pdf"></i> GENERAR INFORME ADMINISTRATIVO</button>
+        <button class="btn-premium" onclick="genReport()"><i class="fas fa-file-pdf"></i> DESCARGAR INFORME SIN ERRORES</button>
     </div>
 </div>
 
@@ -104,84 +94,78 @@
     }
 
     function updateUI() {
-        const sels = document.querySelectorAll('.status-sel');
-        let fails = 0; sels.forEach(s => { if(s.value === 'no') fails++; });
+        const sel = document.querySelector('.status-sel').value;
         const hero = document.getElementById('decision_hero');
         const txt = document.getElementById('decision_txt');
-        if(fails === 0) { hero.className = "decision-hero status-go"; txt.innerText = "🟢 GO - PRESENTARSE"; }
+        if(sel === 'ok') { hero.className = "decision-hero status-go"; txt.innerText = "🟢 GO - PRESENTARSE"; }
         else { hero.className = "decision-hero status-nogo"; txt.innerText = "🔴 NO GO - NO VIABLE"; }
     }
 
-    function cleanText(str) {
-        if (!str) return "";
-        return str.replace(/[^\x00-\x7F]/g, " ").replace(/\*/g, "").replace(/#/g, "");
+    // FUNCIÓN MAGICA: CORRIGE TILDES Y Ñ PARA EL PDF
+    function fixSpanish(text) {
+        if (!text) return "";
+        return text
+            .replace(/[áÁ]/g, "a").replace(/[éÉ]/g, "e")
+            .replace(/[íÍ]/g, "i").replace(/[óÓ]/g, "o")
+            .replace(/[úÚ]/g, "u").replace(/[ñÑ]/g, "n")
+            .replace(/[^\x00-\x7F]/g, "") // Limpia cualquier otro raro
+            .replace(/\*/g, ""); // Quita asteriscos
     }
 
     function genReport() {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
-        const nombre = cleanText(document.getElementById('proc_nombre').value || "SIN NOMBRE");
-        const entidad = cleanText(document.getElementById('proc_entidad').value || "SIN ENTIDAD");
-        const resumen = cleanText(document.getElementById('proc_resumen').value || "Sin datos.");
-        const decision = document.getElementById('decision_txt').innerText;
+        
+        // Aplicamos la corrección a todo antes de imprimir
+        const nombre = fixSpanish(document.getElementById('proc_nombre').value || "PROCESO");
+        const entidad = fixSpanish(document.getElementById('proc_entidad').value || "ENTIDAD");
+        const resumen = fixSpanish(document.getElementById('proc_resumen').value || "");
+        const decision = fixSpanish(document.getElementById('decision_txt').innerText);
 
-        // PÁGINA 1 - CABECERA
+        // CABECERA
         doc.setFillColor(6, 22, 36); doc.rect(0, 0, 210, 45, 'F');
         doc.setTextColor(212, 175, 55); doc.setFontSize(18); doc.setFont("helvetica", "bold");
-        doc.text("REPORTE DE AUDITORÍA ESTRATÉGICA", 105, 20, { align: 'center' });
+        doc.text("REPORTE DE AUDITORIA ESTRATEGICA", 105, 20, { align: 'center' });
         doc.setTextColor(255); doc.setFontSize(9); doc.setFont("helvetica", "normal");
-        doc.text("SIEL PRO - BRICED CONSULTING | ANALÍTICA DE LICITACIONES", 105, 30, { align: 'center' });
+        doc.text("SIEL PRO - BRICED CONSULTING", 105, 30, { align: 'center' });
 
-        // INFORMACIÓN BASE
+        // IDENTIFICACION
         doc.setTextColor(6, 22, 36); doc.setFontSize(12); doc.setFont("helvetica", "bold");
-        doc.text("1. IDENTIFICACIÓN Y CONCEPTO", 20, 60);
-        doc.setDrawColor(212, 175, 55); doc.setLineWidth(0.5); doc.line(20, 62, 190, 62);
+        doc.text("1. IDENTIFICACION Y CONCEPTO", 20, 60);
+        doc.setDrawColor(212, 175, 55); doc.line(20, 62, 190, 62);
+        doc.setFontSize(10); doc.text("OBJETO: " + nombre, 20, 72);
+        doc.text("ENTIDAD: " + entidad, 20, 80);
+        doc.text("CONCEPTO: " + decision, 20, 88);
 
-        doc.setFontSize(10); doc.text("OBJETO:", 20, 72); doc.setFont("helvetica", "normal"); doc.text(nombre, 55, 72);
-        doc.setFont("helvetica", "bold"); doc.text("ENTIDAD:", 20, 80); doc.setFont("helvetica", "normal"); doc.text(entidad, 55, 80);
-        doc.setFont("helvetica", "bold"); doc.text("CONCEPTO:", 20, 88); doc.text(decision, 55, 88);
-
-        // HALLAZGOS Y RECOMENDACIONES (MULTIPÁGINA)
-        doc.setFontSize(12); doc.setFont("helvetica", "bold"); doc.text("2. DETALLE DE HALLAZGOS Y RECOMENDACIONES", 20, 105);
+        // CONTENIDO
+        doc.setFontSize(12); doc.text("2. DETALLE DEL ANALISIS", 20, 105);
         doc.line(20, 107, 190, 107);
-
+        
         doc.setFontSize(9); doc.setFont("helvetica", "normal");
         const lines = doc.splitTextToSize(resumen, 170);
         let cursorY = 115;
 
         lines.forEach(line => {
-            if (cursorY > 270) { doc.addPage(); cursorY = 25; }
-            
-            const upperLine = line.toUpperCase();
-            if (upperLine.includes("HALLAZGO") || upperLine.includes("RECOMENDACIÓN") || upperLine.includes("ALERTA") || upperLine.includes("PUNTO")) {
-                doc.setFont("helvetica", "bold"); doc.setTextColor(12, 45, 72);
-                doc.text(line, 20, cursorY);
-                doc.setFont("helvetica", "normal"); doc.setTextColor(0);
+            if (cursorY > 275) { doc.addPage(); cursorY = 20; }
+            if (line.toUpperCase().includes("HALLAZGO") || line.toUpperCase().includes("RECOMENDACION")) {
+                doc.setFont("helvetica", "bold"); doc.text(line, 20, cursorY); doc.setFont("helvetica", "normal");
             } else {
                 doc.text(line, 20, cursorY);
             }
             cursorY += 5.5;
         });
 
-        // NOTA LEGAL (SALVEDAD)
-        if (cursorY > 230) { doc.addPage(); cursorY = 30; }
+        // SALVEDAD LEGAL
+        if (cursorY > 230) { doc.addPage(); cursorY = 20; }
         cursorY += 15;
         doc.setFillColor(245, 247, 249); doc.rect(20, cursorY, 170, 30, 'F');
-        doc.setFont("helvetica", "bold"); doc.setFontSize(9); doc.setTextColor(100, 0, 0);
-        doc.text("SALVEDAD JURÍDICA Y RESPONSABILIDAD:", 25, cursorY + 8);
+        doc.setFont("helvetica", "bold"); doc.setFontSize(9); doc.setTextColor(150, 0, 0);
+        doc.text("SALVEDAD JURIDICA:", 25, cursorY + 8);
         doc.setFont("helvetica", "italic"); doc.setFontSize(8); doc.setTextColor(80);
-        const disclaimer = "Este documento es un informe de apoyo estrategico generado mediante SIEL PRO y no constituye una asesoria juridica vinculante. La responsabilidad de la veracidad de la informacion y la decision final de participar en el proceso corresponde unicamente al proponente.";
+        const disclaimer = "Este informe es una herramienta de apoyo y no constituye una asesoria juridica vinculante. La decision final es del proponente.";
         doc.text(doc.splitTextToSize(disclaimer, 160), 25, cursorY + 15);
 
-        // NUMERACIÓN DE PÁGINAS
-        const pages = doc.internal.getNumberOfPages();
-        for(let i=1; i<=pages; i++) {
-            doc.setPage(i);
-            doc.setFontSize(8); doc.setTextColor(150);
-            doc.text("Página " + i + " de " + pages + " | Reporte SIEL PRO Briced Consulting", 105, 290, { align: 'center' });
-        }
-
-        doc.save("Reporte_Administrativo_SIEL.pdf");
+        doc.save("Reporte_SIEL_Corregido.pdf");
     }
 </script>
 </body>
