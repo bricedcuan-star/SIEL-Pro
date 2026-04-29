@@ -2,130 +2,114 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>SIEL PRO V8.0 | EDICIÓN PREMIUM CONSULTORÍA</title>
+    <title>SIEL PRO V8.1 | EDICIÓN EDITABLE</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --azul-p: #061624; --azul-s: #0C2D48; --oro: #D4AF37; --gris-f: #f1f5f9; --blanco: #ffffff; }
-        body { font-family: 'Lexend', sans-serif; margin: 0; background: var(--gris-f); color: #334155; }
-        header { background: linear-gradient(135deg, var(--azul-p) 0%, var(--azul-s) 100%); color: white; padding: 20px 40px; border-bottom: 4px solid var(--oro); display: flex; justify-content: space-between; align-items: center; }
-        .container { max-width: 1000px; margin: 20px auto; padding: 0 20px; }
-        .card { background: white; border-radius: 15px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px; border: 1px solid #e2e8f0; }
-        .prompt-zone { background: var(--azul-p); color: #e2e8f0; padding: 15px; border-radius: 10px; font-size: 11px; margin-top: 10px; border-left: 4px solid var(--oro); }
-        label { display: block; font-weight: 800; font-size: 12px; color: var(--azul-s); margin-bottom: 8px; text-transform: uppercase; }
-        input, textarea, select { width: 100%; padding: 12px; border: 2px solid #cbd5e1; border-radius: 8px; font-family: inherit; margin-bottom: 15px; box-sizing: border-box; }
-        .btn-main { background: var(--oro); color: var(--azul-p); padding: 15px 30px; border-radius: 50px; border: none; font-weight: 800; cursor: pointer; width: 100%; font-size: 16px; transition: 0.3s; }
-        .btn-main:hover { transform: scale(1.02); filter: brightness(1.1); }
-        .search-bar { display: flex; gap: 10px; margin-bottom: 20px; }
-        .search-btn { flex: 1; padding: 10px; border-radius: 8px; background: white; border: 1px solid var(--oro); color: var(--azul-s); text-decoration: none; font-size: 10px; font-weight: 700; text-align: center; }
+        :root { --azul: #0C2D48; --oro: #D4AF37; --fondo: #f4f7f6; }
+        body { font-family: 'Lexend', sans-serif; background: var(--fondo); margin: 0; padding: 0; }
+        .header { background: var(--azul); color: white; padding: 20px; text-align: center; border-bottom: 4px solid var(--oro); }
+        .container { max-width: 800px; margin: 30px auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        label { display: block; font-weight: bold; margin-top: 15px; color: var(--azul); font-size: 13px; }
+        input, textarea, select { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; font-family: inherit; box-sizing: border-box; }
+        .btn-download { background: var(--azul); color: white; border: none; padding: 15px; width: 100%; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 20px; font-size: 16px; }
+        .btn-download:hover { background: #1a4a73; }
+        .copy-box { background: #eef2f3; padding: 10px; border-radius: 5px; font-size: 11px; margin-top: 10px; border-left: 3px solid var(--oro); }
     </style>
 </head>
 <body>
 
-<header>
-    <div><span style="font-weight: 800; font-size: 20px;">SIEL PRO</span> <span style="color: var(--oro); font-weight: 300;">V8.0</span></div>
-    <div style="text-align: right; font-size: 12px;">BRICED CONSULTING<br><span style="color: var(--oro);">Premium Edition</span></div>
-</header>
+<div class="header">
+    <h2 style="margin:0;">SIEL PRO V8.1</h2>
+    <p style="margin:0; font-size: 12px; opacity: 0.8;">PREPARADO PARA CONVERSIÓN A WORD</p>
+</div>
 
 <div class="container">
-    <div class="search-bar">
-        <a href="https://www.contratos.gov.co" target="_blank" class="search-btn"><i class="fas fa-search"></i> SECOP I</a>
-        <a href="https://community.secop.gov.co" target="_blank" class="search-btn"><i class="fas fa-search"></i> SECOP II</a>
-        <a href="https://bogota.gov.co" target="_blank" class="search-btn"><i class="fas fa-city"></i> BOGOTÁ</a>
-        <a href="https://leydepropiedadhorizontal.org" target="_blank" class="search-btn"><i class="fas fa-building"></i> P.H.</a>
+    <label>PROYECTO / OBJETO</label>
+    <input type="text" id="nombre" placeholder="Ej: Servicios de Aseo">
+
+    <label>ENTIDAD</label>
+    <input type="text" id="entidad" placeholder="Ej: Conjunto Residencial">
+
+    <div class="copy-box">
+        <strong>PROMPT MAESTRO:</strong><br>
+        <span id="pText">Analiza este pliego bajo los 13 puntos SIEL. Divide en: 1. HALLAZGOS y 2. RECOMENDACIONES. Usa tildes y ñ con normalidad.</span>
+        <br>
+        <button onclick="copyPrompt()" style="margin-top:5px; font-size:10px; cursor:pointer;">Copiar</button>
     </div>
 
-    <div class="card">
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-            <div>
-                <label>Proyecto / Objeto</label>
-                <input type="text" id="p_nombre" placeholder="Nombre de la licitación">
-                <label>Entidad</label>
-                <input type="text" id="p_entidad" placeholder="Entidad contratante">
-                <div class="prompt-zone">
-                    <p id="pText" style="margin:0;">"Actúa como experto senior. Analiza los 13 puntos SIEL. Divide en: **HALLAZGOS** (Datos del pliego) y **RECOMENDACIONES** (Estrategia). USA TILDES Y Ñ NORMALMENTE."</p>
-                    <button onclick="copyP()" style="background:var(--oro); border:none; padding:5px 10px; border-radius:5px; cursor:pointer; margin-top:5px; font-size:9px; font-weight:800;">COPIAR PROMPT</button>
-                </div>
-            </div>
-            <div>
-                <label>Contenido del Análisis (IA)</label>
-                <textarea id="p_analisis" rows="12" placeholder="Pega aquí el resultado..."></textarea>
-            </div>
-        </div>
-    </div>
+    <label>CONTENIDO DEL ANÁLISIS (IA)</label>
+    <textarea id="analisis" rows="10" placeholder="Pega aquí el resultado de la IA..."></textarea>
 
-    <div class="card">
-        <label>Concepto Final</label>
-        <select id="p_go"><option value="GO">🟢 GO - PRESENTARSE</option><option value="NO GO">🔴 NO GO - NO VIABLE</option></select>
-        <button class="btn-main" onclick="generatePDF()">GENERAR INFORME PROFESIONAL V8.0</button>
-    </div>
+    <label>DECISIÓN</label>
+    <select id="decision">
+        <option value="GO - PRESENTARSE">GO - PRESENTARSE</option>
+        <option value="NO GO - NO VIABLE">NO GO - NO VIABLE</option>
+    </select>
+
+    <button class="btn-download" onclick="exportPDF()">DESCARGAR PARA EDITAR EN WORD</button>
 </div>
 
 <script>
-    function copyP() { navigator.clipboard.writeText(document.getElementById('pText').innerText); alert("Prompt Copiado"); }
+    function copyPrompt() {
+        navigator.clipboard.writeText(document.getElementById('pText').innerText);
+        alert("Prompt copiado");
+    }
 
-    function generatePDF() {
+    function exportPDF() {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
         
-        const nombre = document.getElementById('p_nombre').value || "SIN NOMBRE";
-        const entidad = document.getElementById('p_entidad').value || "SIN ENTIDAD";
-        const analisis = document.getElementById('p_analisis').value || "";
-        const go = document.getElementById('p_go').value;
+        // Datos
+        const nombre = document.getElementById('nombre').value.toUpperCase();
+        const entidad = document.getElementById('entidad').value.toUpperCase();
+        const analisis = document.getElementById('analisis').value;
+        const decision = document.getElementById('decision').value;
 
-        // Diseño de Página 1
-        doc.setFillColor(6, 22, 36); doc.rect(0, 0, 210, 40, 'F');
-        doc.setTextColor(212, 175, 55); doc.setFontSize(18); doc.setFont("helvetica", "bold");
-        doc.text("INFORME DE ESTRATEGIA Y VIABILIDAD", 105, 20, { align: 'center' });
-        doc.setTextColor(255); doc.setFontSize(10); doc.text("SIEL PRO - BRICED CONSULTING", 105, 28, { align: 'center' });
+        // Formato sobrio (Fácil de convertir a Word)
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(16);
+        doc.text("INFORME ESTRATÉGICO DE LICITACIÓN", 105, 20, { align: "center" });
+        
+        doc.setFontSize(10);
+        doc.text("BRICED CONSULTING - SIEL PRO", 105, 27, { align: "center" });
+        doc.line(20, 32, 190, 32);
 
         // Ficha Técnica
-        doc.setTextColor(12, 45, 72); doc.setFontSize(11);
-        doc.setFillColor(245, 247, 251); doc.rect(15, 50, 180, 25, 'F');
-        doc.text("OBJETO:", 20, 60); doc.setFont("helvetica", "normal"); doc.text(nombre, 45, 60);
-        doc.setFont("helvetica", "bold"); doc.text("ENTIDAD:", 20, 68); doc.setFont("helvetica", "normal"); doc.text(entidad, 45, 68);
+        doc.setFontSize(11);
+        doc.text("INFORMACIÓN GENERAL", 20, 45);
+        doc.setFont("helvetica", "normal");
+        doc.text("PROYECTO: " + nombre, 20, 52);
+        doc.text("ENTIDAD: " + entidad, 20, 59);
+        doc.setFont("helvetica", "bold");
+        doc.text("CONCEPTO FINAL: " + decision, 20, 66);
 
-        // Badge de Decisión
-        doc.setFillColor(go === 'GO' ? 16 : 220, go === 'GO' ? 185 : 20, go === 'GO' ? 129 : 60);
-        doc.rect(150, 55, 35, 15, 'F');
-        doc.setTextColor(255); doc.setFontSize(10); doc.text(go, 167.5, 65, { align: 'center' });
-
-        // Cuerpo del Informe
-        doc.setTextColor(12, 45, 72); doc.setFontSize(12); doc.setFont("helvetica", "bold");
-        doc.text("DESARROLLO DEL ANALISIS ESTRATEGICO", 20, 90);
-        doc.setDrawColor(212, 175, 55); doc.line(20, 92, 190, 92);
-
-        doc.setFontSize(10); doc.setFont("helvetica", "normal"); doc.setTextColor(0);
+        // Análisis
+        doc.text("ANÁLISIS DETALLADO", 20, 80);
+        doc.line(20, 82, 190, 82);
         
-        // El secreto: splitTextToSize respeta caracteres si la fuente es estándar
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(10);
+        
+        // splitTextToSize ahora procesará tildes mejor en fuentes estándar
         const lines = doc.splitTextToSize(analisis, 170);
-        let cursorY = 100;
+        let y = 90;
 
         lines.forEach(line => {
-            if (cursorY > 275) { doc.addPage(); cursorY = 25; }
-            
-            // Resaltar títulos
-            if (line.includes("HALLAZGO") || line.includes("RECOMENDACION") || line.includes("PUNTO")) {
-                doc.setFont("helvetica", "bold");
-                doc.setTextColor(12, 45, 72);
-                doc.text(line, 20, cursorY);
-                doc.setFont("helvetica", "normal");
-                doc.setTextColor(0);
-            } else {
-                doc.text(line, 20, cursorY);
-            }
-            cursorY += 6;
+            if (y > 280) { doc.addPage(); y = 20; }
+            doc.text(line, 20, y);
+            y += 6;
         });
 
-        // Salvedad al final
-        if (cursorY > 240) { doc.addPage(); cursorY = 25; }
-        doc.setDrawColor(200); doc.line(20, cursorY + 5, 190, cursorY + 5);
-        doc.setFontSize(8); doc.setTextColor(100); doc.setFont("helvetica", "italic");
-        const salvedad = "NOTA DE SALVEDAD: Este informe es una herramienta de analisis basada en IA y no constituye un dictamen juridico vinculante. La decision final de participacion es responsabilidad exclusiva del proponente.";
-        doc.text(doc.splitTextToSize(salvedad, 170), 20, cursorY + 15);
+        // Salvedad
+        if (y > 250) { doc.addPage(); y = 20; }
+        y += 10;
+        doc.setFont("helvetica", "italic");
+        doc.setFontSize(8);
+        doc.text("Nota: Este informe es una herramienta de apoyo y no constituye asesoría jurídica vinculante.", 20, y);
 
-        doc.save(`SIEL_PRO_V8_${nombre.substring(0,10)}.pdf`);
+        doc.save("Informe_Para_Word.pdf");
     }
 </script>
 </body>
