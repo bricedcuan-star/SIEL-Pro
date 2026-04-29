@@ -3,302 +3,207 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIEL PRO V7 | PLATAFORMA INTEGRAL</title>
+    <title>SIEL PRO 7 | PLAN ESENCIAL</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --p: #0C447C; --g: #D4AF37; --d: #0f172a; --w: #ffffff; --r: #e11d48; }
-        body { font-family: 'Lexend', sans-serif; margin: 0; background: #0a192f; color: var(--w); }
+        :root { --azul: #0C2D48; --oro: #D4AF37; --fondo: #F4F7F9; --oscuro: #061624; --rojo: #E11D48; --verde: #10B981; --naranja: #F59E0B; }
+        body { font-family: 'Lexend', sans-serif; margin: 0; background: var(--fondo); color: #333; }
         
-        /* Interfaz de Plataforma */
-        header { background: var(--p); color: var(--w); padding: 25px; border-bottom: 5px solid var(--g); display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
-        .radar-bar { background: #112240; padding: 15px; display: flex; justify-content: center; gap: 20px; border-bottom: 1px solid var(--g); }
-        .btn-radar { background: transparent; color: var(--g); padding: 10px 20px; border-radius: 8px; border: 1px solid var(--g); text-decoration: none; font-size: 13px; font-weight: bold; transition: 0.3s; }
-        .btn-radar:hover { background: var(--g); color: var(--p); }
+        /* HEADER */
+        header { background: var(--azul); color: white; padding: 20px 40px; border-bottom: 4px solid var(--oro); display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-weight: 900; letter-spacing: 2px; font-size: 22px; }
+        .logo span { color: var(--oro); }
 
-        nav { background: var(--w); display: flex; position: sticky; top: 0; z-index: 1000; box-shadow: 0 5px 10px rgba(0,0,0,0.2); }
-        .tab { padding: 20px 30px; cursor: pointer; font-weight: bold; color: #1e293b; border-bottom: 4px solid transparent; transition: 0.3s; }
-        .tab.active { color: var(--p); border-bottom-color: var(--g); background: #f8fafc; }
+        /* MÓDULO 0: EXPLORAR OPORTUNIDADES */
+        .container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
+        .section-title { color: var(--azul); border-left: 5px solid var(--oro); padding-left: 15px; margin-bottom: 25px; }
+        
+        .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 40px; }
+        .card-fuente { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #e5e7eb; transition: 0.3s; }
+        .card-fuente:hover { transform: translateY(-5px); border-color: var(--oro); }
+        .card-fuente i { font-size: 24px; color: var(--azul); margin-bottom: 15px; }
+        
+        .btn-abrir { background: var(--azul); color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; text-decoration: none; font-size: 13px; display: inline-block; }
+        .btn-copiar { background: #E5E7EB; color: #374151; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-size: 13px; margin-left: 5px; }
 
-        .content { padding: 40px; max-width: 1600px; margin: 0 auto; }
-        .card { background: var(--w); color: var(--d); padding: 40px; border-radius: 20px; display: none; border-left: 15px solid var(--p); }
-        .card.active { display: block; animation: slideIn 0.5s ease; }
+        /* FLUJO DE EVALUACIÓN */
+        .eval-box { background: var(--azul); color: white; padding: 40px; border-radius: 15px; text-align: center; margin-top: 30px; }
+        .input-url { width: 80%; padding: 15px; border-radius: 8px; border: none; margin-top: 20px; font-size: 16px; }
+        .btn-crear { background: var(--oro); color: var(--azul); border: none; padding: 15px 30px; border-radius: 8px; font-weight: 900; cursor: pointer; margin-top: 20px; text-transform: uppercase; }
 
-        /* Estilos de Formulario de Plataforma */
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; }
-        label { display: block; font-weight: 800; color: var(--p); margin-bottom: 10px; font-size: 12px; text-transform: uppercase; }
-        input, select, textarea { width: 100%; padding: 15px; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 15px; }
-
-        /* RETENCOL & AIU */
-        .rete-display { background: var(--p); color: white; padding: 30px; border-radius: 15px; border-right: 15px solid var(--g); }
-        .aiu-panel { background: #f0f7ff; border: 2px dashed var(--p); padding: 20px; border-radius: 12px; margin-top: 15px; }
-
-        /* BOTONES ACCIÓN */
-        .btn-main { background: var(--p); color: white; padding: 18px 35px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; text-transform: uppercase; }
-        .btn-main:hover { background: #1a5a9c; transform: scale(1.02); }
-        .btn-gold { background: var(--g); color: var(--p); }
-
-        @keyframes slideIn { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+        /* PANTALLA ANÁLISIS IA (Simulada para V1) */
+        .analisis-ia { display: none; background: white; padding: 30px; border-radius: 15px; margin-top: 30px; border-top: 8px solid var(--oro); }
+        .semaforo { font-size: 40px; text-align: center; margin: 20px 0; }
+        
+        /* ESTILOS DE FORMULARIO */
+        .field-group { margin-bottom: 20px; }
+        label { display: block; font-weight: bold; margin-bottom: 8px; color: var(--azul); }
+        input, textarea, select { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
     </style>
 </head>
 <body>
 
 <header>
-    <div>
-        <h1 style="margin:0; font-size: 2.5em;">SIEL PRO <span style="color:var(--g)">V7 NEXUS</span></h1>
-        <p style="margin:0; color:var(--g); letter-spacing: 2px;">PLATAFORMA INTEGRAL DE CONSULTORÍA | BRICED CONSULTING</p>
-    </div>
-    <div style="text-align:right;">
-        <i class="fas fa-user-tie fa-2x" style="color:var(--g)"></i>
-        <p style="margin:0; font-size:12px;">Licencia Gold 2026</p>
-    </div>
+    <div class="logo">SIEL PRO <span>V7 - PLAN ESENCIAL</span></div>
+    <div class="fase-tag" style="background: var(--oro); color: var(--azul); padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 12px;">FASE 1: ESENCIAL</div>
 </header>
 
-<div class="radar-bar">
-    <a href="https://www.contratos.gov.co" target="_blank" class="btn-radar"><i class="fas fa-search"></i> SECOP I</a>
-    <a href="https://community.secop.gov.co" target="_blank" class="btn-radar"><i class="fas fa-laptop-code"></i> SECOP II</a>
-    <a href="https://www.contratacionbogota.gov.co" target="_blank" class="btn-radar"><i class="fas fa-city"></i> BOGOTÁ</a>
-    <a href="#" class="btn-radar"><i class="fas fa-building"></i> PROP. HORIZONTAL</a>
+<div class="container" id="vista-explorar">
+    <h2 class="section-title">MÓDULO 0 — EXPLORAR OPORTUNIDADES</h2>
+    
+    <div class="grid-cards">
+        <div class="card-fuente">
+            <i class="fas fa-search"></i>
+            <h3>SECOP I</h3>
+            <p>Procesos antiguos y régimen especial.</p>
+            <a href="https://www.contratos.gov.co" target="_blank" class="btn-abrir">Abrir</a>
+            <button class="btn-copiar" onclick="copyLink('https://www.contratos.gov.co')">Copiar Link</button>
+        </div>
+        <div class="card-fuente">
+            <i class="fas fa-laptop-code"></i>
+            <h3>SECOP II</h3>
+            <p>Transaccional y procesos vigentes.</p>
+            <a href="https://community.secop.gov.co" target="_blank" class="btn-abrir">Abrir</a>
+            <button class="btn-copiar" onclick="copyLink('https://community.secop.gov.co')">Copiar Link</button>
+        </div>
+        <div class="card-fuente">
+            <i class="fas fa-city"></i>
+            <h3>Contratación Bogotá</h3>
+            <p>Oportunidades exclusivas del distrito.</p>
+            <a href="https://www.contratacionbogota.gov.co" target="_blank" class="btn-abrir">Abrir</a>
+            <button class="btn-copiar" onclick="copyLink('https://www.contratacionbogota.gov.co')">Copiar Link</button>
+        </div>
+    </div>
+
+    <h2 class="section-title">PROPIEDAD HORIZONTAL & PRIVADOS</h2>
+    <div class="card-fuente" style="max-width: 500px;">
+        <p>Listado interno de convocatorias privadas.</p>
+        <textarea placeholder="Pegue aquí información del proceso privado..." id="info-privada" rows="3"></textarea>
+    </div>
+
+    <div class="eval-box">
+        <i class="fas fa-rocket fa-3x" style="color: var(--oro);"></i>
+        <h2>¿ENCONTRASTE UNA OPORTUNIDAD?</h2>
+        <p>Pega el link del proceso o el objeto para iniciar la evaluación estratégica.</p>
+        <input type="text" class="input-url" id="proceso-url" placeholder="URL del proceso o nombre del pliego...">
+        <br>
+        <button class="btn-crear" onclick="irAAnalisis()">🚀 CREAR EVALUACIÓN DESDE ESTA OPORTUNIDAD</button>
+    </div>
 </div>
 
-<nav>
-    <div class="tab active" onclick="sh('inicio')">RADAR & CONFIG</div>
-    <div class="tab" onclick="sh('retencol')">RETENCOL & AIU</div>
-    <div class="tab" onclick="sh('rup')">RUP & CONSORCIOS</div>
-    <div class="tab" onclick="sh('cert')">CUMPLIMIENTO & FIC</div>
-    <div class="tab" onclick="sh('ia')">CEREBRO IA</div>
-    <div class="tab" onclick="sh('gantt')">INFORME & GANTT</div>
-</nav>
-
-<div class="content">
-
-    <div id="inicio" class="card active">
-        <div class="grid">
-            <div>
-                <label>Tipo de Proceso</label>
-                <select id="p_tipo">
-                    <option>Licitación Pública</option>
-                    <option>Selección Abreviada</option>
-                    <option>Mínima Cuantía</option>
+<div class="container" id="vista-analisis" style="display:none;">
+    <button onclick="regresar()" style="background:none; border:none; color:var(--azul); cursor:pointer; font-weight:bold;"><i class="fas fa-arrow-left"></i> Volver a Explorar</button>
+    
+    <h2 class="section-title">ANÁLISIS DE VIABILIDAD (CORE IA)</h2>
+    
+    <div class="grid-tech" style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+        <div class="glass-card" style="background:white; padding:25px; border-radius:15px;">
+            <div class="field-group">
+                <label>Objeto del Proceso</label>
+                <input type="text" id="pdf-objeto" value="Mantenimiento preventivo y correctivo de infraestructura...">
+            </div>
+            <div class="field-group">
+                <label>Entidad</label>
+                <input type="text" id="pdf-entidad" placeholder="Ej: Alcaldía de Neiva">
+            </div>
+            <div class="field-group">
+                <label>Veredicto Estratégico (Prompt Maestro)</label>
+                <textarea id="pdf-resumen" rows="4">El proceso presenta nivel de complejidad medio...</textarea>
+            </div>
+            <div class="field-group">
+                <label>Decisión Final</label>
+                <select id="pdf-decision" onchange="actualizarSemaforo()">
+                    <option value="GO">🟢 GO (Presentarse)</option>
+                    <option value="CONDICIONADO">🟡 GO CONDICIONADO</option>
+                    <option value="NO GO">🔴 NO GO</option>
                 </select>
-                <label style="margin-top:20px;">Municipio (Geo-Sugerencia)</label>
-                <input type="text" id="mun" placeholder="Ej: Neiva" oninput="geoCheck()">
-                <div id="geo_info" style="margin-top:15px;"></div>
             </div>
-            <div>
-                <label>Margen de Tolerancia Precios (%)</label>
-                <input type="number" id="tol" value="15">
-                <label style="margin-top:20px;">Buscador de Materiales</label>
-                <input type="text" placeholder="Consultar precio mercado..." oninput="marketSearch()">
-            </div>
+        </div>
+
+        <div class="display-resumen" style="background:var(--azul); color:white; padding:25px; border-radius:15px; text-align:center;">
+            <h3>DECISIÓN ESTRATÉGICA</h3>
+            <div id="semaforo-visual" class="semaforo">🟢</div>
+            <p id="decision-texto" style="font-weight:bold; font-size:20px; color:var(--oro);">GO - PRESENTARSE</p>
+            <hr border="1" color="#D4AF37">
+            <button class="btn-crear" style="width:100%" onclick="generarInforme()">📥 DESCARGAR INFORME PDF</button>
+            <p style="font-size: 11px; margin-top: 15px; opacity: 0.7;">V1: Filtro estratégico, IA y Checklist básico.</p>
         </div>
     </div>
-
-    <div id="retencol" class="card">
-        <div class="grid">
-            <div>
-                <label>Concepto RETENCOL (78 Tarifas)</label>
-                <select id="r_select" onchange="toggleAIU()">
-                    <option value="0">Seleccione...</option>
-                    <option value="2" data-aiu="s">Construcción y Obra</option>
-                    <option value="1" data-aiu="n">Transporte de Carga</option>
-                    <option value="11" data-aiu="n">Honorarios PJ</option>
-                    <option value="4" data-aiu="s">Servicios Generales</option>
-                </select>
-                
-                <div id="aiu_panel" class="aiu-panel" style="display:none;">
-                    <label>Esquema AIU (%) - Editable</label>
-                    <div style="display:flex; gap:10px;">
-                        <input type="number" id="a" value="10" title="Admin">
-                        <input type="number" id="i" value="5" title="Imprev">
-                        <input type="number" id="u" value="5" title="Utilidad">
-                    </div>
-                    <small>El IVA se calculará sobre la Utilidad (U)</small>
-                </div>
-
-                <label style="margin-top:20px;">Valor Base del Pago</label>
-                <input type="number" id="v_base" value="100000000" oninput="calcRete()">
-            </div>
-            <div class="rete-display">
-                <h2 style="color:var(--g)">CÉDULA TRIBUTARIA</h2>
-                <div id="r_result">Seleccione un concepto para liquidar...</div>
-            </div>
-        </div>
-    </div>
-
-    <div id="rup" class="card">
-        <div class="grid">
-            <div>
-                <label>Estructura de Proponente</label>
-                <select id="prop_mode" onchange="renderProp()">
-                    <option value="1">Proponente Único</option>
-                    <option value="2">UT / Consorcio (2 Integrantes)</option>
-                    <option value="3">UT / Consorcio (3 Integrantes)</option>
-                </select>
-                <div id="prop_list" style="margin-top:20px;"></div>
-            </div>
-            <div class="rete-display" style="background:var(--d);">
-                <label style="color:var(--g)">Capacidad Residual (K) Ponderada</label>
-                <h1 id="k_total">$ 0</h1>
-                <label style="color:var(--g)">Experiencia Total (SMMLV)</label>
-                <div id="exp_status">Esperando datos...</div>
-            </div>
-        </div>
-    </div>
-
-    <div id="cert" class="card">
-        <div class="grid">
-            <div>
-                <label>Seguridad & Salud</label>
-                <p><input type="checkbox"> Curso Alturas (Vigencia 1 año)</p>
-                <p><input type="checkbox"> Reentrenamiento (Último año)</p>
-                <p><input type="checkbox"> ARL Riesgo V (Construcción)</p>
-                <label>Certificaciones Profesionales</label>
-                <p><input type="checkbox"> COPNIA / Matrícula Profesional</p>
-                <p><input type="checkbox"> Certificados SENA (Técnico/Operativo)</p>
-            </div>
-            <div>
-                <label>Cálculo Manual FIC</label>
-                <input type="number" id="fic_w" placeholder="N° de trabajadores..." oninput="calcFIC()">
-                <div id="fic_res" style="margin-top:15px; padding:15px; background:#f1f5f9; border-radius:10px;"></div>
-            </div>
-        </div>
-    </div>
-
-    <div id="ia" class="card">
-        <div style="background:var(--p); color:white; padding:30px; border-radius:15px;">
-            <h3 style="color:var(--g)">PROMPT MAESTRO SIEL (13 PUNTOS)</h3>
-            <p id="p_text">"Actúa como un experto en licitaciones en Colombia. Analiza el pliego adjunto bajo los 13 puntos críticos SIEL: 1. Experiencia técnica, 2. Capacidad financiera, 3. Indicadores Organizacionales, 4. Multas y Sanciones, 5. Cronograma y Plazos, 6. Visita técnica (Obligatoriedad), 7. Factor de calidad vs Precio, 8. Riesgos previsibles, 9. Garantías exigidas, 10. Forma de pago y anticipos, 11. Lugar de ejecución y fletes, 12. Limitación a Mipyme, 13. Vigencia de la oferta. Genera un resumen ejecutivo de riesgos."</p>
-            <button class="btn-main btn-gold" onclick="copyP()">COPIAR PROMPT MAESTRO</button>
-        </div>
-        <div style="margin-top:30px;">
-            <label>Resultado Auditoría IA</label>
-            <textarea rows="10" placeholder="Pegue aquí el análisis de la IA..."></textarea>
-        </div>
-    </div>
-
-    <div id="gantt" class="card">
-        <div class="grid">
-            <div>
-                <label>Inicio de Ejecución</label>
-                <input type="date" id="g_ini">
-                <label style="margin-top:15px;">Plazo (Meses)</label>
-                <input type="number" id="g_mes" value="6">
-            </div>
-            <div style="text-align:center;">
-                <button class="btn-main" onclick="genPDF()"><i class="fas fa-file-pdf"></i> DESCARGAR INFORME V7 & GANTT</button>
-                <p><small>Se generará un documento PDF con fases de Pre-pliegos, Cierre y Ejecución.</small></p>
-            </div>
-        </div>
-        <div id="gantt_v" style="margin-top:30px; border:1px solid #ddd; height:200px; border-radius:15px; padding:20px;">
-            <h3>Diagrama de Fases (Visualización Plataforma)</h3>
-            <div style="width:100%; height:30px; background:#eee; border-radius:15px; margin-top:10px;">
-                <div style="width:30%; height:100%; background:var(--p); border-radius:15px; color:white; padding-left:10px; font-size:12px;">Fase Licitación</div>
-            </div>
-            <div style="width:100%; height:30px; background:#eee; border-radius:15px; margin-top:10px;">
-                <div style="width:80%; height:100%; background:var(--g); border-radius:15px; color:var(--p); padding-left:10px; font-size:12px;">Fase Ejecución Proyecto</div>
-            </div>
-        </div>
-    </div>
-
 </div>
-
-<footer style="text-align:center; padding:50px; color:#64748b;">
-    <img src="https://via.placeholder.com/150x50?text=Briced+Consulting" alt="Logo"><br>
-    SIEL PRO V7 NEXUS © 2026 | Inteligencia Estratégica Licitatoria
-</footer>
 
 <script>
-    function sh(id) {
-        document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-        event.currentTarget.classList.add('active');
+    function copyLink(link) {
+        navigator.clipboard.writeText(link);
+        alert("Enlace copiado: " + link);
     }
 
-    function toggleAIU() {
-        const sel = document.getElementById('r_select');
-        const opt = sel.options[sel.selectedIndex];
-        document.getElementById('aiu_panel').style.display = opt.getAttribute('data-aiu') === 's' ? 'block' : 'none';
-        calcRete();
+    function irAAnalisis() {
+        const url = document.getElementById('proceso-url').value;
+        if(!url) { alert("Por favor pega un link o nombre de proceso"); return; }
+        document.getElementById('vista-explorar').style.display = 'none';
+        document.getElementById('vista-analisis').style.display = 'block';
     }
 
-    function calcRete() {
-        const base = parseFloat(document.getElementById('v_base').value) || 0;
-        const rate = parseFloat(document.getElementById('r_select').value);
-        const aiuS = document.getElementById('aiu_panel').style.display === 'block';
-        
-        let rf = base * (rate/100);
-        let iva = 0;
-        if(aiuS) {
-            const u = parseFloat(document.getElementById('u').value) / 100;
-            iva = (base * u) * 0.19;
-        } else {
-            iva = base * 0.19;
-        }
-
-        document.getElementById('r_result').innerHTML = `
-            <p>Retención Fuente: $${rf.toLocaleString()}</p>
-            <p>IVA ${aiuS ? '(Sobre Utilidad)' : '(General)'}: $${iva.toLocaleString()}</p>
-            <hr>
-            <h3>NETO A RECIBIR: $${(base - rf).toLocaleString()}</h3>
-        `;
+    function regresar() {
+        document.getElementById('vista-explorar').style.display = 'block';
+        document.getElementById('vista-analisis').style.display = 'none';
     }
 
-    function renderProp() {
-        const n = document.getElementById('prop_mode').value;
-        const cont = document.getElementById('prop_list');
-        cont.innerHTML = "";
-        for(let i=1; i<=n; i++) {
-            cont.innerHTML += `
-                <div style="background:#f1f5f9; padding:15px; border-radius:10px; margin-bottom:10px;">
-                    <label>Integrante ${i} (%)</label>
-                    <input type="number" class="p_p" value="${100/n}" oninput="calcK()">
-                    <label>Experiencia ($)</label>
-                    <input type="number" class="p_e" value="500000000" oninput="calcK()">
-                </div>`;
-        }
+    function actualizarSemaforo() {
+        const val = document.getElementById('pdf-decision').value;
+        const s = document.getElementById('semaforo-visual');
+        const t = document.getElementById('decision-texto');
+        if(val === "GO") { s.innerText = "🟢"; t.innerText = "GO - PRESENTARSE"; t.style.color = "var(--verde)"; }
+        if(val === "CONDICIONADO") { s.innerText = "🟡"; t.innerText = "GO CONDICIONADO"; t.style.color = "var(--naranja)"; }
+        if(val === "NO GO") { s.innerText = "🔴"; t.innerText = "NO GO - RECHAZADO"; t.style.color = "var(--rojo)"; }
     }
 
-    function calcK() {
-        let total = 0;
-        document.querySelectorAll('.p_e').forEach((el, i) => {
-            const perc = document.querySelectorAll('.p_p')[i].value / 100;
-            total += parseFloat(el.value) * perc;
-        });
-        document.getElementById('k_total').innerText = "$ " + total.toLocaleString();
-    }
-
-    function copyP() {
-        navigator.clipboard.writeText(document.getElementById('p_text').innerText);
-        alert("Prompt Maestro Copiado");
-    }
-
-    function genPDF() {
+    function generarInforme() {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
-        doc.setFontSetting = "bold";
-        doc.setTextColor(12, 68, 124);
-        doc.text("INFORME ESTRATÉGICO SIEL PRO V7", 20, 20);
-        doc.text("Briced Consulting - Licitaciones 2026", 20, 30);
-        
+        const decision = document.getElementById('pdf-decision').value;
+        const objeto = document.getElementById('pdf-objeto').value;
+
+        // Estilos de Portada
+        doc.setFillColor(12, 45, 72); // Azul SIEL
+        doc.rect(0, 0, 210, 40, 'F');
+        doc.setTextColor(255, 255, 255);
+        doc.setFontSize(22);
+        doc.text("INFORME DE VIABILIDAD SIEL", 105, 25, { align: 'center' });
+
+        // Decisión (Protagonista)
+        doc.setTextColor(0, 0, 0);
+        doc.setFontSize(14);
+        doc.text("DECISIÓN FINAL:", 105, 60, { align: 'center' });
+        doc.setFontSize(30);
+        doc.text(decision, 105, 75, { align: 'center' });
+
+        // Cuerpo
+        doc.setFontSize(12);
+        doc.text("1. FICHA DEL PROCESO", 20, 100);
         doc.autoTable({
-            startY: 40,
-            head: [['Fase', 'Descripción', 'Estado']],
+            startY: 105,
             body: [
-                ['Licitación', 'Evaluación de pliegos y cierre', 'Completado'],
-                ['Ejecución 1', 'Acta de Inicio y Movilización', 'Programado'],
-                ['Ejecución 2', 'Desarrollo de Obra/Servicio', 'Programado'],
-                ['Cierre', 'Liquidación de Contrato', 'Programado']
+                ['Objeto', objeto],
+                ['Entidad', document.getElementById('pdf-entidad').value || 'Sin definir'],
+                ['Fecha', new Date().toLocaleDateString()]
             ],
-            headStyles: { fillColor: [12, 68, 124] }
+            theme: 'grid'
         });
 
-        doc.save("Informe_SIEL_PRO_V7.pdf");
-    }
+        doc.text("2. RESUMEN EJECUTIVO", 20, doc.lastAutoTable.finalY + 15);
+        doc.setFont("helvetica", "normal");
+        doc.text(doc.splitTextToSize(document.getElementById('pdf-resumen').value, 170), 20, doc.lastAutoTable.finalY + 25);
 
-    window.onload = renderProp;
+        // Nota al pie
+        doc.setFontSize(9);
+        doc.setTextColor(150);
+        doc.text("Este informe es una herramienta de apoyo y no reemplaza el criterio profesional.", 105, 280, { align: 'center' });
+
+        doc.save("Informe_Viabilidad_SIEL.pdf");
+    }
 </script>
 </body>
 </html>
