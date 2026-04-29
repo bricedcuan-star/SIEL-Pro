@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>SIEL PRO V7.7 | VERSIÓN ORTOGRÁFICA FINAL</title>
+    <title>SIEL PRO V7.8 | VERSIÓN FINAL CON PROMPT MAESTRO</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;700;900&display=swap" rel="stylesheet">
@@ -33,10 +33,10 @@
 <body>
 
 <header>
-    <div class="logo">SIEL PRO <span>V7.7</span></div>
+    <div class="logo">SIEL PRO <span>V7.8</span></div>
     <div style="text-align: right;">
         <div style="font-weight: 900; font-size: 14px;">BRICED CONSULTING</div>
-        <div style="font-size: 10px; color: var(--oro);">VERSIÓN ORTOGRÁFICA CORREGIDA</div>
+        <div style="font-size: 10px; color: var(--oro);">SISTEMA DE INTELIGENCIA ESTRATÉGICA</div>
     </div>
 </header>
 
@@ -51,38 +51,40 @@
     </div>
 
     <div class="glass-card">
-        <h3><i class="fas fa-clipboard-list" style="color: var(--oro);"></i> Gestión y Análisis</h3>
+        <h3><i class="fas fa-brain" style="color: var(--oro);"></i> Ficha y Prompt Maestro</h3>
         <div class="form-grid">
             <div>
-                <label>Objeto / Nombre del Proceso</label>
-                <input type="text" id="proc_nombre" placeholder="Nombre del proyecto">
-                <label style="margin-top:15px">Entidad Solicitante</label>
-                <input type="text" id="proc_entidad" placeholder="Nombre de la entidad">
+                <label>Objeto del Proceso</label>
+                <input type="text" id="proc_nombre" placeholder="Nombre de la licitación">
+                <label style="margin-top:15px">Entidad</label>
+                <input type="text" id="proc_entidad" placeholder="Entidad contratante">
                 <div class="prompt-box">
-                    <p id="promptText" style="margin:0; font-size: 10px;">"Analiza el pliego: separa HALLAZGOS de RECOMENDACIONES. Usa viñetas y texto claro."</p>
-                    <button class="btn-copy" onclick="copyPrompt()">COPIAR PROMPT</button>
+                    <p id="promptText" style="margin:0; font-size: 9px; line-height: 1.2; color: #fff;">
+                        "Actúa como experto en contratación. Analiza este pliego bajo los 13 puntos SIEL (Experiencia, Financiero, Indicadores, Multas, Cronograma, Visita, Calidad/Precio, Riesgos, Garantías, Pago, Lugar, Mipyme, Vigencia). Estructura la respuesta en: 1. HALLAZGOS (lo que pide el pliego) y 2. RECOMENDACIONES (consejos para ganar). Usa viñetas claras, sin emojis ni símbolos especiales."
+                    </p>
+                    <button class="btn-copy" onclick="copyPrompt()">COPIAR PROMPT MAESTRO</button>
                 </div>
             </div>
             <div>
-                <label>Resultado del Análisis (IA)</label>
-                <textarea id="proc_resumen" rows="12" placeholder="Pega el contenido aquí..."></textarea>
+                <label>Análisis de IA (Resultados)</label>
+                <textarea id="proc_resumen" rows="14" placeholder="Pega aquí el análisis de la IA..."></textarea>
             </div>
         </div>
     </div>
 
     <div class="glass-card">
-        <h3><i class="fas fa-balance-scale" style="color: var(--oro);"></i> Concepto</h3>
+        <h3><i class="fas fa-check-circle" style="color: var(--oro);"></i> Verificación</h3>
         <div style="display: flex; gap: 20px;">
             <div style="flex:1">
-                <label>Concepto de Viabilidad</label>
-                <select onchange="updateUI()" class="status-sel"><option value="ok">✔ CUMPLE</option><option value="no">❌ NO CUMPLE</option></select>
+                <label>Concepto General</label>
+                <select onchange="updateUI()" class="status-sel"><option value="ok">✔ CUMPLE (GO)</option><option value="no">❌ NO CUMPLE (NO GO)</option></select>
             </div>
         </div>
     </div>
 
     <div id="decision_hero" class="decision-hero status-go">
-        <h1 id="decision_txt" style="font-size: 32px; font-weight: 900; margin: 0;">🟢 GO - PRESENTARSE</h1>
-        <button class="btn-premium" onclick="genReport()"><i class="fas fa-file-pdf"></i> DESCARGAR INFORME SIN ERRORES</button>
+        <h1 id="decision_txt" style="font-size: 30px; font-weight: 900; margin: 0;">🟢 GO - PRESENTARSE</h1>
+        <button class="btn-premium" onclick="genReport()"><i class="fas fa-file-pdf"></i> GENERAR INFORME PROFESIONAL</button>
     </div>
 </div>
 
@@ -90,7 +92,7 @@
     function copyPrompt() {
         const text = document.getElementById('promptText').innerText;
         navigator.clipboard.writeText(text);
-        alert("Copiado.");
+        alert("Prompt Maestro copiado con éxito.");
     }
 
     function updateUI() {
@@ -101,44 +103,43 @@
         else { hero.className = "decision-hero status-nogo"; txt.innerText = "🔴 NO GO - NO VIABLE"; }
     }
 
-    // FUNCIÓN MAGICA: CORRIGE TILDES Y Ñ PARA EL PDF
-    function fixSpanish(text) {
-        if (!text) return "";
-        return text
-            .replace(/[áÁ]/g, "a").replace(/[éÉ]/g, "e")
-            .replace(/[íÍ]/g, "i").replace(/[óÓ]/g, "o")
-            .replace(/[úÚ]/g, "u").replace(/[ñÑ]/g, "n")
-            .replace(/[^\x00-\x7F]/g, "") // Limpia cualquier otro raro
-            .replace(/\*/g, ""); // Quita asteriscos
+    // ELIMINA TILDES Y SÍMBOLOS QUE ROMPEN EL PDF
+    function fixText(str) {
+        if (!str) return "";
+        return str
+            .replace(/[áÁ]/g, "a").replace(/[éÉ]/g, "e").replace(/[íÍ]/g, "i")
+            .replace(/[óÓ]/g, "o").replace(/[úÚ]/g, "u").replace(/[ñÑ]/g, "n")
+            .replace(/\*/g, "").replace(/[^\x00-\x7F]/g, " ");
     }
 
     function genReport() {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
         
-        // Aplicamos la corrección a todo antes de imprimir
-        const nombre = fixSpanish(document.getElementById('proc_nombre').value || "PROCESO");
-        const entidad = fixSpanish(document.getElementById('proc_entidad').value || "ENTIDAD");
-        const resumen = fixSpanish(document.getElementById('proc_resumen').value || "");
-        const decision = fixSpanish(document.getElementById('decision_txt').innerText);
+        const nombre = fixText(document.getElementById('proc_nombre').value || "PROCESO");
+        const entidad = fixText(document.getElementById('proc_entidad').value || "ENTIDAD");
+        const resumen = fixText(document.getElementById('proc_resumen').value || "");
+        const decision = fixText(document.getElementById('decision_txt').innerText);
 
-        // CABECERA
+        // HEADER
         doc.setFillColor(6, 22, 36); doc.rect(0, 0, 210, 45, 'F');
         doc.setTextColor(212, 175, 55); doc.setFontSize(18); doc.setFont("helvetica", "bold");
-        doc.text("REPORTE DE AUDITORIA ESTRATEGICA", 105, 20, { align: 'center' });
-        doc.setTextColor(255); doc.setFontSize(9); doc.setFont("helvetica", "normal");
-        doc.text("SIEL PRO - BRICED CONSULTING", 105, 30, { align: 'center' });
+        doc.text("REPORTE ADMINISTRATIVO SIEL PRO", 105, 20, { align: 'center' });
+        doc.setTextColor(255); doc.setFontSize(10); doc.setFont("helvetica", "normal");
+        doc.text("BRICED CONSULTING - ANALISIS ESTRATEGICO", 105, 30, { align: 'center' });
 
-        // IDENTIFICACION
+        // SECCIÓN 1: DATOS
         doc.setTextColor(6, 22, 36); doc.setFontSize(12); doc.setFont("helvetica", "bold");
-        doc.text("1. IDENTIFICACION Y CONCEPTO", 20, 60);
+        doc.text("1. IDENTIFICACION DEL PROCESO", 20, 60);
         doc.setDrawColor(212, 175, 55); doc.line(20, 62, 190, 62);
-        doc.setFontSize(10); doc.text("OBJETO: " + nombre, 20, 72);
+        
+        doc.setFontSize(10); 
+        doc.text("OBJETO: " + nombre, 20, 72);
         doc.text("ENTIDAD: " + entidad, 20, 80);
-        doc.text("CONCEPTO: " + decision, 20, 88);
+        doc.text("DECISION: " + decision, 20, 88);
 
-        // CONTENIDO
-        doc.setFontSize(12); doc.text("2. DETALLE DEL ANALISIS", 20, 105);
+        // SECCIÓN 2: ANÁLISIS
+        doc.setFontSize(12); doc.text("2. HALLAZGOS Y RECOMENDACIONES", 20, 105);
         doc.line(20, 107, 190, 107);
         
         doc.setFontSize(9); doc.setFont("helvetica", "normal");
@@ -146,9 +147,12 @@
         let cursorY = 115;
 
         lines.forEach(line => {
-            if (cursorY > 275) { doc.addPage(); cursorY = 20; }
-            if (line.toUpperCase().includes("HALLAZGO") || line.toUpperCase().includes("RECOMENDACION")) {
-                doc.setFont("helvetica", "bold"); doc.text(line, 20, cursorY); doc.setFont("helvetica", "normal");
+            if (cursorY > 275) { doc.addPage(); cursorY = 25; }
+            const u = line.toUpperCase();
+            if (u.includes("HALLAZGO") || u.includes("RECOMENDACION") || u.includes("ALERTA")) {
+                doc.setFont("helvetica", "bold"); doc.setTextColor(12, 45, 72);
+                doc.text(line, 20, cursorY);
+                doc.setFont("helvetica", "normal"); doc.setTextColor(0);
             } else {
                 doc.text(line, 20, cursorY);
             }
@@ -156,16 +160,16 @@
         });
 
         // SALVEDAD LEGAL
-        if (cursorY > 230) { doc.addPage(); cursorY = 20; }
+        if (cursorY > 230) { doc.addPage(); cursorY = 25; }
         cursorY += 15;
         doc.setFillColor(245, 247, 249); doc.rect(20, cursorY, 170, 30, 'F');
         doc.setFont("helvetica", "bold"); doc.setFontSize(9); doc.setTextColor(150, 0, 0);
         doc.text("SALVEDAD JURIDICA:", 25, cursorY + 8);
         doc.setFont("helvetica", "italic"); doc.setFontSize(8); doc.setTextColor(80);
-        const disclaimer = "Este informe es una herramienta de apoyo y no constituye una asesoria juridica vinculante. La decision final es del proponente.";
-        doc.text(doc.splitTextToSize(disclaimer, 160), 25, cursorY + 15);
+        const nota = "Este informe es una herramienta de apoyo administrativo y no constituye asesoria juridica vinculante. La responsabilidad final es del proponente.";
+        doc.text(doc.splitTextToSize(nota, 160), 25, cursorY + 15);
 
-        doc.save("Reporte_SIEL_Corregido.pdf");
+        doc.save("Reporte_SIEL_Final.pdf");
     }
 </script>
 </body>
