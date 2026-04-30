@@ -3,488 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIEL PRO - Fase 1: Plan Básico</title>
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <title>Fase 1: Evaluación de Licitación PH-2024</title>
     <style>
-        body { background-color: #F1F5F9; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 20px; }
-        .container { max-width: 1000px; margin: 0 auto; }
-        header { background: #0C447C; color: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
-        nav { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
-        .btn { padding: 10px 15px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; color: white; }
-        .card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 20px; }
-        input, select, textarea { width: 100%; padding: 10px; margin: 10px 0; border-radius: 6px; border: 1px solid #cbd5e1; box-sizing: border-box; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
-        table { width: 100%; border-collapse: collapse; margin: 15px 0; }
-        th, td { border: 1px solid #cbd5e1; padding: 8px; text-align: left; }
-        th { background-color: #f8fafc; }
-        .ia-box { background-color: #e6f7ff; border: 1px solid #91d5ff; border-radius: 6px; padding: 15px; margin-top: 15px; }
-        .ia-title { color: #0050b3; font-weight: bold; margin-bottom: 10px; }
-        .disclaimer-text { font-size: 11px; color: #475569; margin-top: 15px; text-align: justify; line-height: 1.4; border-top: 1px solid #e2e8f0; padding-top: 10px; }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #1A365D;
+            border-bottom: 2px solid #2B6CB0;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2B6CB0;
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #2B6CB0;
+            color: white;
+        }
+        ul {
+            line-height: 1.6;
+        }
+        .highlight {
+            background-color: #EBF8FF;
+            padding: 15px;
+            border-left: 4px solid #3182CE;
+            margin-top: 20px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
-    <div id="root"></div>
 
-    <script type="text/babel">
-        const { useState } = React;
+    <div class="container">
+        <h1>Fase 1: Informe de Viabilidad Técnica y Financiera</h1>
+        <p><strong>Entidad Evaluada:</strong> Edificio Capital 134 P.H.</p>
+        <p><strong>Objeto del Proceso:</strong> Mantenimiento integral de fachadas y puntos fijos.</p>
 
-        function App() {
-            const [tab, setTab] = useState('PERFIL');
-            const [datos, setDatos] = useState({
-                miembros: [{ id: 1, nombre: 'Empresa Líder', patrimonio: 0, expMax: 0, unspsc: "", liquidezRequisito: 1.5, coberturaRequisito: 1.2, capitalRequisito: 50000000, cumpleLiquidez: 'si', cumpleCobertura: 'si', cumpleCapital: 'si', cumpleFiltros: 'si' }],
-                entidad: 'Edificio Capital 134 P.H.',
-                objeto: 'Mantenimiento integral de fachadas y puntos fijos',
-                presupuesto: 250000000,
-                esEntidadPublica: false,
-                esImagen: false,
-                capacidadK: 100000000,
-                promptIA: "",
-                respuestaIA: "",
-                tipoProceso: "Convocatoria Privada",
-                fuenteProceso: "Propiedad Horizontal",
-                analExtraido: {
-                    experiencia: "Validación real de experiencia en fachadas",
-                    viabilidad: "Participar con condiciones. Riesgo financiero trasladado al contratista.",
-                    riesgos: "Esquema de costo global fijo sin reajuste y responsabilidad absoluta sobre cantidades.",
-                    trampas: "Ninguna identificada",
-                    inconsistencias: "Ninguna identificada",
-                    visitaTecnicaObligatoria: "Sí, obligatoria",
-                    manifestacionInteres: "Requerido",
-                    documentosSolicitados: "Requisitos técnicos, financieros y experiencia en fachadas"
-                }
-            });
+        <h2>Checklist de Documentación Solicitada</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Categoría</th>
+                    <th>Exigencia del Documento</th>
+                    <th>Documento a Solicitar</th>
+                    <th>Estado</th>
+                    <th>Riesgo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Capacidad Financiera</strong></td>
+                    <td>Endeudamiento menor o igual al 50%</td>
+                    <td>Estados Financieros certificados</td>
+                    <td>Por validar</td>
+                    <td>Alto</td>
+                </tr>
+                <tr>
+                    <td><strong>Experiencia</strong></td>
+                    <td>5 certificaciones de ejecución</td>
+                    <td>5 Certificaciones de contratos de fachadas</td>
+                    <td>Por validar</td>
+                    <td>Alto</td>
+                </tr>
+                <tr>
+                    <td><strong>Personal Técnico</strong></td>
+                    <td>Director de obra</td>
+                    <td>Hoja de vida y soportes de formación</td>
+                    <td>Por validar</td>
+                    <td>Medio</td>
+                </tr>
+                <tr>
+                    <td><strong>Garantías y Pólizas</strong></td>
+                    <td>Pólizas contractuales</td>
+                    <td>Pólizas de cumplimiento y R.C.E.</td>
+                    <td>Por validar</td>
+                    <td>Medio</td>
+                </tr>
+            </tbody>
+        </table>
 
-            const generarPrompt = () => {
-                const promptGenerado = `Actúa como un analista experto en contratación y pliegos de condiciones. Analiza el siguiente texto o pliego adjunto y extrae de manera concisa la siguiente información estructurada:
-1. Experiencia mínima requerida y filtros excluyentes.
-2. Viabilidad financiera y legal básica.
-3. Riesgos identificados y posibles trampas o inconsistencias en los términos de referencia.
-4. Indica si la visita técnica es obligatoria o no, y si se debe presentar manifestación de interés.
-5. Lista de los documentos y requisitos habilitantes solicitados para la presentación de la oferta.
+        <h2>Cronograma y Condiciones Operativas Críticas</h2>
+        <ul>
+            <li><strong>Visita Técnica:</strong> Es obligatoria. Si no asistes, el proceso te elimina automáticamente.</li>
+            <li><strong>Certificación en Alturas:</strong> Es un filtro excluyente. Debe estar vigente.</li>
+            <li><strong>Antigüedad:</strong> Mínimo 10 años en el mercado.</li>
+            <li><strong>Condiciones de Pago:</strong> 30% de anticipo y retención del 10% durante tres meses (impacto en el flujo de caja).</li>
+        </ul>
 
-Texto del pliego / Términos de Referencia:
-[PEGA AQUÍ EL TEXTO DEL PLIEGO O RESUMEN]`;
-                setDatos({...datos, promptIA: promptGenerado});
-            };
+        <div class="highlight">
+            Veredicto Final: Participar con condiciones (Calificación: 7.5/10).
+        </div>
+    </div>
 
-            const procesarRespuestaIA = () => {
-                let experiencia = "Revisar texto de la IA";
-                let riesgos = "Revisar texto de la IA";
-                let trampas = "Ninguna identificada";
-                let inconsistencias = "Ninguna identificada";
-                let visita = "No especificado";
-                let interes = "No especificado";
-                let documentos = "No especificado";
-
-                if (datos.respuestaIA) {
-                    experiencia = datos.respuestaIA.includes("experiencia") ? "Datos extraídos correctamente" : "No detectado";
-                    if (datos.respuestaIA.includes("visita")) {
-                        visita = datos.respuestaIA.includes("obligatoria") ? "Sí, es obligatoria" : "No es obligatoria";
-                    }
-                    if (datos.respuestaIA.includes("interés") || datos.respuestaIA.includes("manifestación")) {
-                        interes = "Requerido";
-                    }
-                }
-
-                setDatos({
-                    ...datos,
-                    analExtraido: {
-                        experiencia,
-                        viabilidad: "Análisis de viabilidad actualizado por IA",
-                        riesgos,
-                        trampas,
-                        inconsistencias,
-                        visitaTecnicaObligatoria: visita,
-                        manifestacionInteres: interes,
-                        documentosSolicitados: documentos
-                    }
-                });
-            };
-
-            const copiarPrompt = () => {
-                if (datos.promptIA) {
-                    navigator.clipboard.writeText(datos.promptIA);
-                    alert("¡Prompt copiado al portapapeles!");
-                }
-            };
-
-            const imprimirOGuardarPDF = () => {
-                const ventanaReporte = window.open('', '_blank');
-                
-                const htmlContent = `<!DOCTYPE html>
-                <html lang="es">
-                <head>
-                    <meta charset="UTF-8">
-                    <title>Informe de Viabilidad - SIEL PRO</title>
-                    <style>
-                        body { 
-                            font-family: 'Helvetica Neue', Arial, sans-serif; 
-                            color: #333; 
-                            line-height: 1.6; 
-                            padding: 30px; 
-                            max-width: 800px; 
-                            margin: 0 auto; 
-                        }
-                        h1 { color: #0C447C; border-bottom: 2px solid #0C447C; padding-bottom: 5px; font-size: 18pt; }
-                        h2 { color: #1D9E75; margin-top: 25px; font-size: 13pt; }
-                        p { font-size: 10pt; }
-                        .box { 
-                            background: #F8FAFC; 
-                            border: 1px solid #CBD5E1; 
-                            padding: 20px; 
-                            border-radius: 6px; 
-                            margin-top: 15px; 
-                        }
-                        .disclaimer { 
-                            margin-top: 50px; 
-                            font-size: 8pt; 
-                            color: #64748B; 
-                            border-top: 1px solid #E2E8F0; 
-                            padding-top: 15px; 
-                            text-align: justify; 
-                        }
-                        .btn-print {
-                            background-color: #0C447C; 
-                            color: white; 
-                            padding: 10px 20px; 
-                            border: none; 
-                            border-radius: 5px; 
-                            cursor: pointer; 
-                            font-weight: bold;
-                            margin-bottom: 20px;
-                        }
-                        @media print {
-                            .btn-print { display: none; }
-                        }
-                    </style>
-                </head>
-                <body>
-                    <button class="btn-print" onclick="window.print()">🖨️ Imprimir / Guardar como PDF</button>
-
-                    <h1>SIEL PRO - Informe de Viabilidad de Proceso</h1>
-                    
-                    <h2>1. Información del Proceso</h2>
-                    <p><strong>Entidad:</strong> ${datos.entidad || 'No especificada'}</p>
-                    <p><strong>Objeto:</strong> ${datos.objeto || 'No especificado'}</p>
-                    <p><strong>Presupuesto Oficial:</strong> $${datos.presupuesto || 0}</p>
-                    <p><strong>Tipo de proceso:</strong> ${datos.tipoProceso}</p>
-
-                    <h2>2. Resumen del Análisis</h2>
-                    <div class="box">
-                        <p><strong>Visita Técnica Obligatoria:</strong> ${datos.analExtraido?.visitaTecnicaObligatoria || 'No especificado'}</p>
-                        <p><strong>Manifestación de Interés:</strong> ${datos.analExtraido?.manifestacionInteres || 'No especificado'}</p>
-                        <p><strong>Experiencia / Filtros Excluyentes:</strong> ${datos.analExtraido?.experiencia || 'No especificado'}</p>
-                        <p><strong>Riesgos / Viabilidad:</strong> ${datos.analExtraido?.viabilidad || 'No especificado'}</p>
-                        <p><strong>Trampas / Riesgos Detectados:</strong> ${datos.analExtraido?.riesgos || 'Ninguno'}</p>
-                    </div>
-
-                    <div class="disclaimer">
-                        <strong>AVISO LEGAL:</strong> Este informe es de carácter estrictamente informativo y fue generado como una herramienta de apoyo mediante Inteligencia Artificial. La decisión final para la presentación de la oferta, así como la verificación de los requisitos habilitantes, es responsabilidad única y exclusiva del proponente. El usuario puede apoyarse en la información contenida en este documento bajo su propia responsabilidad, sin eximir la necesidad de revisar exhaustivamente los pliegos oficiales.
-                    </div>
-                </body>
-                </html>`;
-
-                ventanaReporte.document.open();
-                ventanaReporte.document.write(htmlContent);
-                ventanaReporte.document.close();
-            };
-
-            const evaluarMotorDecision = () => {
-                const presupuesto = Number(datos.presupuesto) || 0;
-                const kEmpresa = Number(datos.capacidadK) || 0;
-                
-                let kValido = true;
-                if (presupuesto > kEmpresa) {
-                    kValido = false;
-                }
-
-                let tieneFallas = false;
-                let tieneCondicion = false;
-
-                datos.miembros.forEach(m => {
-                    if (m.cumpleFiltros === 'no' || !kValido) {
-                        tieneFallas = true;
-                    }
-                    if (m.cumpleLiquidez === 'no' || m.cumpleCobertura === 'no' || m.cumpleCapital === 'no') {
-                        tieneCondicion = true;
-                    }
-                });
-
-                if (tieneFallas) {
-                    return {
-                        estado: 'NO GO',
-                        color: '#ffcccc',
-                        textColor: '#990000',
-                        mensajeIA: 'El proyecto no cumple con los filtros excluyentes obligatorios o excede la Capacidad K.'
-                    };
-                } else if (tieneCondicion) {
-                    return {
-                        estado: 'GO CONDICIONADO',
-                        color: '#fff2cc',
-                        textColor: '#996600',
-                        mensajeIA: 'Se observa viabilidad legal y experiencia, pero uno o varios indicadores financieros no cumplen con el requerimiento del pliego.'
-                    };
-                } else {
-                    return {
-                        estado: 'GO',
-                        color: '#ccffcc',
-                        textColor: '#006600',
-                        mensajeIA: 'El proyecto es viable en todos los filtros evaluados.'
-                    };
-                }
-            };
-
-            const evaluacion = evaluarMotorDecision();
-
-            return (
-                <div className="container">
-                    <header>
-                        <h2 style={{margin:0}}>SIEL PRO - Fase 1: Plan Básico</h2>
-                        <span>UVT 2026: $52.374</span>
-                    </header>
-
-                    <nav>
-                        <button className="btn" style={{background: tab==='PERFIL'?'#1D9E75':'#94a3b8'}} onClick={() => setTab('PERFIL')}>PERFIL</button>
-                        <button className="btn" style={{background: tab==='FINANCIERO'?'#1D9E75':'#94a3b8'}} onClick={() => setTab('FINANCIERO')}>FINANCIERO</button>
-                        <button className="btn" style={{background: tab==='IA'?'#1D9E75':'#94a3b8'}} onClick={() => setTab('IA')}>TRAMPAS IA</button>
-                    </nav>
-
-                    {tab === 'PERFIL' && (
-                        <div className="card">
-                            <h3>Perfil & Fuentes de Búsqueda</h3>
-                            
-                            <div style={{marginBottom: '20px'}}>
-                                <h4>🔗 Fuentes de Búsqueda</h4>
-                                <ul>
-                                    <li>SECOP I: <a href="https://www.contratos.gov.co/consultas/resultadoListadoProcesos.jsp?estado=2&desdeFomulario=true" target="_blank" rel="noreferrer">Ir a SECOP I</a></li>
-                                    <li>SECOP II: <a href="https://community.secop.gov.co/Public/Tendering/ContractNoticeManagement/Index?currentLanguage=es-CO&Page=login&Country=CO&SkinName=CCE" target="_blank" rel="noreferrer">Ir a SECOP II</a></li>
-                                    <li><a href="https://bogota.gov.co/asi-vamos/contratos-y-obras/participa" target="_blank" rel="noreferrer">Alcaldía Mayor de Bogotá - Contratos</a></li>
-                                    <li><a href="https://leydepropiedadhorizontal.org/category/convocatorias/" target="_blank" rel="noreferrer">Convocatorias Propiedad Horizontal</a></li>
-                                </ul>
-                            </div>
-
-                            <div className="grid">
-                                <div>
-                                    <label>Tipo de Proceso:</label>
-                                    <select value={datos.tipoProceso} onChange={e => setDatos({...datos, tipoProceso: e.target.value})}>
-                                        <option>Licitación Pública</option>
-                                        <option>Selección Abreviada</option>
-                                        <option>Concurso de Méritos</option>
-                                        <option>Mínima Cuantía</option>
-                                        <option>Convocatoria Privada</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label>Plataforma donde se encontró:</label>
-                                    <select value={datos.fuenteProceso} onChange={e => setDatos({...datos, fuenteProceso: e.target.value})}>
-                                        <option>SECOP I</option>
-                                        <option>SECOP II</option>
-                                        <option>Alcaldía Mayor</option>
-                                        <option>Propiedad Horizontal</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            {datos.miembros.map((m, i) => (
-                                <div key={m.id} style={{borderBottom:'1px solid #eee', paddingBottom:'10px', marginTop:'15px', marginBottom:'10px'}}>
-                                    <input placeholder="Nombre Empresa" value={m.nombre} onChange={e => {
-                                        let n = [...datos.miembros]; n[i].nombre = e.target.value; setDatos({...datos, miembros: n});
-                                    }} />
-                                    <div className="grid">
-                                        <input type="number" placeholder="Patrimonio" value={m.patrimonio || ''} onChange={e => {
-                                            let n = [...datos.miembros]; n[i].patrimonio = e.target.value; setDatos({...datos, miembros: n});
-                                        }} />
-                                        <input type="number" placeholder="Experiencia Máxima" value={m.expMax || ''} onChange={e => {
-                                            let n = [...datos.miembros]; n[i].expMax = e.target.value; setDatos({...datos, miembros: n});
-                                        }} />
-                                    </div>
-                                    <input placeholder="Códigos UNSPSC" value={m.unspsc} onChange={e => {
-                                        let n = [...datos.miembros]; n[i].unspsc = e.target.value; setDatos({...datos, miembros: n});
-                                    }} />
-                                </div>
-                            ))}
-                            
-                            <h4>Datos de la Licitación</h4>
-                            <div className="grid">
-                                <div>
-                                    <label>Nombre de la Entidad:</label>
-                                    <input value={datos.entidad} onChange={e => setDatos({...datos, entidad: e.target.value})} />
-                                </div>
-                                <div>
-                                    <label>Objeto del Proceso:</label>
-                                    <input value={datos.objeto} onChange={e => setDatos({...datos, objeto: e.target.value})} />
-                                </div>
-                            </div>
-                            <div className="grid">
-                                <div>
-                                    <label>Presupuesto Oficial ($):</label>
-                                    <input type="number" value={datos.presupuesto || ''} onChange={e => setDatos({...datos, presupuesto: e.target.value})} />
-                                </div>
-                                <div>
-                                    <label>Capacidad de Contratación K ($):</label>
-                                    <input type="number" value={datos.capacidadK || ''} onChange={e => setDatos({...datos, capacidadK: e.target.value})} />
-                                </div>
-                            </div>
-                        </div>
-                    )}
-
-                    {tab === 'FINANCIERO' && (
-                        <div className="card">
-                            <h3>Evaluación Financiera y Checklist Legal</h3>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Indicador / Requisito</th>
-                                        <th>Valor Exigido por Pliego</th>
-                                        <th>¿Cumple?</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {datos.miembros.map((m, i) => (
-                                        <React.Fragment key={m.id}>
-                                            <tr>
-                                                <td>Liquidez Mínima</td>
-                                                <td><input type="number" step="0.1" value={m.liquidezRequisito || 1.5} onChange={e => {
-                                                    let n = [...datos.miembros]; n[i].liquidezRequisito = e.target.value; setDatos({...datos, miembros: n});
-                                                }} /></td>
-                                                <td>
-                                                    <select value={m.cumpleLiquidez} onChange={e => {
-                                                        let n = [...datos.miembros]; n[i].cumpleLiquidez = e.target.value; setDatos({...datos, miembros: n});
-                                                    }}>
-                                                        <option value="si">Sí</option>
-                                                        <option value="no">No</option>
-                                                    </select>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Cobertura Mínima</td>
-                                                <td><input type="number" step="0.1" value={m.coberturaRequisito || 1.2} onChange={e => {
-                                                    let n = [...datos.miembros]; n[i].coberturaRequisito = e.target.value; setDatos({...datos, miembros: n});
-                                                }} /></td>
-                                                <td>
-                                                    <select value={m.cumpleCobertura} onChange={e => {
-                                                        let n = [...datos.miembros]; n[i].cumpleCobertura = e.target.value; setDatos({...datos, miembros: n});
-                                                    }}>
-                                                        <option value="si">Sí</option>
-                                                        <option value="no">No</option>
-                                                    </select>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Capital de Trabajo Mínimo</td>
-                                                <td><input type="number" value={m.capitalRequisito || 50000000} onChange={e => {
-                                                    let n = [...datos.miembros]; n[i].capitalRequisito = e.target.value; setDatos({...datos, miembros: n});
-                                                }} /></td>
-                                                <td>
-                                                    <select value={m.cumpleCapital} onChange={e => {
-                                                        let n = [...datos.miembros];
-                                                        n[0].cumpleCapital = e.target.value;
-                                                        setDatos({...datos, miembros: n});
-                                                    }}>
-                                                        <option value="si">Sí</option>
-                                                        <option value="no">No</option>
-                                                    </select>
-                                                </td>
-                                            </tr>
-                                        </React.Fragment>
-                                    ))}
-                                </tbody>
-                            </table>
-
-                            <h3>Motor de Decisión e IA</h3>
-                            <div className="ia-box" style={{ borderColor: evaluacion.estado === 'NO GO' ? '#ff9999' : '#91d5ff' }}>
-                                <div className="ia-title">🤖 Diagnóstico Automatizado (Análisis IA)</div>
-                                <p>{evaluacion.mensajeIA}</p>
-                            </div>
-
-                            <div style={{ marginTop: '15px', padding: '15px', textAlign: 'center', fontWeight: 'bold', backgroundColor: evaluacion.color, color: evaluacion.textColor, borderRadius: '6px' }}>
-                                ESTADO: {evaluacion.estado}
-                            </div>
-                        </div>
-                    )}
-
-                    {tab === 'IA' && (
-                        <div className="card">
-                            <h3>Generador y Analizador de Pliegos</h3>
-                            
-                            <button className="btn" style={{backgroundColor: '#059669', marginBottom: '10px'}} onClick={generarPrompt}>
-                                📋 Generar Prompt para IA
-                            </button>
-
-                            {datos.promptIA && (
-                                <div>
-                                    <textarea readOnly style={{height: '120px', backgroundColor: '#f8fafc'}} value={datos.promptIA} />
-                                    <button className="btn" style={{backgroundColor: '#0C447C', marginBottom: '15px'}} onClick={copiarPrompt}>
-                                        Copiar Prompt
-                                    </button>
-                                </div>
-                            )}
-
-                            <h4>Pegar resultado del análisis de la IA:</h4>
-                            <textarea 
-                                style={{height: '150px'}} 
-                                placeholder="Pega aquí el texto con el análisis de la licitación..." 
-                                value={datos.respuestaIA} 
-                                onChange={e => setDatos({...datos, respuestaIA: e.target.value})} 
-                            />
-                            
-                            <button className="btn" style={{backgroundColor: '#1D9E75', marginBottom: '20px'}} onClick={procesarRespuestaIA}>
-                                ✨ Procesar Información Básica
-                            </button>
-
-                            <h3>Resumen Automatizado del Pliego</h3>
-                            <div className="ia-box">
-                                <p><strong>Visita Técnica Obligatoria:</strong> {datos.analExtraido?.visitaTecnicaObligatoria || "No especificado"}</p>
-                                <p><strong>Manifestación de Interés:</strong> {datos.analExtraido?.manifestacionInteres || "No especificado"}</p>
-                                <p><strong>Experiencia / Filtros Excluyentes:</strong> {datos.analExtraido?.experiencia || "No especificado"}</p>
-                                <p><strong>Riesgos / Viabilidad:</strong> {datos.analExtraido?.viabilidad || "No especificado"}</p>
-                                <p><strong>Trampas / Riesgos Detectados:</strong> {datos.analExtraido?.riesgos || "Ninguno"}</p>
-function obtenerRequisitosFase1() {
-  const datosFase1 = {
-    proyecto: "Licitación PH-2024",
-    checklistDocumentacion: [
-      {
-        tipo: "Financiero",
-        documento: "Estados financieros (Endeudamiento <= 50%)"
-      },
-      {
-        tipo: "Experiencia",
-        documento: "5 certificaciones de ejecución de fachadas"
-      },
-      {
-        tipo: "Técnico",
-        documento: "Soportes del Director de Obra"
-      }
-    ],
-    cronogramaYCondiciones: [
-      "Visita técnica obligatoria",
-      "Certificación de alturas vigente",
-      "Antigüedad mínima de 10 años"
-    ]
-  };
-
-  return datosFase1;
-}
-                                
-                                <button className="btn" style={{backgroundColor: '#0C447C', marginTop: '15px', width: '100%'}} onClick={imprimirOGuardarPDF}>
-                                    🖨️ Imprimir / Guardar en PDF
-                                </button>
-                                
-                                <p className="disclaimer-text">
-                                    <strong>AVISO LEGAL:</strong> Este informe es de carácter estrictamente informativo y fue generado como una herramienta de apoyo mediante Inteligencia Artificial. La decisión final para la presentación de la oferta, así como la verificación de los requisitos habilitantes, es responsabilidad única y exclusiva del proponente.
-                                </p>
-                            </div>
-                        </div>
-                    )}
-                </div>
-            );
-        }
-
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
-    </script>
 </body>
 </html>
