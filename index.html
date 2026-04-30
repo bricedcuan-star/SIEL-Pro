@@ -22,6 +22,7 @@
         th { background-color: #f8fafc; }
         .ia-box { background-color: #e6f7ff; border: 1px solid #91d5ff; border-radius: 6px; padding: 15px; margin-top: 15px; }
         .ia-title { color: #0050b3; font-weight: bold; margin-bottom: 10px; }
+        .disclaimer-text { font-size: 11px; color: #475569; margin-top: 15px; text-align: justify; line-height: 1.4; border-top: 1px solid #e2e8f0; padding-top: 10px; }
     </style>
 </head>
 <body>
@@ -33,7 +34,7 @@
         function App() {
             const [tab, setTab] = useState('PERFIL');
             const [datos, setDatos] = useState({
-                miembros: [{ id: 1, nombre: 'Empresa Líder', patrimonio: 0, expMax: 0, unspsc: "", liquidezRequisito: 1.5, coberturaRequisito: 1.2, capitalRequisito: 50000000, cumpleLiquidezRequisito: 1.5, cumpleLiquidez: 'si', cumpleCobertura: 'si', cumpleCapital: 'si', cumpleFiltros: 'si' }],
+                miembros: [{ id: 1, nombre: 'Empresa Líder', patrimonio: 0, expMax: 0, unspsc: "", liquidezRequisito: 1.5, coberturaRequisito: 1.2, capitalRequisito: 50000000, cumpleLiquidez: 'si', cumpleCobertura: 'si', cumpleCapital: 'si', cumpleFiltros: 'si' }],
                 entidad: '',
                 objeto: '',
                 presupuesto: 0,
@@ -66,7 +67,6 @@
 
 Texto del pliego / Términos de Referencia:
 [PEGA AQUÍ EL TEXTO DEL PLIEGO O RESUMEN]`;
-                
                 setDatos({...datos, promptIA: promptGenerado});
             };
 
@@ -109,6 +109,55 @@ Texto del pliego / Términos de Referencia:
                     navigator.clipboard.writeText(datos.promptIA);
                     alert("¡Prompt copiado al portapapeles!");
                 }
+            };
+
+            // Función nativa para generar y descargar el reporte de SIEL PRO como documento
+            const descargarInformePDF = () => {
+                const informeHTML = `<!DOCTYPE html>
+                <html lang="es">
+                <head>
+                    <meta charset="UTF-8">
+                    <title>Informe de Viabilidad - SIEL PRO</title>
+                    <style>
+                        body { font-family: 'Helvetica Neue', Arial, sans-serif; color: #333; line-height: 1.6; padding: 20px; }
+                        h1 { color: #0C447C; border-bottom: 2px solid #0C447C; padding-bottom: 5px; }
+                        h2 { color: #1D9E75; margin-top: 20px; }
+                        .box { background: #F8FAFC; border: 1px solid #CBD5E1; padding: 15px; border-radius: 6px; margin-top: 10px; }
+                        .footer { margin-top: 40px; font-size: 9px; color: #64748B; border-top: 1px solid #E2E8F0; padding-top: 10px; text-align: justify; }
+                    </style>
+                </head>
+                <body>
+                    <h1>SIEL PRO - Informe de Viabilidad de Proceso</h1>
+                    <h2>1. Información del Proceso</h2>
+                    <p><strong>Entidad:</strong> ${datos.entidad || 'No especificada'}</p>
+                    <p><strong>Objeto:</strong> ${datos.objeto || 'No especificado'}</p>
+                    <p><strong>Presupuesto:</strong> $${datos.presupuesto || 0}</p>
+                    <p><strong>Tipo de proceso:</strong> ${datos.tipoProceso}</p>
+
+                    <h2>2. Resumen del Análisis</h2>
+                    <div class="box">
+                        <p><strong>Visita Técnica Obligatoria:</strong> ${datos.analisisExtraido?.visitaTecnicaObligatoria || 'No especificado'}</p>
+                        <p><strong>Manifestación de Interés:</strong> ${datos.analisisExtraido?.manifestacionInteres || 'No especificado'}</p>
+                        <p><strong>Experiencia / Filtros:</strong> ${datos.analisisExtraido?.experiencia || 'No especificado'}</p>
+                        <p><strong>Riesgos Detectados:</strong> ${datos.analisisExtraido?.riesgos || 'Ninguno'}</p>
+                    </div>
+
+                    <div class="footer">
+                        <strong>AVISO LEGAL:</strong> Este informe es de carácter estrictamente informativo y fue generado como una herramienta de apoyo mediante Inteligencia Artificial. La decisión final para la presentación de la oferta, así como la verificación de los requisitos habilitantes, es responsabilidad única y exclusiva del proponente. El usuario puede apoyarse en la información contenida en este documento bajo su propia responsabilidad, sin eximir la necesidad de revisar exhaustivamente los pliegos oficiales.
+                    </div>
+                </body>
+                </html>`;
+
+                const blob = new Blob([informeHTML], { type: "text/html;charset=utf-8" });
+                const url = URL.createObjectURL(blob);
+                
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = `Informe-Viabilidad-${datos.entidad || 'Proceso'}.html`;
+                a.click();
+                
+                URL.revokeObjectURL(url);
+                alert("La descarga del informe ha comenzado. Recuerde revisar la información oficial.");
             };
 
             const evaluarMotorDecision = () => {
@@ -178,10 +227,10 @@ Texto del pliego / Términos de Referencia:
                             <div style={{marginBottom: '20px'}}>
                                 <h4>🔗 Fuentes de Búsqueda</h4>
                                 <ul>
-                                    <li>SECOP I: <a href="https://www.contratos.gov.co/consultas/resultadoListadoProcesos.jsp?estado=2&desdeFomulario=true" target="_blank">Ir a SECOP I</a></li>
-                                    <li>SECOP II: <a href="https://community.secop.gov.co/Public/Tendering/ContractNoticeManagement/Index?currentLanguage=es-CO&Page=login&Country=CO&SkinName=CCE" target="_blank">Ir a SECOP II</a></li>
-                                    <li><a href="https://bogota.gov.co/asi-vamos/contratos-y-obras/participa" target="_blank">Alcaldía Mayor de Bogotá - Contratos</a></li>
-                                    <li><a href="https://leydepropiedadhorizontal.org/category/convocatorias/" target="_blank">Convocatorias Propiedad Horizontal</a></li>
+                                    <li>SECOP I: <a href="https://www.contratos.gov.co/consultas/resultadoListadoProcesos.jsp?estado=2&desdeFomulario=true" target="_blank" rel="noreferrer">Ir a SECOP I</a></li>
+                                    <li>SECOP II: <a href="https://community.secop.gov.co/Public/Tendering/ContractNoticeManagement/Index?currentLanguage=es-CO&Page=login&Country=CO&SkinName=CCE" target="_blank" rel="noreferrer">Ir a SECOP II</a></li>
+                                    <li><a href="https://bogota.gov.co/asi-vamos/contratos-y-obras/participa" target="_blank" rel="noreferrer">Alcaldía Mayor de Bogotá - Contratos</a></li>
+                                    <li><a href="https://leydepropiedadhorizontal.org/category/convocatorias/" target="_blank" rel="noreferrer">Convocatorias Propiedad Horizontal</a></li>
                                 </ul>
                             </div>
 
@@ -367,6 +416,14 @@ Texto del pliego / Términos de Referencia:
                                 <p><strong>Manifestación de Interés:</strong> {datos.analisisExtraido?.manifestacionInteres || "No especificado"}</p>
                                 <p><strong>Experiencia / Filtros Excluyentes:</strong> {datos.analisisExtraido?.experiencia || "No especificado"}</p>
                                 <p><strong>Trampas / Riesgos Detectados:</strong> {datos.analisisExtraido?.riesgos || "Ninguno"}</p>
+
+                                <button className="btn" style={{backgroundColor: '#0C447C', marginTop: '15px', width: '100%'}} onClick={descargarInformePDF}>
+                                    📄 Descargar Informe en PDF
+                                </button>
+                                
+                                <p className="disclaimer-text">
+                                    <strong>AVISO LEGAL:</strong> Este informe es de carácter estrictamente informativo y fue generado como una herramienta de apoyo mediante Inteligencia Artificial. La decisión final para la presentación de la oferta, así como la verificación de los requisitos habilitantes, es responsabilidad única y exclusiva del proponente. El usuario puede apoyarse en la información contenida en este documento bajo su propia responsabilidad, sin eximir la necesidad de revisar exhaustivamente los pliegos originales.
+                                </p>
                             </div>
                         </div>
                     )}
