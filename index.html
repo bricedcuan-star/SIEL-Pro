@@ -51,6 +51,18 @@
         th {
             background-color: #f2f2f2;
         }
+        .ia-box {
+            background-color: #e6f7ff;
+            border: 1px solid #91d5ff;
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        .ia-title {
+            color: #0050b3;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
         #resultadoCaja {
             padding: 15px;
             margin-top: 15px;
@@ -72,8 +84,8 @@
         <ul>
             <li><a href="https://bogota.gov.co/asi-vamos/contratos-y-obras/participa" target="_blank">Alcaldía Mayor de Bogotá - Contratos</a></li>
             <li><a href="https://leydepropiedadhorizontal.org/category/convocatorias/" target="_blank">Convocatorias Propiedad Horizontal</a></li>
-            <li>Secop I</li>
-            <li>Secop II</li>
+            <li>Secop I</li><a href=https://www.contratos.gov.co/consultas/inicioConsulta.do" target="_blank">SECOPI</a></li>
+            <li>Secop II</li><a href=https://community.secop.gov.co/Public/Tendering/ContractNoticeManagement/Index?currentLanguage=es-CO&Page=login&Country=CO&SkinName=CCE" target="_blank">SECOPII</a></li>
         </ul>
     </section>
 
@@ -178,6 +190,11 @@
     <section>
         <h2>⚡ Motor de Decisión</h2>
         <button onclick="evaluarLicitacion()">Ejecutar Análisis (GO / NO-GO)</button>
+
+        <div class="ia-box" id="iaCuadro" style="display: none;">
+            <div class="ia-title">🤖 Diagnóstico Automatizado (Análisis IA)</div>
+            <p id="iaMensaje">Espere mientras el sistema analiza los indicadores...</p>
+        </div>
     </section>
 
     <div id="resultadoCaja"></div>
@@ -200,21 +217,28 @@
             }
 
             const resultadoCaja = document.getElementById('resultadoCaja');
+            const iaCuadro = document.getElementById('iaCuadro');
+            const iaMensaje = document.getElementById('iaMensaje');
+
             resultadoCaja.style.display = 'block';
+            iaCuadro.style.display = 'block';
 
             // Motor de decisión: GO, GO CONDICIONADO o NO GO
             if (cumpleFiltros === 'no' || !kValido) {
                 resultadoCaja.style.backgroundColor = '#ffcccc';
                 resultadoCaja.style.color = '#990000';
                 resultadoCaja.innerHTML = 'ESTADO: NO GO — Proceso inviable. Excede la Capacidad K o incumple filtros excluyentes.';
+                iaMensaje.innerHTML = '<strong>Diagnóstico de IA:</strong> El proyecto no cumple con los filtros excluyentes obligatorios o excede la capacidad de contratación (K). Se recomienda no presentar oferta para evitar desgaste operativo y financiero.';
             } else if (cumpleLiq === 'no' || cumpleCob === 'no' || cumpleCap === 'no') {
                 resultadoCaja.style.backgroundColor = '#fff2cc';
                 resultadoCaja.style.color = '#996600';
                 resultadoCaja.innerHTML = 'ESTADO: GO CONDICIONADO — Requiere revisión de condiciones y riesgos en los indicadores financieros.';
+                iaMensaje.innerHTML = '<strong>Diagnóstico de IA:</strong> Se observa viabilidad legal y de experiencia, pero uno o varios indicadores financieros no cumplen con el requerimiento del pliego. Debe evaluar si cuenta con garantías o plan de contingencia antes de avanzar.';
             } else {
                 resultadoCaja.style.backgroundColor = '#ccffcc';
                 resultadoCaja.style.color = '#006600';
                 resultadoCaja.innerHTML = 'ESTADO: GO — Proceso viable, proceder con el reporte y la propuesta.';
+                iaMensaje.innerHTML = '<strong>Diagnóstico de IA:</strong> El proyecto es viable en todos los filtros evaluados (Capacidad K, experiencia y razones financieras). Se sugiere proceder con la fase de propuesta formal.';
             }
         }
     </script>
