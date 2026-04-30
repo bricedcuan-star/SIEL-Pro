@@ -33,7 +33,7 @@
         function App() {
             const [tab, setTab] = useState('PERFIL');
             const [datos, setDatos] = useState({
-                miembros: [{ id: 1, nombre: 'Empresa Líder', patrimonio: 0, expMax: 0, unspsc: "", liquidezRequisito: 1.5, coberturaRequisito: 1.2, capitalRequisito: 50000000, cumpleLiquidez: 'si', cumpleCobertura: 'si', cumpleCapital: 'si', cumpleFiltros: 'si' }],
+                miembros: [{ id: 1, nombre: 'Empresa Líder', patrimonio: 0, expMax: 0, unspsc: "", liquidezRequisito: 1.5, coberturaRequisito: 1.2, capitalRequisito: 50000000, cumpleLiquidezRequisito: 1.5, cumpleLiquidez: 'si', cumpleCobertura: 'si', cumpleCapital: 'si', cumpleFiltros: 'si' }],
                 entidad: '',
                 objeto: '',
                 presupuesto: 0,
@@ -42,6 +42,8 @@
                 capacidadK: 100000000,
                 promptIA: "",
                 respuestaIA: "",
+                tipoProceso: "Licitación Pública",
+                fuenteProceso: "SECOP II",
                 analisisExtraido: {
                     experiencia: "",
                     viabilidad: "",
@@ -69,10 +71,7 @@ Texto del pliego / Términos de Referencia:
             };
 
             const procesarRespuestaIA = () => {
-                const texto = datos.respuestaIA.toLowerCase();
-                
                 let experiencia = "Revisar texto de la IA";
-                let viabilidad = "Revisar texto de la IA";
                 let riesgos = "Revisar texto de la IA";
                 let trampas = "Ninguna identificada";
                 let inconsistencias = "Ninguna identificada";
@@ -82,7 +81,6 @@ Texto del pliego / Términos de Referencia:
 
                 if (datos.respuestaIA) {
                     experiencia = datos.respuestaIA.includes("experiencia") ? "Datos extraídos correctamente" : "No detectado";
-                    // Lógica simulada de extracción de elementos clave
                     if (datos.respuestaIA.includes("visita")) {
                         visita = datos.respuestaIA.includes("obligatoria") ? "Sí, es obligatoria" : "No es obligatoria";
                     }
@@ -180,15 +178,37 @@ Texto del pliego / Términos de Referencia:
                             <div style={{marginBottom: '20px'}}>
                                 <h4>🔗 Fuentes de Búsqueda</h4>
                                 <ul>
+                                    <li>SECOP I: <a href="https://www.contratos.gov.co/consultas/resultadoListadoProcesos.jsp?estado=2&desdeFomulario=true" target="_blank">Ir a SECOP I</a></li>
+                                    <li>SECOP II: <a href="https://community.secop.gov.co/Public/Tendering/ContractNoticeManagement/Index?currentLanguage=es-CO&Page=login&Country=CO&SkinName=CCE" target="_blank">Ir a SECOP II</a></li>
                                     <li><a href="https://bogota.gov.co/asi-vamos/contratos-y-obras/participa" target="_blank">Alcaldía Mayor de Bogotá - Contratos</a></li>
                                     <li><a href="https://leydepropiedadhorizontal.org/category/convocatorias/" target="_blank">Convocatorias Propiedad Horizontal</a></li>
-                                    <li>Secop I</li>
-                                    <li>Secop II</li>
                                 </ul>
                             </div>
 
+                            <div className="grid">
+                                <div>
+                                    <label>Tipo de Proceso:</label>
+                                    <select value={datos.tipoProceso} onChange={e => setDatos({...datos, tipoProceso: e.target.value})}>
+                                        <option>Licitación Pública</option>
+                                        <option>Selección Abreviada</option>
+                                        <option>Concurso de Méritos</option>
+                                        <option>Mínima Cuantía</option>
+                                        <option>Convocatoria Privada</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label>Plataforma donde se encontró:</label>
+                                    <select value={datos.fuenteProceso} onChange={e => setDatos({...datos, fuenteProceso: e.target.value})}>
+                                        <option>SECOP I</option>
+                                        <option>SECOP II</option>
+                                        <option>Alcaldía Mayor</option>
+                                        <option>Propiedad Horizontal</option>
+                                    </select>
+                                </div>
+                            </div>
+
                             {datos.miembros.map((m, i) => (
-                                <div key={m.id} style={{borderBottom:'1px solid #eee', paddingBottom:'10px', marginBottom:'10px'}}>
+                                <div key={m.id} style={{borderBottom:'1px solid #eee', paddingBottom:'10px', marginTop:'15px', marginBottom:'10px'}}>
                                     <input placeholder="Nombre Empresa" value={m.nombre} onChange={e => {
                                         let n = [...datos.miembros]; n[i].nombre = e.target.value; setDatos({...datos, miembros: n});
                                     }} />
@@ -260,7 +280,7 @@ Texto del pliego / Términos de Referencia:
                                             </tr>
                                             <tr>
                                                 <td>Cobertura Mínima</td>
-                                                <td><input type="number" step="0.1" value={m.coberRequisito || 1.2} onChange={e => {
+                                                <td><input type="number" step="0.1" value={m.coberturaRequisito || 1.2} onChange={e => {
                                                     let n = [...datos.miembros]; n[i].coberRequisito = e.target.value; setDatos({...datos, miembros: n});
                                                 }} /></td>
                                                 <td>
@@ -343,10 +363,10 @@ Texto del pliego / Términos de Referencia:
 
                             <h3>Resumen Automatizado del Pliego</h3>
                             <div className="ia-box">
-                                <p><strong>Visita Técnica Obligatoria:</strong> {datos.analisisExtraido.visitaTecnicaObligatoria}</p>
-                                <p><strong>Manifestación de Interés:</strong> {datos.analisisExtraido.manifestacionInteres}</p>
-                                <p><strong>Experiencia / Filtros Excluyentes:</strong> {datos.analisisExtraido.experiencia}</p>
-                                <p><strong>Trampas / Riesgos Detectados:</strong> {datos.analisisExtraido.riesgos}</p>
+                                <p><strong>Visita Técnica Obligatoria:</strong> {datos.analisisExtraido?.visitaTecnicaObligatoria || "No especificado"}</p>
+                                <p><strong>Manifestación de Interés:</strong> {datos.analisisExtraido?.manifestacionInteres || "No especificado"}</p>
+                                <p><strong>Experiencia / Filtros Excluyentes:</strong> {datos.analisisExtraido?.experiencia || "No especificado"}</p>
+                                <p><strong>Trampas / Riesgos Detectados:</strong> {datos.analisisExtraido?.riesgos || "Ninguno"}</p>
                             </div>
                         </div>
                     )}
