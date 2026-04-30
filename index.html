@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIEL PRO - Blindaje Contractual</title>
+    <title>SIEL PRO - Fase 1: Plan Básico</title>
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -37,20 +37,11 @@
                 entidad: '',
                 objeto: '',
                 presupuesto: 0,
-                valorProceso: 0,
-                municipioIca: 'Bogotá D.C.',
-                tarifaIcaManual: 9.66,
-                conceptoRenta: 'Servicios en general — PJ',
                 esEntidadPublica: false,
                 esImagen: false,
                 analisisIA: "",
                 capacidadK: 100000000
             });
-
-            const ESTATUTON = [
-                { m: 'Bogotá D.C.', t: 9.66 }, { m: 'Medellín', t: 10 }, { m: 'Cali', t: 8 }, 
-                { m: 'Barranquilla', t: 7 }, { m: 'OTRO (Manual)', t: 0 }
-            ];
 
             const consolidar = () => {
                 let pat = 0, exp = 0;
@@ -59,14 +50,6 @@
                     exp = Math.max(exp, Number(m.expMax) || 0);
                 });
                 return { pat, exp };
-            };
-
-            const calcular = () => {
-                const base = Number(datos.valorProceso) || 0;
-                const vIca = (base * (Number(datos.tarifaIcaManual) || 0)) / 1000;
-                const vRenta = base * 0.04; // Simplificado para la demo
-                const vEstp = datos.esEntidadPublica ? base * 0.02 : 0;
-                return { vIca, vRenta, vEstp, neto: base - (vIca + vRenta + vEstp) };
             };
 
             const evaluarMotorDecision = () => {
@@ -115,13 +98,12 @@
             };
 
             const c = consolidar();
-            const res = calcular();
             const evaluacion = evaluarMotorDecision();
 
             return (
                 <div className="container">
                     <header>
-                        <h2 style={{margin:0}}>SIEL PRO - Blindaje Contractual</h2>
+                        <h2 style={{margin:0}}>SIEL PRO - Fase 1: Plan Básico</h2>
                         <span>UVT 2026: $52.374</span>
                     </header>
 
@@ -129,12 +111,23 @@
                         <button className="btn" style={{background: tab==='PERFIL'?'#1D9E75':'#94a3b8'}} onClick={() => setTab('PERFIL')}>PERFIL</button>
                         <button className="btn" style={{background: tab==='FINANCIERO'?'#1D9E75':'#94a3b8'}} onClick={() => setTab('FINANCIERO')}>FINANCIERO</button>
                         <button className="btn" style={{background: tab==='IA'?'#1D9E75':'#94a3b8'}} onClick={() => setTab('IA')}>TRAMPAS IA</button>
-                        <button className="btn" style={{background: tab==='RETENCOL'?'#1D9E75':'#94a3b8'}} onClick={() => setTab('RETENCOL')}>RETENCOL</button>
                     </nav>
 
                     {tab === 'PERFIL' && (
                         <div className="card">
-                            <h3>Perfil & UNSPSC</h3>
+                            <h3>Perfil & Fuentes de Búsqueda</h3>
+                            
+                            {/* Fuentes de Búsqueda Oficiales */}
+                            <div style={{marginBottom: '20px'}}>
+                                <h4>🔗 Fuentes de Búsqueda</h4>
+                                <ul>
+                                    <li><a href="https://bogota.gov.co/asi-vamos/contratos-y-obras/participa" target="_blank">Alcaldía Mayor de Bogotá - Contratos</a></li>
+                                    <li><a href="https://leydepropiedadhorizontal.org/category/convocatorias/" target="_blank">Convocatorias Propiedad Horizontal</a></li>
+                                    <li>Secop I</li>
+                                    <li>Secop II</li>
+                                </ul>
+                            </div>
+
                             {datos.miembros.map((m, i) => (
                                 <div key={m.id} style={{borderBottom:'1px solid #eee', paddingBottom:'10px', marginBottom:'10px'}}>
                                     <input placeholder="Nombre Empresa" value={m.nombre} onChange={e => {
@@ -267,30 +260,6 @@
                             <textarea style={{height:'150px'}} placeholder="Pega el análisis de la IA aquí..." value={datos.analisisIA} onChange={e => setDatos({...datos, analisisIA: e.target.value})} />
                         </div>
                     )}
-
-                    {tab === 'RETENCOL' && (
-                        <div className="grid">
-                            <div className="card">
-                                <h3>Calculadora</h3>
-                                <input type="number" placeholder="Valor Contrato" onChange={e => setDatos({...datos, valorProceso: e.target.value})} />
-                                <select onChange={e => {
-                                    const m = ESTATUTON.find(x => x.m === e.target.value);
-                                    setDatos({...datos, municipioIca: e.target.value, tarifaIcaManual: m ? m.t : 0});
-                                }}>
-                                    {ESTATUTON.map(x => <option key={x.m}>{x.m}</option>)}
-                                </select>
-                                <input type="number" value={datos.tarifaIcaManual} onChange={e => setDatos({...datos, tarifaIcaManual: e.target.value})} />
-                                <button className="btn" style={{background:'#64748b', width:'100%'}} onClick={() => window.open('https://sites.google.com/view/estatuton-2024/inicio')}>VER ESTATUTON</button>
-                            </div>
-                            <div className="card" style={{background:'#0C447C', color:'white'}}>
-                                <h3>Resultado Retenciones</h3>
-                                <p>ICA: -${res.vIca.toLocaleString()}</p>
-                                <p>Renta: -${res.vRenta.toLocaleString()}</p>
-                                <hr/>
-                                <h2>NETO: ${res.neto.toLocaleString()}</h2>
-                            </div>
-                        </div>
-                    )}
                 </div>
             );
         }
@@ -300,11 +269,3 @@
     </script>
 </body>
 </html>
-<div style={{ backgroundColor: '#e2e8f0', padding: '10px', borderRadius: '8px', marginBottom: '15px' }}>
-    <strong style={{ color: '#0C447C' }}>SISTEMA SIEL - ESTRUCTURA DE FASES:</strong>
-    <ul style={{ margin: '5px 0 0 20px', padding: 0 }}>
-        <li><span style={{ color: '#059669', fontWeight: 'bold' }}>Fase 1 (Actual): Plan Básico (Viabilidad).</span> Permite analizar pliegos, filtrar indicadores excluyentes y realizar cálculos rápidos de retenciones e impuestos.</li>
-        <li style={{ color: '#64748b' }}>Fase 2: Análisis de Riesgos y Matriz de Cumplimiento detallada (Próximos módulos).</li>
-        <li style={{ color: '#64748b' }}>Fase 3: Motor de decisión corporativo avanzado.</li>
-    </ul>
-</div>
