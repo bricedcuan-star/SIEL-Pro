@@ -31,6 +31,20 @@
     <script type="text/babel">
         const { useState } = React;
 
+        {tab === 'PERFIL' && (
+                        <div className="card">
+                            <h3>Perfil & Fuentes de Búsqueda</h3>
+                            
+                            <div style={{marginBottom: '20px'}}>
+                                <h4>🔗 Fuentes de Búsqueda</h4>
+                                <ul>
+                                    <li>SECOP I: <a href="https://www.contratos.gov.co/consultas/resultadoListadoProcesos.jsp?estado=2&desdeFomulario=true" target="_blank" rel="noreferrer">Ir a SECOP I</a></li>
+                                    <li>SECOP II: <a href="https://community.secop.gov.co/Public/Tendering/ContractNoticeManagement/Index?currentLanguage=es-CO&Page=login&Country=CO&SkinName=CCE" target="_blank" rel="noreferrer">Ir a SECOP II</a></li>
+                                    <li><a href="https://bogota.gov.co/asi-vamos/contratos-y-obras/participa" target="_blank" rel="noreferrer">Alcaldía Mayor de Bogotá - Contratos</a></li>
+                                    <li><a href="https://leydepropiedadhorizontal.org/category/convocatorias/" target="_blank" rel="noreferrer">Convocatorias Propiedad Horizontal</a></li>
+                                </ul>
+                            </div>
+                            
         function App() {
             const [tab, setTab] = useState('PERFIL');
             const [datos, setDatos] = useState({
@@ -213,7 +227,7 @@ Texto del pliego / Términos de Referencia:
                     </div>
 
                     <div class="disclaimer">
-                        <strong>AVISO LEGAL:</strong> Este informe es de carácter estrictamente informativo y fue generado como una herramienta de apoyo mediante Inteligencia Artificial. La decisión final para la presentación de la oferta, así como la verificación de los requisitos habilitantes, es responsabilidad única y exclusiva del proponente. El usuario puede apoyarse en la información contenida en este documento bajo su propia responsabilidad, sin eximir la necesidad de revisar exhaustivamente los pliegos oficiales.
+                        <strong>AVISO LEGAL:</strong> Este informe es de carácter estrictamente informativo y fue generado como una herramienta de apoyo mediante Inteligencia Artificial. La decisión final para la presentación de la oferta, así como la verificación de los requisitos habilitantes, es responsabilidad única y exclusiva del proponente.
                     </div>
                 </body>
                 </html>`;
