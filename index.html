@@ -2,156 +2,102 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>SIEL PRO | Versión 0</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIEL - Sistema de Evaluación Inteligente de Licitaciones</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
-        :root {
-            --critico: #e11d48;
-            --importante: #f59e0b;
-            --observacion: #3b82f6;
-            --go: #10b981;
-            --azul-p: #061624;
-            --azul-s: #0C2D48;
-            --oro: #D4AF37;
-            --fondo: #f8fafc;
-        }
-
         body {
-            font-family: 'Lexend', sans-serif;
-            background: var(--fondo);
-            margin: 0;
-            color: #1e293b;
-            padding: 20px;
+            background-color: #f3f4f6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
-        header {
-            background: linear-gradient(135deg, var(--azul-p) 0%, var(--azul-s) 100%);
-            color: white;
-            padding: 20px;
-            border-radius: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
         .card {
             background: white;
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 20px;
-            border: 1px solid #edf2f7;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
-        }
-
-        .bloqueado {
-            opacity: 0.6;
-            pointer-events: none;
-            background-color: #f1f5f9;
-        }
-
-        label {
-            display: block;
-            font-weight: 800;
-            font-size: 11px;
-            color: var(--azul-s);
-            margin-bottom: 8px;
-            text-transform: uppercase;
-        }
-
-        textarea, input {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e2e8f0;
-            border-radius: 10px;
-            font-family: inherit;
-            font-size: 13px;
-            box-sizing: border-box;
-            margin-bottom: 10px;
-        }
-
-        button {
-            background: var(--azul-p);
-            color: white;
-            padding: 12px;
-            border: none;
-            border-radius: 10px;
-            font-weight: 800;
-            cursor: pointer;
-            width: 100%;
-        }
-
-        button:hover {
-            opacity: 0.9;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
-<body>
+<body class="p-6">
 
-    <header>
-        <div>
-            <span style="font-weight: 800; font-size: 24px;">SIEL V0</span> 
-            <span style="color: var(--oro); font-weight: 300;">(Base Unificada)</span>
-        </div>
-        <div style="font-size: 11px; text-align: right;">
-            <b>INTELIGENCIA ESTRATÉGICA</b>
-        </div>
-    </header>
+    <div class="max-w-4xl mx-auto">
+        <header class="mb-8 text-center">
+            <h1 class="text-4xl font-extrabold text-blue-900">🧱 SIEL</h1>
+            <p class="text-gray-600 mt-2">Sistema de Evaluación Inteligente de Licitaciones - Fase 1 (Viabilidad)</p>
+        </header>
 
-    <div class="card" id="fase1">
-     class SielFase1:
-    def __init__(self):
-        # Fuentes oficiales y de consulta para el Plan Básico
-        self.fuentes_busqueda = [
-            "https://bogota.gov.co/asi-vamos/contratos-y-obras/participa",
-            "https://leydepropiedadhorizontal.org/category/convocatorias/",
-            "Secop I",
-            "Secop II"
-        ]
-        
-    def procesar_licitacion(self, pliego_datos):
-        # 1. Extracción de requisitos
-        requisitos = self.extraer_requisitos(pliego_datos)
-        
-        # 2. Detección de riesgos
-        riesgos = self.detectar_riesgos(pliego_datos)
-        
-        # 3. Checklist de cumplimiento
-        cumplimiento = self.checklist_cumplimiento(requisitos)
-        
-        # 4. Motor de decisión
-        decision = self.motor_decision(riesgos, cumplimiento)
-        
-        return {
-            "requisitos": requisitos,
-            "riesgos": riesgos,
-            "checklist": cumplimiento,
-            "decision": decision
+        <div class="card p-6 mb-6">
+            <h2 class="text-xl font-bold text-gray-800 mb-4">🔗 Fuentes de Búsqueda Oficiales</h2>
+            <ul class="list-disc pl-6 space-y-2 text-blue-600">
+                <li><a href="https://bogota.gov.co/asi-vamos/contratos-y-obras/participa" target="_blank" class="hover:underline">Alcaldía Mayor de Bogotá - Contratos</a></li>
+                <li><a href="https://leydepropiedadhorizontal.org/category/convocatorias/" target="_blank" class="hover:underline">Convocatorias Propiedad Horizontal</a></li>
+                <li><a href="#" class="text-gray-600 cursor-not-allowed">Secop I (Consulta directa)</a></li>
+                <li><a href="#" class="text-gray-600 cursor-not-allowed">Secop II (Consulta directa)</a></li>
+            </ul>
+        </div>
+
+        <div class="card p-6">
+            <h2 class="text-xl font-bold text-gray-800 mb-4">📋 Motor de Decisión (Fase 1)</h2>
+            
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700">Nombre del proceso o ID del pliego:</label>
+                <input type="text" id="nombrePliego" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="Ej: Licitación No. 001">
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700">Nivel de riesgo estimado:</label>
+                <select id="riesgoPliego" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    <option value="bajo">Bajo (Sin restricciones evidentes)</option>
+                    <option value="medio">Medio (Requiere condiciones específicas)</option>
+                    <option value="alto">Alto (Restricciones críticas / incumplimientos)</option>
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700">¿Cumple con los requisitos mínimos?</label>
+                <select id="cumpleRequisitos" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    <option value="si">Sí, cumple todos los requisitos</option>
+                    <option value="condicionado">Cumple parcialmente (Con observaciones)</option>
+                    <option value="no">No cumple con los requisitos</option>
+                </select>
+            </div>
+
+            <button onclick="evaluarLicitacion()" class="w-full bg-blue-600 text-white p-3 rounded-md font-semibold hover:bg-blue-700 transition duration-200 cursor-pointer">
+                Ejecutar Análisis
+            </button>
+        </div>
+
+        <div id="resultadoSeccion" class="card p-6 mt-6 hidden">
+            <h2 class="text-xl font-bold text-gray-800 mb-2">Resultados del Análisis</h2>
+            <div id="resultadoCaja" class="p-4 rounded-md text-white text-center font-bold text-lg"></div>
+        </div>
+    </div>
+
+    <script>
+        function evaluarLicitacion() {
+            const nombre = document.getElementById('nombrePliego').value;
+            const riesgo = document.getElementById('riesgoPliego').value;
+            const cumple = document.getElementById('cumpleRequisitos').value;
+            
+            const resultadoSeccion = document.getElementById('resultadoSeccion');
+            const resultadoCaja = document.getElementById('resultadoCaja');
+
+            resultadoSeccion.classList.remove('hidden');
+
+            // Motor de decisión lógica
+            if (cumple === 'no' || riesgo === 'alto') {
+                resultadoCaja.className = 'p-4 rounded-md text-center font-bold text-lg bg-red-600 text-white';
+                resultadoCaja.innerHTML = 'ESTADO: NO GO — Proceso inviable, evitar pérdida de recursos.';
+            } else if (cumple === 'condicionado' || riesgo === 'medio') {
+                resultadoCaja.className = 'p-4 rounded-md text-center font-bold text-lg bg-yellow-500 text-gray-900';
+                resultadoCaja.innerHTML = 'ESTADO: GO CONDICIONADO — Requiere validación de observaciones y riesgos.';
+            } else {
+                resultadoCaja.className = 'p-4 rounded-md text-center font-bold text-lg bg-green-600 text-white';
+                resultadoCaja.innerHTML = 'ESTADO: GO — Proceso viable, proceder con el análisis financiero.';
+            }
         }
-        
-    def extraer_requisitos(self, pliego):
-        # Lógica de extracción de requisitos del pliego
-        return {"tecnicos": [], "financieros": [], "legales": []}
-        
-    def detectar_riesgos(self, pliego):
-        # Detección de riesgos preliminares
-        return {"riesgos_identificados": 0, "severidad": "bajo"}
-        
-    def checklist_cumplimiento(self, requisitos):
-        # Comparación de requisitos vs capacidades
-        return {"cumple": True, "faltantes": []}
-        
-    def motor_decision(self, riesgos, cumplimiento):
-        # Motor de decisión: GO, GO CONDICIONADO, NO GO
-        if not cumplimiento["cumple"] or riesgos["severidad"] == "alto":
-            return "NO GO"
-        elif riesgos["severidad"] == "medio" or len(cumplimiento["faltantes"]) > 0:
-            return "GO CONDICIONADO"
-        else:
-            return "GO"
-        }
-               
+    </script>
+</body>
+</html>
     <div class="card bloqueado" id="fase2">
         <h3>🟡 Fase 2: Plan Esencial (Rentabilidad)</h3>
         <label>Margen de ganancia estimado (%)</label>
