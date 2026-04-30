@@ -100,12 +100,59 @@
     </header>
 
     <div class="card" id="fase1">
-        <h3>🟢 Fase 1: Plan Básico (Viabilidad)</h3>
-        <label>Ingresa el resultado del pliego a procesar:</label>
-        <textarea id="f_raw" rows="4" placeholder="Pega el texto aquí para evaluar..." oninput="evaluarFase1()"></textarea>
-        <p id="msj_fase1" style="font-size: 12px; color: #475569;">Escribe algo en el cuadro para continuar.</p>
-    </div>
+       # MÓDULO: SIEL - FASE 1 (Viabilidad)
 
+class SielFase1:
+    def __init__(self):
+        # Fuentes oficiales y de consulta para el Plan Básico
+        self.fuentes_busqueda = [
+            "https://bogota.gov.co/asi-vamos/contratos-y-obras/participa",
+            "https://leydepropiedadhorizontal.org/category/convocatorias/",
+            "Secop I",
+            "Secop II"
+        ]
+        
+    def procesar_licitacion(self, pliego_datos):
+        # 1. Extracción de requisitos
+        requisitos = self.extraer_requisitos(pliego_datos)
+        
+        # 2. Detección de riesgos
+        riesgos = self.detectar_riesgos(pliego_datos)
+        
+        # 3. Checklist de cumplimiento
+        cumplimiento = self.checklist_cumplimiento(requisitos)
+        
+        # 4. Motor de decisión
+        decision = self.motor_decision(riesgos, cumplimiento)
+        
+        return {
+            "requisitos": requisitos,
+            "riesgos": riesgos,
+            "checklist": cumplimiento,
+            "decision": decision
+        }
+        
+    def extraer_requisitos(self, pliego):
+        # Lógica de extracción de requisitos del pliego
+        return {"tecnicos": [], "financieros": [], "legales": []}
+        
+    def detectar_riesgos(self, pliego):
+        # Detección de riesgos preliminares
+        return {"riesgos_identificados": 0, "severidad": "bajo"}
+        
+    def checklist_cumplimiento(self, requisitos):
+        # Comparación de requisitos vs capacidades
+        return {"cumple": True, "faltantes": []}
+        
+    def motor_decision(self, riesgos, cumplimiento):
+        # Motor de decisión: GO, GO CONDICIONADO, NO GO
+        if not cumplimiento["cumple"] or riesgos["severidad"] == "alto":
+            return "NO GO"
+        elif riesgos["severidad"] == "medio" or len(cumplimiento["faltantes"]) > 0:
+            return "GO CONDICIONADO"
+        else:
+            return "GO"
+        
     <div class="card bloqueado" id="fase2">
         <h3>🟡 Fase 2: Plan Esencial (Rentabilidad)</h3>
         <label>Margen de ganancia estimado (%)</label>
