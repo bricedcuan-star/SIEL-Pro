@@ -2,46 +2,30 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>SIEL PRO  | SISTEMA DE INTELIGENCIA ESTRATEGICA </title>
+    <title>SIEL PRO V12.0 | BRICED CONSULTING - FULL REPORT</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
-        :root { --critico: #e11d48; --importante: #f59e0b; --observacion: #3b82f6; --go: #10b981; --azul-p: #061624; --azul-s: #0C2D48; --oro: #D4AF37; --fondo: #f8fafc; }
-        body { font-family: 'Lexend', sans-serif; background: var(--fondo); margin: 0; color: #1e293b; padding-bottom: 60px; }
-        
+        :root { --critico: #e11d48; --importante: #f59e0b; --observacion: #3b82f6; --go: #10b981; --azul-p: #061624; --azul-s: #0C2D48; --oro: #D4AF37; --fondo: #f1f5f9; }
+        body { font-family: 'Lexend', sans-serif; background: var(--fondo); margin: 0; padding-bottom: 50px; }
         header { background: linear-gradient(135deg, var(--azul-p) 0%, var(--azul-s) 100%); color: white; padding: 20px 40px; border-bottom: 4px solid var(--oro); display: flex; justify-content: space-between; align-items: center; }
-        .search-bar { display: flex; gap: 10px; margin: 20px auto; max-width: 1100px; padding: 0 20px; }
-        .search-btn { flex: 1; padding: 12px; border-radius: 10px; background: white; border: 1.5px solid var(--oro); color: var(--azul-s); text-decoration: none; font-size: 11px; font-weight: 800; text-align: center; transition: 0.3s; }
-        
-        .container { max-width: 1150px; margin: 0 auto; padding: 0 20px; }
-
-        .decision-hero { background: white; border-radius: 20px; padding: 25px; text-align: center; border: 3px solid #e2e8f0; margin-bottom: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
-        
-        .card { background: white; border-radius: 20px; padding: 25px; margin-bottom: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
-        .prompt-box { background: var(--azul-p); color: #a5b4fc; padding: 15px; border-radius: 12px; border: 1px dashed var(--oro); margin-top: 10px; font-size: 10px; }
-        
-        .checklist-container { background: #f1f5f9; padding: 15px; border-radius: 15px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-        .check-item { background: white; padding: 10px; border-radius: 8px; display: flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 600; border: 1px solid #e2e8f0; }
-
-        .alert-group { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-top: 15px; }
-        .alert-card { border-radius: 12px; padding: 12px; border-top: 5px solid; background: white; }
-        .alert-red { border-color: var(--critico); }
-        .alert-orange { border-color: var(--importante); }
-        .alert-blue { border-color: var(--observacion); }
-
-        label { display: block; font-weight: 800; font-size: 11px; color: var(--azul-s); margin-bottom: 5px; text-transform: uppercase; }
-        textarea, input, select { width: 100%; padding: 10px; border: 2px solid #e2e8f0; border-radius: 10px; font-family: inherit; font-size: 13px; box-sizing: border-box; }
-        
-        .btn-magic { background: #6366f1; color: white; padding: 10px; border: none; border-radius: 8px; font-weight: 800; cursor: pointer; width: 100%; margin-bottom: 10px; }
-        .btn-premium { background: var(--oro); color: var(--azul-p); padding: 20px; border: none; border-radius: 50px; width: 100%; font-weight: 900; font-size: 18px; cursor: pointer; margin-top: 10px; box-shadow: 0 10px 25px rgba(212,175,55,0.4); }
+        .search-bar { display: flex; gap: 8px; margin: 15px auto; max-width: 1200px; padding: 0 20px; }
+        .search-btn { flex: 1; padding: 10px; border-radius: 8px; background: white; border: 1px solid var(--oro); color: var(--azul-s); text-decoration: none; font-size: 10px; font-weight: 800; text-align: center; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: grid; grid-template-columns: 450px 1fr; gap: 20px; }
+        .decision-hero { grid-column: 1 / span 2; background: white; border-radius: 15px; padding: 25px; text-align: center; border: 2px solid #cbd5e1; box-shadow: 0 8px 20px rgba(0,0,0,0.05); }
+        .card { background: white; border-radius: 15px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        label { display: block; font-weight: 800; font-size: 11px; color: var(--azul-s); margin-bottom: 6px; text-transform: uppercase; }
+        textarea, input, select { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: inherit; font-size: 13px; box-sizing: border-box; }
+        .btn-magic { background: var(--azul-p); color: white; padding: 10px; border: none; border-radius: 8px; font-weight: 800; cursor: pointer; width: 100%; margin-bottom: 15px; font-size: 12px; }
+        .btn-premium { grid-column: 1 / span 2; background: var(--oro); color: var(--azul-p); padding: 25px; border: none; border-radius: 50px; font-weight: 900; font-size: 20px; cursor: pointer; box-shadow: 0 10px 25px rgba(212,175,55,0.4); }
     </style>
 </head>
 <body>
 
 <header>
-    <div><span style="font-weight: 800; font-size: 24px;">SIEL PRO</span> <span style="color: var(--oro); font-weight: 300;">V10.0</span></div>
-    <div style="text-align: right; font-size: 12px;">BRICED CONSULTING<br><b>AUTO-SCANNER ACTIVADO</b></div>
+    <div><span style="font-weight: 800; font-size: 24px;">SIEL PRO</span> <span style="color: var(--oro); font-weight: 300;">V12.0</span></div>
+    <div style="text-align: right; font-size: 12px;">BRICED CONSULTING<br><b>REPORTE DE AUDITORÍA MULTIPÁGINA</b></div>
 </header>
 
 <div class="search-bar">
@@ -52,121 +36,132 @@
 </div>
 
 <div class="container">
-    
     <div class="decision-hero" id="hero_box">
-        <label>🎯 DECISIÓN ESTRATÉGICA FINAL</label>
-        <select id="f_dec" onchange="updateColors()" style="font-size: 22px; font-weight: 900; text-align: center; border: none; background: transparent;">
+        <label>🎯 SEMÁFORO DE VIABILIDAD</label>
+        <select id="f_dec" onchange="updateColors()" style="font-size: 24px; font-weight: 900; text-align: center;">
             <option value="GO">🟢 GO - PRESENTARSE</option>
             <option value="COND">🟡 GO CONDICIONADO</option>
             <option value="NOGO">🔴 NO GO - NO VIABLE</option>
         </select>
-        <input type="text" id="f_motivo" placeholder="La IA llenará esto automáticamente..." style="margin-top:10px; text-align: center; font-style: italic; border: none;">
+        <input type="text" id="f_motivo" placeholder="Motivo estratégico de la decisión..." style="text-align:center; font-style:italic; border:none; margin-top:10px;">
     </div>
 
-    <div style="display: grid; grid-template-columns: 1fr 1.3fr; gap: 20px;">
-        <div>
-            <div class="card">
-                <label>Análisis Crudo de la IA</label>
-                <textarea id="f_raw" rows="10" placeholder="Pega aquí la respuesta de la IA..." oninput="autoScan()"></textarea>
-                <button class="btn-magic" onclick="autoScan()">RE-ESCANEAR TEXTO <i class="fas fa-magic"></i></button>
-                <div class="prompt-box">
-                    <p id="pText" style="margin:0;">"Analiza este pliego bajo los 13 puntos SIEL. Define: 1. RESUMEN (3 líneas), 2. ALERTAS (Críticas, Importantes, Mejoras) y 3. DECISIÓN (GO, COND, NOGO)."</p>
-                    <button onclick="navigator.clipboard.writeText(document.getElementById('pText').innerText); alert('Copiado');" style="background:var(--oro); border:none; padding:3px 8px; border-radius:4px; cursor:pointer; font-weight:800; font-size:8px;">COPIAR PROMPT</button>
-                </div>
-            </div>
-
-            <div class="card">
-                <label>📋 CHECKLIST DE REQUISITOS</label>
-                <div class="checklist-container" id="checklist">
-                    <label class="check-item"><input type="checkbox" id="ck_exp"> Experiencia</label>
-                    <label class="check-item"><input type="checkbox" id="ck_fin"> Financiero</label>
-                    <label class="check-item"><input type="checkbox" id="ck_ind"> Indicadores</label>
-                    <label class="check-item"><input type="checkbox" id="ck_vis"> Visita Técnica</label>
-                    <label class="check-item"><input type="checkbox" id="ck_gar"> Garantías</label>
-                    <label class="check-item"><input type="checkbox" id="ck_ris"> Riesgos</label>
-                </div>
+    <div>
+        <div class="card">
+            <label>1. PEGAR RESULTADO DE IA</label>
+            <textarea id="f_raw" rows="15" placeholder="Pega el análisis aquí..." oninput="autoScan()"></textarea>
+            <button class="btn-magic" onclick="autoScan()">AUTO-LLENADO INTELIGENTE <i class="fas fa-robot"></i></button>
+            <div style="background:var(--azul-p); color:#fff; padding:12px; border-radius:10px; font-size:10px;">
+                <p id="pText">"Analiza bajo los 13 puntos SIEL. Divide en: RESUMEN, HALLAZGOS POR PUNTO, ALERTAS CRÍTICAS y RECOMENDACIONES DE GANANCIA."</p>
+                <button onclick="navigator.clipboard.writeText(document.getElementById('pText').innerText); alert('Copiado');" style="background:var(--oro); border:none; padding:5px; border-radius:4px; font-weight:800; cursor:pointer; margin-top:5px;">COPIAR PROMPT</button>
             </div>
         </div>
+    </div>
 
-        <div>
-            <div class="card">
-                <label>IDENTIFICACIÓN</label>
+    <div>
+        <div class="card">
+            <label>IDENTIFICACIÓN</label>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:15px;">
                 <input type="text" id="f_nom" placeholder="Proyecto">
-                <input type="text" id="f_ent" placeholder="Entidad" style="margin-top:5px">
-                
-                <label style="margin-top:15px">🧠 RESUMEN EJECUTIVO AUTOMÁTICO</label>
-                <textarea id="f_resumen" rows="3"></textarea>
-                
-                <div class="alert-group">
-                    <div class="alert-card alert-red"><label style="color:var(--critico)">🔴 CRÍTICAS</label><textarea id="f_a_red" rows="4"></textarea></div>
-                    <div class="alert-card alert-orange"><label style="color:var(--importante)">🟡 IMPORTANTES</label><textarea id="f_a_org" rows="4"></textarea></div>
-                    <div class="alert-card alert-blue"><label style="color:var(--observacion)">🔵 MEJORAS</label><textarea id="f_a_blu" rows="4"></textarea></div>
-                </div>
+                <input type="text" id="f_ent" placeholder="Entidad">
             </div>
+            <label>🧠 RESUMEN EJECUTIVO (GERENCIA)</label>
+            <textarea id="f_res" rows="3"></textarea>
+            
+            <label style="margin-top:15px">⚠️ ALERTAS Y RIESGOS</label>
+            <textarea id="f_alertas" rows="5" placeholder="Críticas, Importantes y Observaciones..."></textarea>
+
+            <label style="margin-top:15px">📈 ESTRATEGIA PARA GANAR (RECOMENDACIONES)</label>
+            <textarea id="f_estrat" rows="5" placeholder="¿Qué debe hacer el cliente para ganar?"></textarea>
         </div>
     </div>
 
-    <button class="btn-premium" onclick="exportSIELPDF()"><i class="fas fa-file-pdf"></i> GENERAR INFORME PROFESIONAL V10</button>
+    <button class="btn-premium" onclick="exportSIEL()">GENERAR INFORME DE AUDITORÍA PROFESIONAL (PDF)</button>
 </div>
 
 <script>
-    // MOTOR DE ESCANEO AUTOMÁTICO (Parsing)
-    function autoScan() {
-        const text = document.getElementById('f_raw').value;
-        if(!text) return;
-
-        // 1. Detectar Decisión
-        if(text.includes("NOGO") || text.includes("NO GO") || text.includes("NO VIABLE")) document.getElementById('f_dec').value = "NOGO";
-        else if(text.includes("CONDICIONADO") || text.includes("DUDOSO")) document.getElementById('f_dec').value = "COND";
-        else if(text.includes("GO") || text.includes("VIABLE")) document.getElementById('f_dec').value = "GO";
-        updateColors();
-
-        // 2. Extraer Resumen (Busca las primeras líneas o palabras clave)
-        const resMatch = text.match(/(?:RESUMEN|Conclusión ejecutiva|En resumen):?\s*([\s\S]*?)(?=\d\.|ALERTAS|HALLAZGOS)/i);
-        if(resMatch) document.getElementById('f_resumen').value = resMatch[1].trim().substring(0, 250);
-
-        // 3. Extraer Alertas por categorías
-        const redMatch = text.match(/(?:Críticas|Rojo|CRÍTICAS|Alta prioridad):?\s*([\s\S]*?)(?=Amarillo|Naranja|Importantes|Azul|Mejoras|3\.)/i);
-        if(redMatch) document.getElementById('f_a_red').value = redMatch[1].trim();
-
-        const orgMatch = text.match(/(?:Importantes|Naranja|Mediana):?\s*([\s\S]*?)(?=Azul|Mejoras|Baja|3\.)/i);
-        if(orgMatch) document.getElementById('f_a_org').value = orgMatch[1].trim();
-
-        const bluMatch = text.match(/(?:Mejoras|Azul|Observaciones|Baja):?\s*([\s\S]*?)(?=ANÁLISIS|FIN)/i);
-        if(bluMatch) document.getElementById('f_a_blu').value = bluMatch[1].trim();
-
-        // 4. Auto-Checklist (Sincronización Inteligente)
-        document.getElementById('ck_exp').checked = text.toLowerCase().includes("experiencia");
-        document.getElementById('ck_fin').checked = text.toLowerCase().includes("financiero");
-        document.getElementById('ck_ind').checked = text.toLowerCase().includes("indicador");
-        document.getElementById('ck_vis').checked = text.toLowerCase().includes("visita");
-        document.getElementById('ck_gar').checked = text.toLowerCase().includes("garantía") || text.toLowerCase().includes("póliza");
-        document.getElementById('ck_ris').checked = text.toLowerCase().includes("riesgo");
-
-        // 5. Motivo
-        const motMatch = text.match(/(?:Motivo|Porque|Razón):?\s*([\s\S]*?)(?=\n)/i);
-        if(motMatch) document.getElementById('f_motivo').value = motMatch[1].trim();
-    }
-
     function updateColors() {
         const d = document.getElementById('f_dec').value;
         const h = document.getElementById('hero_box');
-        if(d === 'GO') h.style.borderColor = '#10b981';
-        else if(d === 'COND') h.style.borderColor = '#f59e0b';
-        else h.style.borderColor = '#e11d48';
+        h.style.borderColor = (d === 'GO') ? '#10b981' : (d === 'COND' ? '#f59e0b' : '#e11d48');
     }
 
-    function exportSIELPDF() {
+    function autoScan() {
+        const text = document.getElementById('f_raw').value;
+        if(!text) return;
+        
+        // Detección de decisión
+        if(/NO GO|NOGO|NO VIABLE/i.test(text)) document.getElementById('f_dec').value = "NOGO";
+        else if(/CONDICIONADO|DUDOSO/i.test(text)) document.getElementById('f_dec').value = "COND";
+        else document.getElementById('f_dec').value = "GO";
+        updateColors();
+
+        // Mapeo de campos (Buscando encabezados comunes de la IA)
+        const parts = text.split(/\d\./);
+        document.getElementById('f_res').value = (text.match(/RESUMEN:?([\s\S]*?)(?=\n\n|\d\.|ALERTAS)/i) || ["",""])[1].trim();
+        document.getElementById('f_alertas').value = (text.match(/ALERTAS:?([\s\S]*?)(?=\n\n|RECOMENDACIONES|ESTRATEGIA)/i) || ["",""])[1].trim();
+        document.getElementById('f_estrat').value = (text.match(/RECOMENDACIONES|ESTRATEGIA:?([\s\S]*?)$/i) || ["",""])[1].trim();
+    }
+
+    function exportSIEL() {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
-        // ... (Estructura de PDF mantenida de la V9.5)
-        const nom = (document.getElementById('f_nom').value || "PROCESO").toUpperCase();
-        doc.setFontSize(20); doc.text("REPORTE ESTRATÉGICO V10", 105, 20, {align:"center"});
-        doc.setFontSize(12); doc.text("PROYECTO: " + nom, 20, 40);
-        doc.text("DECISIÓN: " + document.getElementById('f_dec').value, 20, 50);
-        doc.text("RESUMEN:", 20, 65);
-        doc.setFontSize(10); doc.text(doc.splitTextToSize(document.getElementById('f_resumen').value, 170), 20, 75);
-        doc.save("SIEL_V10_Final.pdf");
+        const margin = 20;
+        const pageWidth = 210;
+        const contentWidth = pageWidth - (margin * 2);
+        let currentY = 20;
+
+        // Función para añadir texto con control de página
+        const addText = (text, size, style = "normal", color = [0, 0, 0]) => {
+            doc.setFont("helvetica", style);
+            doc.setFontSize(size);
+            doc.setTextColor(color[0], color[1], color[2]);
+            const lines = doc.splitTextToSize(text, contentWidth);
+            lines.forEach(line => {
+                if (currentY > 275) { doc.addPage(); currentY = 20; }
+                doc.text(line, margin, currentY);
+                currentY += (size * 0.5) + 2;
+            });
+            currentY += 5;
+        };
+
+        // PORTADA / ENCABEZADO
+        doc.setFillColor(6, 22, 36); doc.rect(0, 0, 210, 40, 'F');
+        doc.setTextColor(212, 175, 55); doc.setFontSize(18); doc.setFont("helvetica", "bold");
+        doc.text("REPORTE DE AUDITORÍA SIEL PRO", 105, 20, { align: "center" });
+        doc.setTextColor(255); doc.setFontSize(10); doc.text("BRICED CONSULTING | ESTRATEGIA Y LICITACIONES", 105, 28, { align: "center" });
+        
+        currentY = 50;
+        addText("1. IDENTIFICACIÓN Y DECISIÓN", 14, "bold", [12, 45, 72]);
+        addText("PROYECTO: " + document.getElementById('f_nom').value, 11);
+        addText("ENTIDAD: " + document.getElementById('f_ent').value, 11);
+        addText("ESTADO: " + document.getElementById('f_dec').options[document.getElementById('f_dec').selectedIndex].text, 12, "bold", [212, 175, 55]);
+        
+        currentY += 5;
+        addText("2. RESUMEN EJECUTIVO", 14, "bold", [12, 45, 72]);
+        addText(document.getElementById('f_res').value, 10);
+
+        currentY += 5;
+        addText("3. ALERTAS CRÍTICAS Y RIESGOS", 14, "bold", [12, 45, 72]);
+        addText(document.getElementById('f_alertas').value, 10);
+
+        currentY += 5;
+        addText("4. ESTRATEGIA SUGERIDA PARA GANAR", 14, "bold", [12, 45, 72]);
+        addText(document.getElementById('f_estrat').value, 10);
+
+        currentY += 5;
+        addText("5. ANÁLISIS DETALLADO (INPUT COMPLETO)", 14, "bold", [12, 45, 72]);
+        addText(document.getElementById('f_raw').value, 9);
+
+        // PIE DE PÁGINA
+        const totalPages = doc.internal.getNumberOfPages();
+        for (let i = 1; i <= totalPages; i++) {
+            doc.setPage(i);
+            doc.setFontSize(8); doc.setTextColor(150);
+            doc.text(`Briced Consulting © 2026 - Informe SIEL PRO - Página ${i} de ${totalPages}`, 105, 290, {align:"center"});
+        }
+
+        doc.save(`Auditoria_Briced_${document.getElementById('f_nom').value.substring(0,15)}.pdf`);
     }
 </script>
 </body>
