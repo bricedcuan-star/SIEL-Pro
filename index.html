@@ -91,7 +91,7 @@ Texto del pliego / Términos de Referencia:
 
                 setDatos({
                     ...datos,
-                    analisisExtraido: {
+                    analExtraido: {
                         experiencia,
                         viabilidad: "Análisis de viabilidad actualizado por IA",
                         riesgos,
@@ -111,53 +111,85 @@ Texto del pliego / Términos de Referencia:
                 }
             };
 
-            // Función nativa para generar y descargar el reporte de SIEL PRO como documento
-            const descargarInformePDF = () => {
-                const informeHTML = `<!DOCTYPE html>
+            const imprimirOGuardarPDF = () => {
+                // Abre una ventana dedicada a impresión en formato PDF
+                const ventanaReporte = window.open('', '_blank');
+                
+                const htmlContent = `<!DOCTYPE html>
                 <html lang="es">
                 <head>
                     <meta charset="UTF-8">
                     <title>Informe de Viabilidad - SIEL PRO</title>
                     <style>
-                        body { font-family: 'Helvetica Neue', Arial, sans-serif; color: #333; line-height: 1.6; padding: 20px; }
-                        h1 { color: #0C447C; border-bottom: 2px solid #0C447C; padding-bottom: 5px; }
-                        h2 { color: #1D9E75; margin-top: 20px; }
-                        .box { background: #F8FAFC; border: 1px solid #CBD5E1; padding: 15px; border-radius: 6px; margin-top: 10px; }
-                        .footer { margin-top: 40px; font-size: 9px; color: #64748B; border-top: 1px solid #E2E8F0; padding-top: 10px; text-align: justify; }
+                        body { 
+                            font-family: 'Helvetica Neue', Arial, sans-serif; 
+                            color: #333; 
+                            line-height: 1.6; 
+                            padding: 30px; 
+                            max-width: 800px; 
+                            margin: 0 auto; 
+                        }
+                        h1 { color: #0C447C; border-bottom: 2px solid #0C447C; padding-bottom: 5px; font-size: 18pt; }
+                        h2 { color: #1D9E75; margin-top: 25px; font-size: 13pt; }
+                        p { font-size: 10pt; }
+                        .box { 
+                            background: #F8FAFC; 
+                            border: 1px solid #CBD5E1; 
+                            padding: 20px; 
+                            border-radius: 6px; 
+                            margin-top: 15px; 
+                        }
+                        .disclaimer { 
+                            margin-top: 50px; 
+                            font-size: 8pt; 
+                            color: #64748B; 
+                            border-top: 1px solid #E2E8F0; 
+                            padding-top: 15px; 
+                            text-align: justify; 
+                        }
+                        .btn-print {
+                            background-color: #0C447C; 
+                            color: white; 
+                            padding: 10px 20px; 
+                            border: none; 
+                            border-radius: 5px; 
+                            cursor: pointer; 
+                            font-weight: bold;
+                            margin-bottom: 20px;
+                        }
+                        @media print {
+                            .btn-print { display: none; }
+                        }
                     </style>
                 </head>
                 <body>
+                    <button class="btn-print" onclick="window.print()">🖨️ Imprimir / Guardar como PDF</button>
+
                     <h1>SIEL PRO - Informe de Viabilidad de Proceso</h1>
+                    
                     <h2>1. Información del Proceso</h2>
                     <p><strong>Entidad:</strong> ${datos.entidad || 'No especificada'}</p>
                     <p><strong>Objeto:</strong> ${datos.objeto || 'No especificado'}</p>
-                    <p><strong>Presupuesto:</strong> $${datos.presupuesto || 0}</p>
+                    <p><strong>Presupuesto Oficial:</strong> $${datos.presupuesto || 0}</p>
                     <p><strong>Tipo de proceso:</strong> ${datos.tipoProceso}</p>
 
                     <h2>2. Resumen del Análisis</h2>
                     <div class="box">
-                        <p><strong>Visita Técnica Obligatoria:</strong> ${datos.analisisExtraido?.visitaTecnicaObligatoria || 'No especificado'}</p>
-                        <p><strong>Manifestación de Interés:</strong> ${datos.analisisExtraido?.manifestacionInteres || 'No especificado'}</p>
-                        <p><strong>Experiencia / Filtros:</strong> ${datos.analisisExtraido?.experiencia || 'No especificado'}</p>
-                        <p><strong>Riesgos Detectados:</strong> ${datos.analisisExtraido?.riesgos || 'Ninguno'}</p>
+                        <p><strong>Visita Técnica Obligatoria:</strong> ${datos.analExtraido?.visitaTecnicaObligatoria || 'No especificado'}</p>
+                        <p><strong>Manifestación de Interés:</strong> ${datos.analExtraido?.manifestacionInteres || 'No especificado'}</p>
+                        <p><strong>Experiencia / Filtros Excluyentes:</strong> ${datos.analExtraido?.experiencia || 'No especificado'}</p>
+                        <p><strong>Trampas / Riesgos Detectados:</strong> ${datos.analExtraido?.riesgos || 'Ninguno'}</p>
                     </div>
 
-                    <div class="footer">
+                    <div class="disclaimer">
                         <strong>AVISO LEGAL:</strong> Este informe es de carácter estrictamente informativo y fue generado como una herramienta de apoyo mediante Inteligencia Artificial. La decisión final para la presentación de la oferta, así como la verificación de los requisitos habilitantes, es responsabilidad única y exclusiva del proponente. El usuario puede apoyarse en la información contenida en este documento bajo su propia responsabilidad, sin eximir la necesidad de revisar exhaustivamente los pliegos oficiales.
                     </div>
                 </body>
                 </html>`;
 
-                const blob = new Blob([informeHTML], { type: "text/html;charset=utf-8" });
-                const url = URL.createObjectURL(blob);
-                
-                const a = document.createElement("a");
-                a.href = url;
-                a.download = `Informe-Viabilidad-${datos.entidad || 'Proceso'}.html`;
-                a.click();
-                
-                URL.revokeObjectURL(url);
-                alert("La descarga del informe ha comenzado. Recuerde revisar la información oficial.");
+                ventanaReporte.document.open();
+                ventanaReporte.document.write(htmlContent);
+                ventanaReporte.document.close();
             };
 
             const evaluarMotorDecision = () => {
@@ -347,8 +379,10 @@ Texto del pliego / Términos de Referencia:
                                                     let n = [...datos.miembros]; n[i].capitalRequisito = e.target.value; setDatos({...datos, miembros: n});
                                                 }} /></td>
                                                 <td>
-                                                    <select value={m.cumpleCapital} onChange={e => {
-                                                        let n = [...datos.miembros]; n[i].cumpleCapital = e.target.value; setDatos({...datos, miembros: n});
+                                                    <select value={datos.miembros[0].cumpleCapital} onChange={e => {
+                                                        let n = [...datos.miembros];
+                                                        n[0].cumpleCapital = e.target.value;
+                                                        setDatos({...datos, miembros: n});
                                                     }}>
                                                         <option value="si">Sí</option>
                                                         <option value="no">No</option>
@@ -359,15 +393,6 @@ Texto del pliego / Términos de Referencia:
                                     ))}
                                 </tbody>
                             </table>
-                            <label>Validación de filtros excluyentes (Experiencia y Capacidad K):</label>
-                            <select value={datos.miembros[0].cumpleFiltros} onChange={e => {
-                                let n = [...datos.miembros];
-                                n[0].cumpleFiltros = e.target.value;
-                                setDatos({...datos, miembros: n});
-                            }}>
-                                <option value="si">Cumple con toda la experiencia y Capacidad K</option>
-                                <option value="no">Falla en experiencia o Capacidad K insuficiente</option>
-                            </select>
 
                             <h3>Motor de Decisión e IA</h3>
                             <div className="ia-box" style={{ borderColor: evaluacion.estado === 'NO GO' ? '#ff9999' : '#91d5ff' }}>
@@ -412,17 +437,17 @@ Texto del pliego / Términos de Referencia:
 
                             <h3>Resumen Automatizado del Pliego</h3>
                             <div className="ia-box">
-                                <p><strong>Visita Técnica Obligatoria:</strong> {datos.analisisExtraido?.visitaTecnicaObligatoria || "No especificado"}</p>
-                                <p><strong>Manifestación de Interés:</strong> {datos.analisisExtraido?.manifestacionInteres || "No especificado"}</p>
-                                <p><strong>Experiencia / Filtros Excluyentes:</strong> {datos.analisisExtraido?.experiencia || "No especificado"}</p>
-                                <p><strong>Trampas / Riesgos Detectados:</strong> {datos.analisisExtraido?.riesgos || "Ninguno"}</p>
+                                <p><strong>Visita Técnica Obligatoria:</strong> {datos.analExtraido?.visitaTecnicaObligatoria || "No especificado"}</p>
+                                <p><strong>Manifestación de Interés:</strong> {datos.analExtraido?.manifestacionInteres || "No especificado"}</p>
+                                <p><strong>Experiencia / Filtros Excluyentes:</strong> {datos.analExtraido?.experiencia || "No especificado"}</p>
+                                <p><strong>Trampas / Riesgos Detectados:</strong> {datos.analExtraido?.riesgos || "Ninguno"}</p>
 
-                                <button className="btn" style={{backgroundColor: '#0C447C', marginTop: '15px', width: '100%'}} onClick={descargarInformePDF}>
-                                    📄 Descargar Informe en PDF
+                                <button className="btn" style={{backgroundColor: '#0C447C', marginTop: '15px', width: '100%'}} onClick={imprimirOGuardarPDF}>
+                                    🖨️ Imprimir / Guardar en PDF
                                 </button>
                                 
                                 <p className="disclaimer-text">
-                                    <strong>AVISO LEGAL:</strong> Este informe es de carácter estrictamente informativo y fue generado como una herramienta de apoyo mediante Inteligencia Artificial. La decisión final para la presentación de la oferta, así como la verificación de los requisitos habilitantes, es responsabilidad única y exclusiva del proponente. El usuario puede apoyarse en la información contenida en este documento bajo su propia responsabilidad, sin eximir la necesidad de revisar exhaustivamente los pliegos originales.
+                                    <strong>AVISO LEGAL:</strong> Este informe es de carácter estrictamente informativo y fue generado como una herramienta de apoyo mediante Inteligencia Artificial. La decisión final para la presentación de la oferta, así como la verificación de los requisitos habilitantes, es responsabilidad única y exclusiva del proponente.
                                 </p>
                             </div>
                         </div>
