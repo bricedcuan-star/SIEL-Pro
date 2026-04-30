@@ -4,72 +4,85 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIEL - Sistema de Evaluación Inteligente de Licitaciones</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
+        /* Puedes modificar o borrar estos estilos básicos para usar los tuyos */
         body {
-            background-color: #f3f4f6;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: Arial, sans-serif;
+            margin: 20px;
         }
-        .card {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+        #resultadoCaja {
+            padding: 15px;
+            margin-top: 15px;
+            text-align: center;
+            font-weight: bold;
+            display: none;
         }
     </style>
 </head>
-<body class="p-6">
+<body>
 
-    <div class="max-w-4xl mx-auto">
-        <header class="mb-8 text-center">
-            <h1 class="text-4xl font-extrabold text-blue-900">🧱 SIEL</h1>
-            <p class="text-gray-600 mt-2">Sistema de Evaluación Inteligente de Licitaciones - Fase 1 (Viabilidad)</p>
+    <div class="container">
+        <header>
+            <h1>🧱 SIEL</h1>
+            <p>Sistema de Evaluación Inteligente de Licitaciones - Fase 1 (Viabilidad)</p>
         </header>
 
-        <div class="card p-6 mb-6">
-            <h2 class="text-xl font-bold text-gray-800 mb-4">🔗 Fuentes de Búsqueda Oficiales</h2>
-            <ul class="list-disc pl-6 space-y-2 text-blue-600">
-                <li><a href="https://bogota.gov.co/asi-vamos/contratos-y-obras/participa" target="_blank" class="hover:underline">Alcaldía Mayor de Bogotá - Contratos</a></li>
-                <li><a href="https://leydepropiedadhorizontal.org/category/convocatorias/" target="_blank" class="hover:underline">Convocatorias Propiedad Horizontal</a></li>
-                <li><a href="#" class="text-gray-600 cursor-not-allowed">Secop I (Consulta directa)</a></li>
-                <li><a href="#" class="text-gray-600 cursor-not-allowed">Secop II (Consulta directa)</a></li>
+        <section>
+            <h2>🔗 Fuentes de Búsqueda Oficiales</h2>
+            <ul>
+                <li><a href="https://bogota.gov.co/asi-vamos/contratos-y-obras/participa" target="_blank">Alcaldía Mayor de Bogotá - Contratos</a></li>
+                <li><a href="https://leydepropiedadhorizontal.org/category/convocatorias/" target="_blank">Convocatorias Propiedad Horizontal</a></li>
+                <li>Secop I</li>
+                <li>Secop II</li>
             </ul>
-        </div>
+        </section>
 
-        <div class="card p-6">
-            <h2 class="text-xl font-bold text-gray-800 mb-4">📋 Motor de Decisión (Fase 1)</h2>
+        <section>
+            <h2>📋 Motor de Decisión (Fase 1)</h2>
             
-            <div class="mb-4">
-                <label class="block text-sm font-medium text-gray-700">Nombre del proceso o ID del pliego:</label>
-                <input type="text" id="nombrePliego" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="Ej: Licitación No. 001">
+            <div class="form-group">
+                <label>Nombre del proceso o ID del pliego:</label>
+                <input type="text" id="nombrePliego" placeholder="Ej: Licitación No. 001">
             </div>
 
-            <div class="mb-4">
-                <label class="block text-sm font-medium text-gray-700">Nivel de riesgo estimado:</label>
-                <select id="riesgoPliego" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            <div class="form-group">
+                <label>Nivel de riesgo estimado:</label>
+                <select id="riesgoPliego">
                     <option value="bajo">Bajo (Sin restricciones evidentes)</option>
                     <option value="medio">Medio (Requiere condiciones específicas)</option>
                     <option value="alto">Alto (Restricciones críticas / incumplimientos)</option>
                 </select>
             </div>
 
-            <div class="mb-4">
-                <label class="block text-sm font-medium text-gray-700">¿Cumple con los requisitos mínimos?</label>
-                <select id="cumpleRequisitos" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            <div class="form-group">
+                <label>¿Cumple con los requisitos mínimos?</label>
+                <select id="cumpleRequisitos">
                     <option value="si">Sí, cumple todos los requisitos</option>
                     <option value="condicionado">Cumple parcialmente (Con observaciones)</option>
                     <option value="no">No cumple con los requisitos</option>
                 </select>
             </div>
 
-            <button onclick="evaluarLicitacion()" class="w-full bg-blue-600 text-white p-3 rounded-md font-semibold hover:bg-blue-700 transition duration-200 cursor-pointer">
-                Ejecutar Análisis
-            </button>
-        </div>
+            <button onclick="evaluarLicitacion()">Ejecutar Análisis</button>
+        </section>
 
-        <div id="resultadoSeccion" class="card p-6 mt-6 hidden">
-            <h2 class="text-xl font-bold text-gray-800 mb-2">Resultados del Análisis</h2>
-            <div id="resultadoCaja" class="p-4 rounded-md text-white text-center font-bold text-lg"></div>
-        </div>
+        <div id="resultadoCaja"></div>
     </div>
 
     <script>
@@ -78,71 +91,24 @@
             const riesgo = document.getElementById('riesgoPliego').value;
             const cumple = document.getElementById('cumpleRequisitos').value;
             
-            const resultadoSeccion = document.getElementById('resultadoSeccion');
             const resultadoCaja = document.getElementById('resultadoCaja');
-
-            resultadoSeccion.classList.remove('hidden');
+            resultadoCaja.style.display = 'block';
 
             // Motor de decisión lógica
             if (cumple === 'no' || riesgo === 'alto') {
-                resultadoCaja.className = 'p-4 rounded-md text-center font-bold text-lg bg-red-600 text-white';
+                resultadoCaja.style.backgroundColor = '#ffcccc';
+                resultadoCaja.style.color = '#990000';
                 resultadoCaja.innerHTML = 'ESTADO: NO GO — Proceso inviable, evitar pérdida de recursos.';
             } else if (cumple === 'condicionado' || riesgo === 'medio') {
-                resultadoCaja.className = 'p-4 rounded-md text-center font-bold text-lg bg-yellow-500 text-gray-900';
-                resultadoCaja.innerHTML = 'ESTADO: GO CONDICIONADO — Requiere validación de observaciones y riesgos.';
+                resultadoCaja.style.backgroundColor = '#fff2cc';
+                resultadoCaja.style.color = '#996600';
+                resultadoCaja.innerHTML = 'ESTADO: GO CONDIC — GO CONDICIONADO — Requiere validación de observaciones y riesgos.';
             } else {
-                resultadoCaja.className = 'p-4 rounded-md text-center font-bold text-lg bg-green-600 text-white';
+                resultadoCaja.style.backgroundColor = '#ccffcc';
+                resultadoCaja.style.color = '#006600';
                 resultadoCaja.innerHTML = 'ESTADO: GO — Proceso viable, proceder con el análisis financiero.';
             }
         }
     </script>
-</body>
-</html>
-    <div class="card bloqueado" id="fase2">
-        <h3>🟡 Fase 2: Plan Esencial (Rentabilidad)</h3>
-        <label>Margen de ganancia estimado (%)</label>
-        <input type="number" id="f_margen" placeholder="Ej. 12" oninput="evaluarFase2()">
-        <p id="msj_fase2" style="font-size: 12px; color: #475569;">Bloqueado hasta completar la fase 1.</p>
-    </div>
-
-    <div class="card bloqueado" id="fase3">
-        <h3>🔴 Fase 3: Plan Premium (Estratégico)</h3>
-        <label>Análisis de contratos y riesgos operacionales</label>
-        <p style="font-size: 12px; color: #475569;">Funcionalidad disponible en versión Premium.</p>
-        <button onclick="alert('Redirigiendo a pasarela de pago...');">ACTUALIZAR AHORA</button>
-    </div>
-
-<script>
-    function evaluarFase1() {
-        const texto = document.getElementById('f_raw').value;
-        const msj = document.getElementById('msj_fase1');
-        
-        if (texto.length > 10) {
-            msj.innerText = "✅ Viabilidad procesada. Ahora puedes llenar el margen en la Fase 2.";
-            
-            // Desbloquear fase 2
-            const fase2 = document.getElementById('fase2');
-            fase2.classList.remove('bloqueado');
-            document.getElementById('msj_fase2').innerText = "Listo para ingresar datos financieros.";
-        } else {
-            msj.innerText = "Escribe al menos 10 caracteres para continuar.";
-        }
-    }
-
-    function evaluarFase2() {
-        const margen = document.getElementById('f_margen').value;
-        const msj = document.getElementById('msj_fase2');
-        
-        if (margen >= 10) {
-            msj.innerText = "💰 Rentabilidad aprobada (Margen ≥ 10%). ¡Fase Premium desbloqueada!";
-            
-            // Desbloquear fase 3
-            document.getElementById('fase3').classList.remove('bloqueado');
-        } else if (margen > 0) {
-            msj.innerText = "⚠️ Alerta: Margen bajo. (Aceptable para modo básico, pero riesgoso).";
-        }
-    }
-</script>
-
 </body>
 </html>
