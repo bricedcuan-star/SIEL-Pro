@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>SIEL PRO V12.5 | ESTRATEGIA PARA GANAR</title>
+    <title>SIEL PRO V13.0 | ESTRATEGIA PARA GANAR - EDICIÓN FINAL</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;800&display=swap" rel="stylesheet">
@@ -102,6 +102,28 @@
             font-size: 10px; 
         }
 
+        .checklist-container { 
+            background: #f1f5f9; 
+            padding: 15px; 
+            border-radius: 15px; 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 10px; 
+            margin-top: 10px;
+        }
+        .check-item { 
+            background: white; 
+            padding: 10px; 
+            border-radius: 8px; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            font-size: 12px; 
+            font-weight: 600; 
+            border: 1px solid #e2e8f0; 
+        }
+        .check-item input { width: 18px; height: 18px; }
+
         label { 
             display: block; 
             font-weight: 800; 
@@ -154,7 +176,7 @@
 <body>
 
 <header>
-    <div><span style="font-weight: 800; font-size: 24px;">SIEL PRO</span> <span style="color: var(--oro); font-weight: 300;">V12.5</span></div>
+    <div><span style="font-weight: 800; font-size: 24px;">SIEL PRO</span> <span style="color: var(--oro); font-weight: 300;">V13.0</span></div>
     <div style="text-align: right; font-size: 12px;">BRICED CONSULTING<br><b>INTELIGENCIA ESTRATÉGICA PARA GANAR</b></div>
 </header>
 
@@ -188,6 +210,18 @@
                 <button onclick="navigator.clipboard.writeText(document.getElementById('pText').innerText); alert('Copiado');" style="background:var(--oro); border:none; padding:5px 10px; border-radius:5px; cursor:pointer; margin-top:8px; font-weight:800; font-size:9px;">COPIAR PROMPT MAESTRO</button>
             </div>
         </div>
+        
+        <div class="card">
+            <label>📋 CHECKLIST DE ALISTAMIENTO</label>
+            <div class="checklist-container">
+                <label class="check-item"><input type="checkbox" id="ck_exp"> Experiencia</label>
+                <label class="check-item"><input type="checkbox" id="ck_fin"> Financiero</label>
+                <label class="check-item"><input type="checkbox" id="ck_ind"> Indicadores</label>
+                <label class="check-item"><input type="checkbox" id="ck_vis"> Visita Técnica</label>
+                <label class="check-item"><input type="checkbox" id="ck_gar"> Garantías</label>
+                <label class="check-item"><input type="checkbox" id="ck_ris"> Riesgos</label>
+            </div>
+        </div>
     </div>
 
     <div>
@@ -214,7 +248,7 @@
         </div>
     </div>
 
-    <button class="btn-premium" onclick="exportSIELPDF()"><i class="fas fa-file-pdf"></i> GENERAR INFORME PROFESIONAL (V12.5)</button>
+    <button class="btn-premium" onclick="exportSIELPDF()"><i class="fas fa-file-pdf"></i> GENERAR INFORME PROFESIONAL (V13.0)</button>
 </div>
 
 <script>
@@ -244,7 +278,7 @@
         const resMatch = text.match(/(?:RESUMEN EJECUTIVO|Conclusión ejecutiva|RESUMEN):?\s*([\s\S]*?)(?=\n\n|\d\.|ALERTAS|HALLAZGOS)/i);
         if(resMatch) document.getElementById('f_res').value = resMatch[1].trim().substring(0, 250);
 
-        // 3. Extraer Alertas (Reagrupamiento inteligente de lo que impacta la oferta)
+        // 3. Extraer Alertas
         const alertsMatch = text.match(/(?:ALERTAS CRÍTICAS|ALERTAS|HALLAZGOS):?\s*([\s\S]*?)(?=ESTRATEGIA|RECOMENDACIONES|CONCEPTO)/i);
         if(alertsMatch) document.getElementById('f_alertas').value = alertsMatch[1].trim();
 
@@ -252,8 +286,16 @@
         const stratMatch = text.match(/(?:ESTRATEGIA|RECOMENDACIONES PARA GANAR|CLAVE PARA GANAR):?\s*([\s\S]*?)$/i);
         if(stratMatch) document.getElementById('f_estrat').value = stratMatch[1].trim();
         
-        // 5. Motivo corto de la decisión
-        document.getElementById('f_motivo').value = "Proceso procesado y listo para validación de estrategia.";
+        // 5. Checkbox Inteligente
+        document.getElementById('ck_exp').checked = text.toLowerCase().includes("experiencia");
+        document.getElementById('ck_fin').checked = text.toLowerCase().includes("financiero");
+        document.getElementById('ck_ind').checked = text.toLowerCase().includes("indicador");
+        document.getElementById('ck_vis').checked = text.toLowerCase().includes("visita");
+        document.getElementById('ck_gar').checked = text.toLowerCase().includes("garantía") || text.toLowerCase().includes("póliza");
+        document.getElementById('ck_ris').checked = text.toLowerCase().includes("riesgo");
+
+        // 6. Motivo corto
+        document.getElementById('f_motivo').value = "Proceso escaneado y listo para validación de estrategia.";
     }
 
     function exportSIELPDF() {
@@ -263,7 +305,6 @@
         const nom = (document.getElementById('f_nom').value || "PROCESO").toUpperCase();
         const ent = (document.getElementById('f_ent').value || "ENTIDAD").toUpperCase();
         const dec = document.getElementById('f_dec').options[document.getElementById('f_dec').selectedIndex].text;
-        const mot = document.getElementById('f_motivo').value;
         const res = document.getElementById('f_res').value;
         const alertas = document.getElementById('f_alertas').value;
         const estrat = document.getElementById('f_estrat').value;
