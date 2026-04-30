@@ -442,7 +442,33 @@ Texto del pliego / Términos de Referencia:
                                 <p><strong>Experiencia / Filtros Excluyentes:</strong> {datos.analExtraido?.experiencia || "No especificado"}</p>
                                 <p><strong>Riesgos / Viabilidad:</strong> {datos.analExtraido?.viabilidad || "No especificado"}</p>
                                 <p><strong>Trampas / Riesgos Detectados:</strong> {datos.analExtraido?.riesgos || "Ninguno"}</p>
+function obtenerRequisitosFase1() {
+  const datosFase1 = {
+    proyecto: "Licitación PH-2024",
+    checklistDocumentacion: [
+      {
+        tipo: "Financiero",
+        documento: "Estados financieros (Endeudamiento <= 50%)"
+      },
+      {
+        tipo: "Experiencia",
+        documento: "5 certificaciones de ejecución de fachadas"
+      },
+      {
+        tipo: "Técnico",
+        documento: "Soportes del Director de Obra"
+      }
+    ],
+    cronogramaYCondiciones: [
+      "Visita técnica obligatoria",
+      "Certificación de alturas vigente",
+      "Antigüedad mínima de 10 años"
+    ]
+  };
 
+  return datosFase1;
+}
+                                
                                 <button className="btn" style={{backgroundColor: '#0C447C', marginTop: '15px', width: '100%'}} onClick={imprimirOGuardarPDF}>
                                     🖨️ Imprimir / Guardar en PDF
                                 </button>
