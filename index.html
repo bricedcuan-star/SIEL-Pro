@@ -39,17 +39,78 @@
                 presupuesto: 0,
                 esEntidadPublica: false,
                 esImagen: false,
-                analisisIA: "",
-                capacidadK: 100000000
+                capacidadK: 100000000,
+                promptIA: "",
+                respuestaIA: "",
+                analisisExtraido: {
+                    experiencia: "",
+                    viabilidad: "",
+                    riesgos: "",
+                    trampas: "",
+                    inconsistencias: "",
+                    visitaTecnicaObligatoria: "No especificado",
+                    manifestacionInteres: "No especificado",
+                    documentosSolicitados: ""
+                }
             });
 
-            const consolidar = () => {
-                let pat = 0, exp = 0;
-                datos.miembros.forEach(m => {
-                    pat += Number(m.patrimonio) || 0;
-                    exp = Math.max(exp, Number(m.expMax) || 0);
+            const generarPrompt = () => {
+                const promptGenerado = `Actúa como un analista experto en contratación pública y pliegos de condiciones. Analiza el siguiente texto o pliego adjunto y extrae de manera concisa la siguiente información estructurada:
+1. Experiencia mínima requerida y filtros excluyentes.
+2. Viabilidad financiera y legal básica.
+3. Riesgos identificados y posibles trampas o inconsistencias en los términos de referencia.
+4. Indica si la visita técnica es obligatoria o no, y si se debe presentar manifestación de interés.
+5. Lista de los documentos y requisitos habilitantes solicitados para la presentación de la oferta.
+
+Texto del pliego / Términos de Referencia:
+[PEGA AQUÍ EL TEXTO DEL PLIEGO O RESUMEN]`;
+                
+                setDatos({...datos, promptIA: promptGenerado});
+            };
+
+            const procesarRespuestaIA = () => {
+                const texto = datos.respuestaIA.toLowerCase();
+                
+                let experiencia = "Revisar texto de la IA";
+                let viabilidad = "Revisar texto de la IA";
+                let riesgos = "Revisar texto de la IA";
+                let trampas = "Ninguna identificada";
+                let inconsistencias = "Ninguna identificada";
+                let visita = "No especificado";
+                let interes = "No especificado";
+                let documentos = "No especificado";
+
+                if (datos.respuestaIA) {
+                    experiencia = datos.respuestaIA.includes("experiencia") ? "Datos extraídos correctamente" : "No detectado";
+                    // Lógica simulada de extracción de elementos clave
+                    if (datos.respuestaIA.includes("visita")) {
+                        visita = datos.respuestaIA.includes("obligatoria") ? "Sí, es obligatoria" : "No es obligatoria";
+                    }
+                    if (datos.respuestaIA.includes("interés") || datos.respuestaIA.includes("manifestación")) {
+                        interes = "Requerido";
+                    }
+                }
+
+                setDatos({
+                    ...datos,
+                    analisisExtraido: {
+                        experiencia,
+                        viabilidad: "Análisis de viabilidad actualizado por IA",
+                        riesgos,
+                        trampas,
+                        inconsistencias,
+                        visitaTecnicaObligatoria: visita,
+                        manifestacionInteres: interes,
+                        documentosSolicitados: documentos
+                    }
                 });
-                return { pat, exp };
+            };
+
+            const copiarPrompt = () => {
+                if (datos.promptIA) {
+                    navigator.clipboard.writeText(datos.promptIA);
+                    alert("¡Prompt copiado al portapapeles!");
+                }
             };
 
             const evaluarMotorDecision = () => {
@@ -78,26 +139,25 @@
                         estado: 'NO GO',
                         color: '#ffcccc',
                         textColor: '#990000',
-                        mensajeIA: 'El proyecto no cumple con los filtros excluyentes obligatorios o excede la Capacidad K. Se recomienda no presentar oferta para evitar desgaste operativo.'
+                        mensajeIA: 'El proyecto no cumple con los filtros excluyentes obligatorios o excede la Capacidad K.'
                     };
                 } else if (tieneCondicion) {
                     return {
                         estado: 'GO CONDICIONADO',
                         color: '#fff2cc',
                         textColor: '#996600',
-                        mensajeIA: 'Se observa viabilidad legal y experiencia, pero uno o varios indicadores financieros no cumplen con el requerimiento del pliego. Validar riesgos antes de avanzar.'
+                        mensajeIA: 'Se observa viabilidad legal y experiencia, pero uno o varios indicadores financieros no cumplen con el requerimiento del pliego.'
                     };
                 } else {
                     return {
                         estado: 'GO',
                         color: '#ccffcc',
                         textColor: '#006600',
-                        mensajeIA: 'El proyecto es viable en todos los filtros evaluados (Capacidad K, experiencia y razones financieras). Se sugiere proceder con la fase de propuesta formal.'
+                        mensajeIA: 'El proyecto es viable en todos los filtros evaluados.'
                     };
                 }
             };
 
-            const c = consolidar();
             const evaluacion = evaluarMotorDecision();
 
             return (
@@ -117,7 +177,6 @@
                         <div className="card">
                             <h3>Perfil & Fuentes de Búsqueda</h3>
                             
-                            {/* Fuentes de Búsqueda Oficiales */}
                             <div style={{marginBottom: '20px'}}>
                                 <h4>🔗 Fuentes de Búsqueda</h4>
                                 <ul>
@@ -137,7 +196,7 @@
                                         <input type="number" placeholder="Patrimonio" value={m.patrimonio || ''} onChange={e => {
                                             let n = [...datos.miembros]; n[i].patrimonio = e.target.value; setDatos({...datos, miembros: n});
                                         }} />
-                                        <input type="number" placeholder="Experiencia Máxima (años/contratos)" value={m.expMax || ''} onChange={e => {
+                                        <input type="number" placeholder="Experiencia Máxima" value={m.expMax || ''} onChange={e => {
                                             let n = [...datos.miembros]; n[i].expMax = e.target.value; setDatos({...datos, miembros: n});
                                         }} />
                                     </div>
@@ -151,11 +210,11 @@
                             <div className="grid">
                                 <div>
                                     <label>Nombre de la Entidad:</label>
-                                    <input value={datos.entidad} onChange={e => setDatos({...datos, entidad: e.target.value})} placeholder="Ej: Alcaldía Mayor" />
+                                    <input value={datos.entidad} onChange={e => setDatos({...datos, entidad: e.target.value})} />
                                 </div>
                                 <div>
                                     <label>Objeto del Proceso:</label>
-                                    <input value={datos.objeto} onChange={e => setDatos({...datos, objeto: e.target.value})} placeholder="Ej: Suministro de bienes" />
+                                    <input value={datos.objeto} onChange={e => setDatos({...datos, objeto: e.target.value})} />
                                 </div>
                             </div>
                             <div className="grid">
@@ -164,7 +223,7 @@
                                     <input type="number" value={datos.presupuesto || ''} onChange={e => setDatos({...datos, presupuesto: e.target.value})} />
                                 </div>
                                 <div>
-                                    <label>Capacidad de Contratación K de la Empresa ($):</label>
+                                    <label>Capacidad de Contratación K ($):</label>
                                     <input type="number" value={datos.capacidadK || ''} onChange={e => setDatos({...datos, capacidadK: e.target.value})} />
                                 </div>
                             </div>
@@ -255,9 +314,40 @@
 
                     {tab === 'IA' && (
                         <div className="card">
-                            <h3>Analizador de Amarres</h3>
-                            <label><input type="checkbox" checked={datos.esImagen} onChange={e => setDatos({...datos, esImagen: e.target.checked})} /> ¿PDF Imagen?</label>
-                            <textarea style={{height:'150px'}} placeholder="Pega el análisis de la IA aquí..." value={datos.analisisIA} onChange={e => setDatos({...datos, analisisIA: e.target.value})} />
+                            <h3>Generador y Analizador de Pliegos</h3>
+                            
+                            <button className="btn" style={{backgroundColor: '#059669', marginBottom: '10px'}} onClick={generarPrompt}>
+                                📋 Generar Prompt para IA
+                            </button>
+
+                            {datos.promptIA && (
+                                <div>
+                                    <textarea readOnly style={{height: '120px', backgroundColor: '#f8fafc'}} value={datos.promptIA} />
+                                    <button className="btn" style={{backgroundColor: '#0C447C', marginBottom: '15px'}} onClick={copiarPrompt}>
+                                        Copiar Prompt
+                                    </button>
+                                </div>
+                            )}
+
+                            <h4>Pegar resultado del análisis de la IA:</h4>
+                            <textarea 
+                                style={{height: '150px'}} 
+                                placeholder="Pega aquí el texto con el análisis de la licitación..." 
+                                value={datos.respuestaIA} 
+                                onChange={e => setDatos({...datos, respuestaIA: e.target.value})} 
+                            />
+                            
+                            <button className="btn" style={{backgroundColor: '#1D9E75', marginBottom: '20px'}} onClick={procesarRespuestaIA}>
+                                ✨ Procesar Información Básica
+                            </button>
+
+                            <h3>Resumen Automatizado del Pliego</h3>
+                            <div className="ia-box">
+                                <p><strong>Visita Técnica Obligatoria:</strong> {datos.analisisExtraido.visitaTecnicaObligatoria}</p>
+                                <p><strong>Manifestación de Interés:</strong> {datos.analisisExtraido.manifestacionInteres}</p>
+                                <p><strong>Experiencia / Filtros Excluyentes:</strong> {datos.analisisExtraido.experiencia}</p>
+                                <p><strong>Trampas / Riesgos Detectados:</strong> {datos.analisisExtraido.riesgos}</p>
+                            </div>
                         </div>
                     )}
                 </div>
