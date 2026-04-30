@@ -2,64 +2,152 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>SIEL PRO - Sistema Unificado por Fases</title>
+    <title>SIEL PRO | Versión 0</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
+            --critico: #e11d48;
+            --importante: #f59e0b;
+            --observacion: #3b82f6;
+            --go: #10b981;
             --azul-p: #061624;
+            --azul-s: #0C2D48;
             --oro: #D4AF37;
             --fondo: #f8fafc;
         }
-        body { font-family: 'Lexend', sans-serif; background: var(--fondo); margin: 0; padding: 20px; }
-        .card { background: white; border-radius: 15px; padding: 20px; margin-bottom: 20px; border: 1px solid #edf2f7; }
-        .bloqueado { opacity: 0.6; pointer-events: none; }
-        .plan-header { background: var(--azul-p); color: white; padding: 10px; border-radius: 8px; text-align: center; }
+
+        body {
+            font-family: 'Lexend', sans-serif;
+            background: var(--fondo);
+            margin: 0;
+            color: #1e293b;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--azul-p) 0%, var(--azul-s) 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid #edf2f7;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+        }
+
+        .bloqueado {
+            opacity: 0.6;
+            pointer-events: none;
+            background-color: #f1f5f9;
+        }
+
+        label {
+            display: block;
+            font-weight: 800;
+            font-size: 11px;
+            color: var(--azul-s);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        textarea, input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 13px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background: var(--azul-p);
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 800;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
     </style>
 </head>
 <body>
 
-    <div class="plan-header">
-        <h2>SIEL PRO - ESTRUCTURA UNIFICADA</h2>
-    </div>
+    <header>
+        <div>
+            <span style="font-weight: 800; font-size: 24px;">SIEL V0</span> 
+            <span style="color: var(--oro); font-weight: 300;">(Base Unificada)</span>
+        </div>
+        <div style="font-size: 11px; text-align: right;">
+            <b>INTELIGENCIA ESTRATÉGICA</b>
+        </div>
+    </header>
 
-    <div class="card">
+    <div class="card" id="fase1">
         <h3>🟢 Fase 1: Plan Básico (Viabilidad)</h3>
-        <label>Ingresa el texto del proceso:</label>
-        <textarea id="f_raw" rows="6" placeholder="Pega aquí el resultado..." oninput="procesarFaseBasica()"></textarea>
-        <p id="resultado_viabilidad">Resultado: Esperando datos...</p>
+        <label>Ingresa el resultado del pliego a procesar:</label>
+        <textarea id="f_raw" rows="4" placeholder="Pega el texto aquí para evaluar..." oninput="evaluarFase1()"></textarea>
+        <p id="msj_fase1" style="font-size: 12px; color: #475569;">Escribe algo en el cuadro para continuar.</p>
     </div>
 
-    <div class="card" id="fase2_contenedor">
+    <div class="card bloqueado" id="fase2">
         <h3>🟡 Fase 2: Plan Esencial (Rentabilidad)</h3>
-        <label>Margen deseado (%)</label>
-        <input type="number" id="f_margen" placeholder="Ej. 15" oninput="procesarFaseEsencial()">
-        <p id="resultado_financiero">Completa la fase básica para habilitar.</p>
+        <label>Margen de ganancia estimado (%)</label>
+        <input type="number" id="f_margen" placeholder="Ej. 12" oninput="evaluarFase2()">
+        <p id="msj_fase2" style="font-size: 12px; color: #475569;">Bloqueado hasta completar la fase 1.</p>
     </div>
 
-    <div class="card bloqueado" id="fase3_contenedor">
+    <div class="card bloqueado" id="fase3">
         <h3>🔴 Fase 3: Plan Premium (Estratégico)</h3>
-        <p>🔒 Esta función está reservada para suscriptores Premium.</p>
-        <button onclick="alert('Actualizando a Premium...');">ACTUALIZAR AHORA</button>
+        <label>Análisis de contratos y riesgos operacionales</label>
+        <p style="font-size: 12px; color: #475569;">Funcionalidad disponible en versión Premium.</p>
+        <button onclick="alert('Redirigiendo a pasarela de pago...');">ACTUALIZAR AHORA</button>
     </div>
 
 <script>
-    function procesarFaseBasica() {
+    function evaluarFase1() {
         const texto = document.getElementById('f_raw').value;
-        if (texto.length > 5) {
-            document.getElementById('resultado_viabilidad').innerText = "✅ Viabilidad evaluada correctamente. ¡Puedes avanzar al siguiente nivel!";
+        const msj = document.getElementById('msj_fase1');
+        
+        if (texto.length > 10) {
+            msj.innerText = "✅ Viabilidad procesada. Ahora puedes llenar el margen en la Fase 2.";
             
-            // Lógica: Habilitar fase 2 (desbloquear el contenedor)
-            const f2 = document.getElementById('fase2_contenedor');
-            f2.style.opacity = "1";
-            f2.style.pointerEvents = "auto";
+            // Desbloquear fase 2
+            const fase2 = document.getElementById('fase2');
+            fase2.classList.remove('bloqueado');
+            document.getElementById('msj_fase2').innerText = "Listo para ingresar datos financieros.";
+        } else {
+            msj.innerText = "Escribe al menos 10 caracteres para continuar.";
         }
     }
 
-    function procesarFaseEsencial() {
+    function evaluarFase2() {
         const margen = document.getElementById('f_margen').value;
+        const msj = document.getElementById('msj_fase2');
+        
         if (margen >= 10) {
-            document.getElementById('resultado_financiero').innerText = "💰 Rentabilidad aprobada: Margen adecuado.";
+            msj.innerText = "💰 Rentabilidad aprobada (Margen ≥ 10%). ¡Fase Premium desbloqueada!";
+            
+            // Desbloquear fase 3
+            document.getElementById('fase3').classList.remove('bloqueado');
         } else if (margen > 0) {
-            document.getElementById('resultado_financiero').innerText = "⚠️ Alerta: El margen es bajo para los costos estimados.";
+            msj.innerText = "⚠️ Alerta: Margen bajo. (Aceptable para modo básico, pero riesgoso).";
         }
     }
 </script>
