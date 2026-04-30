@@ -5,16 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIEL - Sistema de Evaluación Inteligente de Licitaciones</title>
     <style>
-        /* Estilos básicos para la presentación */
         body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
             margin: 0 auto;
-            max-width: 800px;
+            max-width: 850px;
             padding: 20px;
         }
         header, section {
             margin-bottom: 25px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 15px;
         }
         .form-group {
             margin-bottom: 15px;
@@ -30,6 +31,26 @@
             margin-bottom: 10px;
             box-sizing: border-box;
         }
+        .grid-2 {
+            display: flex;
+            gap: 15px;
+        }
+        .grid-2 > div {
+            flex: 1;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
         #resultadoCaja {
             padding: 15px;
             margin-top: 15px;
@@ -42,8 +63,8 @@
 <body>
 
     <header>
-        <h1>🧱 SIEL</h1>
-        <p>Sistema de Evaluación Inteligente de Licitaciones - Fase 1 (Viabilidad)</p>
+        <h1>🧱 SIEL - Fase 1: Plan Básico</h1>
+        <p>Sistema de Evaluación Inteligente de Licitaciones y Convocatorias</p>
     </header>
 
     <section>
@@ -57,58 +78,143 @@
     </section>
 
     <section>
-        <h2>📋 Motor de Decisión (Fase 1)</h2>
+        <h2>⚙️ Configuración Inicial (Datos de la Empresa)</h2>
+        <div class="grid-2">
+            <div class="form-group">
+                <label for="empresaLiquidez">Liquidez Mínima Requerida:</label>
+                <input type="number" id="empresaLiquidez" value="1.5" step="0.1">
+            </div>
+            <div class="form-group">
+                <label for="empresaEndeudamiento">Endeudamiento Máximo (%):</label>
+                <input type="number" id="empresaEndeudamiento" value="70" step="1">
+            </div>
+        </div>
+        <div class="grid-2">
+            <div class="form-group">
+                <label for="empresaPatrimonio">Patrimonio Mínimo:</label>
+                <input type="number" id="empresaPatrimonio" value="50000000">
+            </div>
+            <div class="form-group">
+                <label for="empresaCapacidadK">Capacidad de Contratación (K):</label>
+                <input type="number" id="empresaCapacidadK" value="100000000">
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>📋 Análisis de Información General</h2>
+        <div class="form-group">
+            <label for="entidadLicitacion">Nombre de la Entidad:</label>
+            <input type="text" id="entidadLicitacion" placeholder="Ej: Alcaldía de Bogotá">
+        </div>
+        <div class="form-group">
+            <label for="objetoLicitacion">Objeto del Proceso:</label>
+            <input type="text" id="objetoLicitacion" placeholder="Ej: Suministro de materiales">
+        </div>
+        <div class="form-group">
+            <label for="presupuestoLicitacion">Presupuesto Oficial ($):</label>
+            <input type="number" id="presupuestoLicitacion" placeholder="Ej: 250000000">
+        </div>
+    </section>
+
+    <section>
+        <h2>📊 Evaluación Financiera y Checklist Legal</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Indicador / Requisito</th>
+                    <th>Valor Exigido por Pliego</th>
+                    <th>¿Cumple? (Sí / No)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Liquidez</td>
+                    <td><input type="number" id="exigidoLiquidez" value="1.5" step="0.1"></td>
+                    <td>
+                        <select id="cumpleLiquidez">
+                            <option value="si">Sí</option>
+                            <option value="no">No</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Cobertura</td>
+                    <td><input type="number" id="exigidoCobertura" value="1.2" step="0.1"></td>
+                    <td>
+                        <select id="cumpleCobertura">
+                            <option value="si">Sí</option>
+                            <option value="no">No</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Capital de Trabajo</td>
+                    <td><input type="number" id="exigidoCapital" value="50000000"></td>
+                    <td>
+                        <select id="cumpleCapital">
+                            <option value="si">Sí</option>
+                            <option value="no">No</option>
+                        </select>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="form-group">
+            <label for="exigenciaExperiencia">Experiencia Exigida (Años/Contratos):</label>
+            <input type="text" id="exigenciaExperiencia" placeholder="Ej: 3 contratos similares">
+        </div>
         
         <div class="form-group">
-            <label for="nombrePliego">Nombre del proceso o ID del pliego:</label>
-            <input type="text" id="nombrePliego" placeholder="Ej: Licitación No. 001">
-        </div>
-
-        <div class="form-group">
-            <label for="riesgoPliego">Nivel de riesgo estimado:</label>
-            <select id="riesgoPliego">
-                <option value="bajo">Bajo (Sin restricciones evidentes)</option>
-                <option value="medio">Medio (Requiere condiciones específicas)</option>
-                <option value="alto">Alto (Restricciones críticas / incumplimientos)</option>
+            <label for="cumpleFiltros">Validación de Capacidad (Experiencia y Capacidad K):</label>
+            <select id="cumpleFiltros">
+                <option value="si">Cumple con toda la experiencia y Capacidad K</option>
+                <option value="no">Falla en experiencia o Capacidad K insuficiente</option>
             </select>
         </div>
+    </section>
 
-        <div class="form-group">
-            <label for="cumpleRequisitos">¿Cumple con los requisitos mínimos?</label>
-            <select id="cumpleRequisitos">
-                <option value="si">Sí, cumple todos los requisitos</option>
-                <option value="condicionado">Cumple parcialmente (Con observaciones)</option>
-                <option value="no">No cumple con los requisitos</option>
-            </select>
-        </div>
-
-        <button onclick="evaluarLicitacion()">Ejecutar Análisis</button>
+    <section>
+        <h2>⚡ Motor de Decisión</h2>
+        <button onclick="evaluarLicitacion()">Ejecutar Análisis (GO / NO-GO)</button>
     </section>
 
     <div id="resultadoCaja"></div>
 
     <script>
         function evaluarLicitacion() {
-            const nombre = document.getElementById('nombrePliego').value;
-            const riesgo = document.getElementById('riesgoPliego').value;
-            const cumple = document.getElementById('cumpleRequisitos').value;
-            
+            const presupuesto = parseFloat(document.getElementById('presupuestoLicitacion').value) || 0;
+            const kEmpresa = parseFloat(document.getElementById('empresaCapacidadK').value) || 0;
+
+            // Valores de checklist
+            const cumpleLiq = document.getElementById('cumpleLiquidez').value;
+            const cumpleCob = document.getElementById('cumpleCobertura').value;
+            const cumpleCap = document.getElementById('cumpleCapital').value;
+            const cumpleFiltros = document.getElementById('cumpleFiltros').value;
+
+            // Validación del presupuesto frente a la Capacidad K
+            let kValido = true;
+            if (presupuesto > kEmpresa) {
+                kValido = false;
+            }
+
             const resultadoCaja = document.getElementById('resultadoCaja');
             resultadoCaja.style.display = 'block';
 
-            // Motor de decisión lógica
-            if (cumple === 'no' || riesgo === 'alto') {
+            // Motor de decisión: GO, GO CONDICIONADO o NO GO
+            if (cumpleFiltros === 'no' || !kValido) {
                 resultadoCaja.style.backgroundColor = '#ffcccc';
                 resultadoCaja.style.color = '#990000';
-                resultadoCaja.innerHTML = 'ESTADO: NO GO — Proceso inviable, evitar pérdida de recursos.';
-            } else if (cumple === 'condicionado' || riesgo === 'medio') {
+                resultadoCaja.innerHTML = 'ESTADO: NO GO — Proceso inviable. Excede la Capacidad K o incumple filtros excluyentes.';
+            } else if (cumpleLiq === 'no' || cumpleCob === 'no' || cumpleCap === 'no') {
                 resultadoCaja.style.backgroundColor = '#fff2cc';
                 resultadoCaja.style.color = '#996600';
-                resultadoCaja.innerHTML = 'ESTADO: GO CONDICIONADO — Requiere validación de observaciones y riesgos.';
+                resultadoCaja.innerHTML = 'ESTADO: GO CONDICIONADO — Requiere revisión de condiciones y riesgos en los indicadores financieros.';
             } else {
                 resultadoCaja.style.backgroundColor = '#ccffcc';
                 resultadoCaja.style.color = '#006600';
-                resultadoCaja.innerHTML = 'ESTADO: GO — Proceso viable, proceder con el análisis financiero.';
+                resultadoCaja.innerHTML = 'ESTADO: GO — Proceso viable, proceder con el reporte y la propuesta.';
             }
         }
     </script>
