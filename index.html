@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>SIEL PRO V17.0 | TOTALMENTE AUTOMÁTICO</title>
+    <title>SIEL PRO V18.0 | AUTOMÁTICO Y DEFINITIVO</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;800&display=swap" rel="stylesheet">
@@ -187,7 +187,7 @@
 <body>
 
 <header>
-    <div><span style="font-weight: 800; font-size: 26px; letter-spacing: -1px;">SIEL PRO</span> <span style="color: var(--oro); font-weight: 300;">V17.0</span></div>
+    <div><span style="font-weight: 800; font-size: 26px; letter-spacing: -1px;">SIEL PRO</span> <span style="color: var(--oro); font-weight: 300;">V18.0</span></div>
     <div style="text-align: right; font-size: 11px; line-height: 1.2;">BRICED CONSULTING<br><b style="color:var(--oro)">INTELIGENCIA ESTRATÉGICA AUTOMÁTICA</b></div>
 </header>
 
@@ -207,7 +207,7 @@
             <option value="COND">🟡 GO CONDICIONADO (ALTA ATENCIÓN)</option>
             <option value="NOGO">🔴 NO GO - RIESGO NO ASUMIBLE</option>
         </select>
-        <input type="text" id="f_motivo" placeholder="Análisis automático de viabilidad..." style="text-align: center; font-style: italic; border:none; border-bottom: 1px solid #e2e8f0; margin-top:10px; color: #475569; font-size: 13px;">
+        <input type="text" id="f_motivo" placeholder="Argumento automático de viabilidad..." style="text-align: center; font-style: italic; border:none; border-bottom: 1px solid #e2e8f0; margin-top:10px; color: #475569; font-size: 13px;">
     </div>
 
     <div>
@@ -238,7 +238,7 @@
             </div>
 
             <label style="margin-top:15px">🧠 SÍNTESIS DE VALOR (GERENCIAL)</label>
-            <textarea id="f_res" rows="3" placeholder="Sintetiza la viabilidad en automático..."></textarea>
+            <textarea id="f_res" rows="3" placeholder="Síntesis automática de valor..."></textarea>
             
             <label style="margin-top:15px">⚠️ MATRIZ DE RIESGOS Y ALERTAS</label>
             <textarea id="f_alertas" rows="6" placeholder="Críticas, Importantes y Mejoras extraídas de la IA."></textarea>
@@ -254,7 +254,7 @@
         </div>
     </div>
 
-    <button class="btn-premium" onclick="exportSIEL_V17()"><i class="fas fa-file-invoice"></i> GENERAR INFORME DE CONSULTORÍA MAESTRO</button>
+    <button class="btn-premium" onclick="exportSIEL_V18()"><i class="fas fa-file-invoice"></i> GENERAR INFORME DE CONSULTORÍA MAESTRO</button>
 </div>
 
 <script>
@@ -274,7 +274,7 @@
         const text = document.getElementById('f_raw').value;
         if(!text) return;
 
-        // Detección 100% automática del estado del proceso
+        // 1. Detección automática del veredicto
         if(/NO GO|NOGO|NO VIABLE/i.test(text)) {
             document.getElementById('f_dec').value = "NOGO";
             document.getElementById('f_motivo').value = "El proceso presenta vacíos legales críticos y un riesgo que supera el beneficio del contrato.";
@@ -287,121 +287,18 @@
         }
         updateColors();
 
-        // 2. Llenado automático del resumen
+        // 2. Extracción y generación automática del resumen de valor gerencial
         const resMatch = text.match(/(?:RESUMEN EJECUTIVO|Resumen|Conclusión ejecutiva):?\s*([\s\S]*?)(?=\n\n|\d\.|ALERTAS|HALLAZGOS|Concepto)/i);
         if(resMatch) {
             document.getElementById('f_res').value = resMatch[1].trim().substring(0, 280);
+        } else {
+            document.getElementById('f_res').value = "Proceso evaluado estratégicamente. Determina un plan de mitigación enfocado en la confianza y el control de riesgos operativos.";
         }
 
-        // 3. Extracción de la matriz de alertas
+        // 3. Matriz de riesgos
         const alertsMatch = text.match(/(?:ALERTAS CRÍTICAS|ALERTAS|HALLAZGOS):?\s*([\s\S]*?)(?=ESTRATEGIA|CONCEPTO|RECOMENDACIONES)/i);
         if(alertsMatch) {
             document.getElementById('f_alertas').value = alertsMatch[1].trim();
         }
 
-        // 4. Extracción de estrategia de ganancia
-        const stratMatch = text.match(/(?:ESTRATEGIA|RECOMENDACIONES PARA GANAR|CLAVE PARA GANAR):?\s*([\s\S]*?)$/i);
-        if(stratMatch) {
-            document.getElementById('f_estrat').value = stratMatch[1].trim();
-        }
-    }
-
-    function exportSIEL_V17() {
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-        
-        const nom = (document.getElementById('f_nom').value || "PROCESO").toUpperCase();
-        const ent = (document.getElementById('f_ent').value || "ENTIDAD").toUpperCase();
-        const dec = document.getElementById('f_dec').options[document.getElementById('f_dec').selectedIndex].text;
-        const mot = document.getElementById('f_motivo').value || "Análisis estratégico de viabilidad.";
-        const res = document.getElementById('f_res').value;
-        const alertas = document.getElementById('f_alertas').value;
-        const estrat = document.getElementById('f_estrat').value;
-        
-        // ENCABEZADO PREMIUM
-        doc.setFillColor(6, 22, 36); 
-        doc.rect(0, 0, 210, 45, 'F');
-        doc.setTextColor(212, 175, 55); 
-        doc.setFontSize(20); 
-        doc.setFont("helvetica", "bold");
-        doc.text("INFORME DE CONSULTORÍA SIEL PRO", 105, 20, { align: "center" });
-        doc.setTextColor(255); 
-        doc.setFontSize(9); 
-        doc.text("BRICED CONSULTING | AUDITORÍA DE ALTO IMPACTO", 105, 32, { align: "center" });
-
-        // INFORMACIÓN BÁSICA
-        doc.setTextColor(12, 45, 72); 
-        doc.setFontSize(9);
-        doc.text("PROYECTO: " + nom, 20, 53);
-        doc.text("ENTIDAD: " + ent, 20, 60);
-        doc.text("ESTADO: " + dec, 20, 67);
-        doc.text("ARGUMENTO: " + mot, 20, 74);
-        
-        let y = 85;
-
-        // FUNCIÓN DE SECCIONES CON PAGINACIÓN INTELIGENTE
-        const addSection = (title, content) => {
-            if (y > 230) {
-                doc.addPage();
-                y = 20;
-            }
-            // Título de la sección
-            doc.setFont("helvetica", "bold");
-            doc.setTextColor(12, 45, 72);
-            doc.setFontSize(10);
-            doc.setFillColor(241, 245, 249);
-            doc.rect(20, y - 5, 170, 7, 'F');
-            doc.text(title, 23, y);
-            y += 8;
-            
-            doc.setFont("helvetica", "normal");
-            doc.setFontSize(9);
-            const lines = doc.splitTextToSize(content || "Sin información procesada.", 160);
-            
-            lines.forEach(line => {
-                if (y > 270) {
-                    doc.addPage();
-                    y = 20;
-                }
-                doc.text(line, 20, y);
-                y += 4.5;
-            });
-            y += 6;
-        };
-
-        addSection("1. RESUMEN EJECUTIVO DE VIABILIDAD", res);
-        addSection("2. MATRIZ DE RIESGOS Y ALERTAS (METODOLOGÍA 13 PUNTOS)", alertas);
-        addSection("3. ESTRATEGIA PARA ASEGURAR LA ADJUDICACIÓN", estrat);
-
-        // ABREBOCAS COMERCIAL
-        if (y > 200) {
-            doc.addPage();
-            y = 20;
-        }
-        y += 5;
-        doc.setDrawColor(212, 175, 55); 
-        doc.setFillColor(255, 250, 240);
-        doc.rect(20, y, 168, 26, 'FD');
-        doc.setTextColor(184, 134, 11);
-        doc.setFont("helvetica", "bold");
-        doc.setFontSize(9);
-        doc.text("POTENCIAL DE OPTIMIZACIÓN (VERSIÓN PRO)", 24, y + 8);
-        doc.setFont("helvetica", "normal");
-        doc.setFontSize(8);
-        doc.text("Este reporte preliminar identifica las vulnerabilidades que puedes convertir en tu mayor fortaleza.", 24, y + 15);
-        doc.text("Mejora tu oferta integrando el módulo de estructuración de precios y propuesta técnica avanzada.", 24, y + 21);
-
-        // PIE DE PÁGINA
-        const totalPages = doc.internal.getNumberOfPages();
-        for (let i = 1; i <= totalPages; i++) {
-            doc.setPage(i);
-            doc.setFontSize(7); 
-            doc.setTextColor(150);
-            doc.text(`Briced Consulting © 2026 - Inteligencia Licitatoria - Página ${i} de ${totalPages}`, 105, 290, { align: "center" });
-        }
-
-        doc.save(`SIEL_MAESTRO_${nom.substring(0, 10)}.pdf`);
-    }
-</script>
-</body>
-</html>
+        // 4. Estrategia
