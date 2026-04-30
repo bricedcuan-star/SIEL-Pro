@@ -5,14 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIEL - Sistema de Evaluación Inteligente de Licitaciones</title>
     <style>
-        /* Puedes modificar o borrar estos estilos básicos para usar los tuyos */
+        /* Estilos básicos para la presentación */
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        .container {
-            max-width: 800px;
+            line-height: 1.6;
             margin: 0 auto;
+            max-width: 800px;
+            padding: 20px;
+        }
+        header, section {
+            margin-bottom: 25px;
         }
         .form-group {
             margin-bottom: 15px;
@@ -20,11 +22,13 @@
         label {
             display: block;
             margin-bottom: 5px;
+            font-weight: bold;
         }
         input, select, button {
             width: 100%;
-            padding: 8px;
+            padding: 10px;
             margin-bottom: 10px;
+            box-sizing: border-box;
         }
         #resultadoCaja {
             padding: 15px;
@@ -37,53 +41,51 @@
 </head>
 <body>
 
-    <div class="container">
-        <header>
-            <h1>🧱 SIEL</h1>
-            <p>Sistema de Evaluación Inteligente de Licitaciones - Fase 1 (Viabilidad)</p>
-        </header>
+    <header>
+        <h1>🧱 SIEL</h1>
+        <p>Sistema de Evaluación Inteligente de Licitaciones - Fase 1 (Viabilidad)</p>
+    </header>
 
-        <section>
-            <h2>🔗 Fuentes de Búsqueda Oficiales</h2>
-            <ul>
-                <li><a href="https://bogota.gov.co/asi-vamos/contratos-y-obras/participa" target="_blank">Alcaldía Mayor de Bogotá - Contratos</a></li>
-                <li><a href="https://leydepropiedadhorizontal.org/category/convocatorias/" target="_blank">Convocatorias Propiedad Horizontal</a></li>
-                <li>Secop I</li>
-                <li>Secop II</li>
-            </ul>
-        </section>
+    <section>
+        <h2>🔗 Fuentes de Búsqueda</h2>
+        <ul>
+            <li><a href="https://bogota.gov.co/asi-vamos/contratos-y-obras/participa" target="_blank">Alcaldía Mayor de Bogotá - Contratos</a></li>
+            <li><a href="https://leydepropiedadhorizontal.org/category/convocatorias/" target="_blank">Convocatorias Propiedad Horizontal</a></li>
+            <li>Secop I</li>
+            <li>Secop II</li>
+        </ul>
+    </section>
 
-        <section>
-            <h2>📋 Motor de Decisión (Fase 1)</h2>
-            
-            <div class="form-group">
-                <label>Nombre del proceso o ID del pliego:</label>
-                <input type="text" id="nombrePliego" placeholder="Ej: Licitación No. 001">
-            </div>
+    <section>
+        <h2>📋 Motor de Decisión (Fase 1)</h2>
+        
+        <div class="form-group">
+            <label for="nombrePliego">Nombre del proceso o ID del pliego:</label>
+            <input type="text" id="nombrePliego" placeholder="Ej: Licitación No. 001">
+        </div>
 
-            <div class="form-group">
-                <label>Nivel de riesgo estimado:</label>
-                <select id="riesgoPliego">
-                    <option value="bajo">Bajo (Sin restricciones evidentes)</option>
-                    <option value="medio">Medio (Requiere condiciones específicas)</option>
-                    <option value="alto">Alto (Restricciones críticas / incumplimientos)</option>
-                </select>
-            </div>
+        <div class="form-group">
+            <label for="riesgoPliego">Nivel de riesgo estimado:</label>
+            <select id="riesgoPliego">
+                <option value="bajo">Bajo (Sin restricciones evidentes)</option>
+                <option value="medio">Medio (Requiere condiciones específicas)</option>
+                <option value="alto">Alto (Restricciones críticas / incumplimientos)</option>
+            </select>
+        </div>
 
-            <div class="form-group">
-                <label>¿Cumple con los requisitos mínimos?</label>
-                <select id="cumpleRequisitos">
-                    <option value="si">Sí, cumple todos los requisitos</option>
-                    <option value="condicionado">Cumple parcialmente (Con observaciones)</option>
-                    <option value="no">No cumple con los requisitos</option>
-                </select>
-            </div>
+        <div class="form-group">
+            <label for="cumpleRequisitos">¿Cumple con los requisitos mínimos?</label>
+            <select id="cumpleRequisitos">
+                <option value="si">Sí, cumple todos los requisitos</option>
+                <option value="condicionado">Cumple parcialmente (Con observaciones)</option>
+                <option value="no">No cumple con los requisitos</option>
+            </select>
+        </div>
 
-            <button onclick="evaluarLicitacion()">Ejecutar Análisis</button>
-        </section>
+        <button onclick="evaluarLicitacion()">Ejecutar Análisis</button>
+    </section>
 
-        <div id="resultadoCaja"></div>
-    </div>
+    <div id="resultadoCaja"></div>
 
     <script>
         function evaluarLicitacion() {
@@ -102,7 +104,7 @@
             } else if (cumple === 'condicionado' || riesgo === 'medio') {
                 resultadoCaja.style.backgroundColor = '#fff2cc';
                 resultadoCaja.style.color = '#996600';
-                resultadoCaja.innerHTML = 'ESTADO: GO CONDIC — GO CONDICIONADO — Requiere validación de observaciones y riesgos.';
+                resultadoCaja.innerHTML = 'ESTADO: GO CONDICIONADO — Requiere validación de observaciones y riesgos.';
             } else {
                 resultadoCaja.style.backgroundColor = '#ccffcc';
                 resultadoCaja.style.color = '#006600';
