@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>SIEL PRO V16.0 | EL ESTÁNDAR DE ORO</title>
+    <title>SIEL PRO V17.0 | TOTALMENTE AUTOMÁTICO</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;800&display=swap" rel="stylesheet">
@@ -187,8 +187,8 @@
 <body>
 
 <header>
-    <div><span style="font-weight: 800; font-size: 26px; letter-spacing: -1px;">SIEL PRO</span> <span style="color: var(--oro); font-weight: 300;">V16.0</span></div>
-    <div style="text-align: right; font-size: 11px; line-height: 1.2;">BRICED CONSULTING<br><b style="color:var(--oro)">INTELIGENCIA ESTRATÉGICA PARA GANAR</b></div>
+    <div><span style="font-weight: 800; font-size: 26px; letter-spacing: -1px;">SIEL PRO</span> <span style="color: var(--oro); font-weight: 300;">V17.0</span></div>
+    <div style="text-align: right; font-size: 11px; line-height: 1.2;">BRICED CONSULTING<br><b style="color:var(--oro)">INTELIGENCIA ESTRATÉGICA AUTOMÁTICA</b></div>
 </header>
 
 <div class="search-bar">
@@ -207,13 +207,13 @@
             <option value="COND">🟡 GO CONDICIONADO (ALTA ATENCIÓN)</option>
             <option value="NOGO">🔴 NO GO - RIESGO NO ASUMIBLE</option>
         </select>
-        <input type="text" id="f_motivo" placeholder="Argumento automático de viabilidad..." style="text-align: center; font-style: italic; border:none; border-bottom: 1px solid #e2e8f0; margin-top:10px; color: #475569; font-size: 13px;">
+        <input type="text" id="f_motivo" placeholder="Análisis automático de viabilidad..." style="text-align: center; font-style: italic; border:none; border-bottom: 1px solid #e2e8f0; margin-top:10px; color: #475569; font-size: 13px;">
     </div>
 
     <div>
         <div class="card">
             <label>1. INGESTIÓN DE ANÁLISIS SIEL (INPUT)</label>
-            <textarea id="f_raw" rows="18" placeholder="Pega aquí el análisis generado por la IA..." oninput="autoScan()"></textarea>
+            <textarea id="f_raw" rows="18" placeholder="Pega aquí el resultado de la IA para procesar..." oninput="autoScan()"></textarea>
             <button class="btn-magic" onclick="autoScan()">SINCRO-ANÁLISIS INTELIGENTE <i class="fas fa-bolt"></i></button>
             
             <div class="prompt-box">
@@ -238,7 +238,7 @@
             </div>
 
             <label style="margin-top:15px">🧠 SÍNTESIS DE VALOR (GERENCIAL)</label>
-            <textarea id="f_res" rows="3" placeholder="Por qué este negocio es para nosotros..."></textarea>
+            <textarea id="f_res" rows="3" placeholder="Sintetiza la viabilidad en automático..."></textarea>
             
             <label style="margin-top:15px">⚠️ MATRIZ DE RIESGOS Y ALERTAS</label>
             <textarea id="f_alertas" rows="6" placeholder="Críticas, Importantes y Mejoras extraídas de la IA."></textarea>
@@ -254,7 +254,7 @@
         </div>
     </div>
 
-    <button class="btn-premium" onclick="exportSIEL_V16()"><i class="fas fa-file-invoice"></i> GENERAR INFORME DE CONSULTORÍA MAESTRO</button>
+    <button class="btn-premium" onclick="exportSIEL_V17()"><i class="fas fa-file-invoice"></i> GENERAR INFORME DE CONSULTORÍA MAESTRO</button>
 </div>
 
 <script>
@@ -274,7 +274,7 @@
         const text = document.getElementById('f_raw').value;
         if(!text) return;
 
-        // 1. Detección de decisión automática
+        // Detección 100% automática del estado del proceso
         if(/NO GO|NOGO|NO VIABLE/i.test(text)) {
             document.getElementById('f_dec').value = "NOGO";
             document.getElementById('f_motivo').value = "El proceso presenta vacíos legales críticos y un riesgo que supera el beneficio del contrato.";
@@ -287,26 +287,26 @@
         }
         updateColors();
 
-        // 2. Extracción del Resumen Ejecutivo
+        // 2. Llenado automático del resumen
         const resMatch = text.match(/(?:RESUMEN EJECUTIVO|Resumen|Conclusión ejecutiva):?\s*([\s\S]*?)(?=\n\n|\d\.|ALERTAS|HALLAZGOS|Concepto)/i);
         if(resMatch) {
             document.getElementById('f_res').value = resMatch[1].trim().substring(0, 280);
         }
 
-        // 3. Extracción de Alertas
+        // 3. Extracción de la matriz de alertas
         const alertsMatch = text.match(/(?:ALERTAS CRÍTICAS|ALERTAS|HALLAZGOS):?\s*([\s\S]*?)(?=ESTRATEGIA|CONCEPTO|RECOMENDACIONES)/i);
         if(alertsMatch) {
             document.getElementById('f_alertas').value = alertsMatch[1].trim();
         }
 
-        // 4. Extracción de Estrategia
+        // 4. Extracción de estrategia de ganancia
         const stratMatch = text.match(/(?:ESTRATEGIA|RECOMENDACIONES PARA GANAR|CLAVE PARA GANAR):?\s*([\s\S]*?)$/i);
         if(stratMatch) {
             document.getElementById('f_estrat').value = stratMatch[1].trim();
         }
     }
 
-    function exportSIEL_V16() {
+    function exportSIEL_V17() {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
         
