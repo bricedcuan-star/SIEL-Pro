@@ -2,303 +2,67 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>SIEL PRO V18.0 | AUTOMÁTICO Y DEFINITIVO</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <title>SIEL PRO - Sistema Unificado por Fases</title>
     <style>
-        :root { 
-            --critico: #e11d48; 
-            --importante: #f59e0b; 
-            --observacion: #3b82f6; 
-            --go: #10b981; 
-            --azul-p: #061624; 
-            --azul-s: #0C2D48; 
-            --oro: #D4AF37; 
-            --fondo: #f8fafc; 
+        :root {
+            --azul-p: #061624;
+            --oro: #D4AF37;
+            --fondo: #f8fafc;
         }
-        
-        body { 
-            font-family: 'Lexend', sans-serif; 
-            background: var(--fondo); 
-            margin: 0; 
-            color: #1e293b; 
-            padding-bottom: 60px; 
-        }
-        
-        header { 
-            background: linear-gradient(135deg, var(--azul-p) 0%, var(--azul-s) 100%); 
-            color: white; 
-            padding: 25px 40px; 
-            border-bottom: 4px solid var(--oro); 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
-        }
-        
-        .search-bar { 
-            display: flex; 
-            gap: 10px; 
-            margin: 20px auto; 
-            max-width: 1150px; 
-            padding: 0 20px; 
-        }
-        
-        .search-btn { 
-            flex: 1; 
-            padding: 12px; 
-            border-radius: 12px; 
-            background: white; 
-            border: 1px solid var(--oro); 
-            color: var(--azul-s); 
-            text-decoration: none; 
-            font-size: 11px; 
-            font-weight: 800; 
-            text-align: center; 
-            transition: 0.3s; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05); 
-        }
-        
-        .search-btn:hover { 
-            background: var(--oro); 
-            color: var(--azul-p); 
-            transform: translateY(-2px); 
-        }
-
-        .container { 
-            max-width: 1150px; 
-            margin: 0 auto; 
-            padding: 0 20px; 
-            display: grid; 
-            grid-template-columns: 1fr 1.3fr; 
-            gap: 25px; 
-        }
-
-        .card { 
-            background: white; 
-            border-radius: 20px; 
-            padding: 30px; 
-            margin-bottom: 20px; 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.03); 
-            border: 1px solid #edf2f7; 
-        }
-
-        .decision-hero { 
-            grid-column: 1 / -1; 
-            background: white; 
-            border-radius: 20px; 
-            padding: 35px; 
-            text-align: center; 
-            border: 2px solid #cbd5e1; 
-            margin-bottom: 10px; 
-            position: relative; 
-            overflow: hidden; 
-        }
-        
-        .decision-hero::before { 
-            content: ""; 
-            position: absolute; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 5px; 
-            background: var(--oro); 
-        }
-
-        .prompt-box { 
-            background: #0f172a; 
-            color: #94a3b8; 
-            padding: 15px; 
-            border-radius: 12px; 
-            border: 1px dashed var(--oro); 
-            margin-top: 15px; 
-            font-size: 10px; 
-            line-height: 1.4; 
-        }
-
-        label { 
-            display: block; 
-            font-weight: 800; 
-            font-size: 11px; 
-            color: var(--azul-s); 
-            margin-bottom: 10px; 
-            text-transform: uppercase; 
-            letter-spacing: 1px; 
-        }
-        
-        textarea, input, select { 
-            width: 100%; 
-            padding: 14px; 
-            border: 2px solid #e2e8f0; 
-            border-radius: 12px; 
-            font-family: inherit; 
-            font-size: 13px; 
-            box-sizing: border-box; 
-            margin-bottom: 8px; 
-            transition: 0.3s; 
-        }
-        
-        textarea:focus { 
-            border-color: var(--oro); 
-            outline: none; 
-            box-shadow: 0 0 10px rgba(212,175,55,0.1); 
-        }
-        
-        .btn-magic { 
-            background: var(--azul-p); 
-            color: white; 
-            padding: 14px; 
-            border: none; 
-            border-radius: 12px; 
-            font-weight: 800; 
-            cursor: pointer; 
-            width: 100%; 
-            margin-bottom: 15px; 
-            letter-spacing: 1px; 
-        }
-        
-        .btn-premium { 
-            grid-column: 1 / -1; 
-            background: linear-gradient(90deg, var(--oro), #f6e05e); 
-            color: var(--azul-p); 
-            padding: 22px; 
-            border: none; 
-            border-radius: 50px; 
-            width: 100%; 
-            font-weight: 900; 
-            font-size: 19px; 
-            cursor: pointer; 
-            box-shadow: 0 15px 35px rgba(212,175,55,0.3); 
-            text-transform: uppercase; 
-            transition: 0.4s; 
-        }
-        
-        .upsell-tag { 
-            font-size: 10px; 
-            color: var(--oro); 
-            font-weight: 800; 
-            margin-top: 5px; 
-            display: block; 
-            text-align: right; 
-        }
+        body { font-family: 'Lexend', sans-serif; background: var(--fondo); margin: 0; padding: 20px; }
+        .card { background: white; border-radius: 15px; padding: 20px; margin-bottom: 20px; border: 1px solid #edf2f7; }
+        .bloqueado { opacity: 0.6; pointer-events: none; }
+        .plan-header { background: var(--azul-p); color: white; padding: 10px; border-radius: 8px; text-align: center; }
     </style>
 </head>
 <body>
 
-<header>
-    <div><span style="font-weight: 800; font-size: 26px; letter-spacing: -1px;">SIEL PRO</span> <span style="color: var(--oro); font-weight: 300;">V18.0</span></div>
-    <div style="text-align: right; font-size: 11px; line-height: 1.2;">BRICED CONSULTING<br><b style="color:var(--oro)">INTELIGENCIA ESTRATÉGICA AUTOMÁTICA</b></div>
-</header>
-
-<div class="search-bar">
-    <a href="https://www.contratos.gov.co" target="_blank" class="search-btn"><i class="fas fa-search"></i> SECOP I</a>
-    <a href="https://community.secop.gov.co" target="_blank" class="search-btn"><i class="fas fa-project-diagram"></i> SECOP II</a>
-    <a href="https://bogota.gov.co" target="_blank" class="search-btn"><i class="fas fa-city"></i> BOGOTÁ P.H.</a>
-    <a href="https://leydepropiedadhorizontal.org" target="_blank" class="search-btn"><i class="fas fa-building"></i> LEGISLACIÓN</a>
-</div>
-
-<div class="container">
-    
-    <div class="decision-hero" id="hero_box">
-        <label>🎯 VERDICTO ESTRATÉGICO FINAL</label>
-        <select id="f_dec" onchange="updateColors()" style="font-size: 26px; font-weight: 900; text-align: center; border: none; background: transparent; color: var(--azul-p);">
-            <option value="GO">🟢 GO - PARTICIPACIÓN TOTAL</option>
-            <option value="COND">🟡 GO CONDICIONADO (ALTA ATENCIÓN)</option>
-            <option value="NOGO">🔴 NO GO - RIESGO NO ASUMIBLE</option>
-        </select>
-        <input type="text" id="f_motivo" placeholder="Argumento automático de viabilidad..." style="text-align: center; font-style: italic; border:none; border-bottom: 1px solid #e2e8f0; margin-top:10px; color: #475569; font-size: 13px;">
+    <div class="plan-header">
+        <h2>SIEL PRO - ESTRUCTURA UNIFICADA</h2>
     </div>
 
-    <div>
-        <div class="card">
-            <label>1. INGESTIÓN DE ANÁLISIS SIEL (INPUT)</label>
-            <textarea id="f_raw" rows="18" placeholder="Pega aquí el resultado de la IA para procesar..." oninput="autoScan()"></textarea>
-            <button class="btn-magic" onclick="autoScan()">SINCRO-ANÁLISIS INTELIGENTE <i class="fas fa-bolt"></i></button>
-            
-            <div class="prompt-box">
-                <p id="pText" style="margin:0;">"Actúa como auditor experto aplicando la metodología de 13 puntos SIEL de Briced Consulting. Resume de forma detallada y sin recortar: 1. Resumen Ejecutivo, 2. Alertas Críticas, Importantes y Mejoras, y 3. Concepto y Estrategia para ganar."</p>
-                <button onclick="navigator.clipboard.writeText(document.getElementById('pText').innerText); alert('Prompt copiado al portapapeles');" style="background:var(--oro); border:none; padding:6px 12px; border-radius:6px; cursor:pointer; margin-top:10px; font-weight:800; font-size:9px; color: var(--azul-p);">COPIAR PROMPT SIEL</button>
-            </div>
-            <span class="upsell-tag">* Módulo de predicción de competidores disponible en Versión Pro</span>
-        </div>
+    <div class="card">
+        <h3>🟢 Fase 1: Plan Básico (Viabilidad)</h3>
+        <label>Ingresa el texto del proceso:</label>
+        <textarea id="f_raw" rows="6" placeholder="Pega aquí el resultado..." oninput="procesarFaseBasica()"></textarea>
+        <p id="resultado_viabilidad">Resultado: Esperando datos...</p>
     </div>
 
-    <div>
-        <div class="card">
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                <div>
-                    <label>Objeto del Proceso</label>
-                    <input type="text" id="f_nom" placeholder="Proyecto Licitación">
-                </div>
-                <div>
-                    <label>Entidad Contratante</label>
-                    <input type="text" id="f_ent" placeholder="Nombre de la entidad">
-                </div>
-            </div>
-
-            <label style="margin-top:15px">🧠 SÍNTESIS DE VALOR (GERENCIAL)</label>
-            <textarea id="f_res" rows="3" placeholder="Síntesis automática de valor..."></textarea>
-            
-            <label style="margin-top:15px">⚠️ MATRIZ DE RIESGOS Y ALERTAS</label>
-            <textarea id="f_alertas" rows="6" placeholder="Críticas, Importantes y Mejoras extraídas de la IA."></textarea>
-
-            <label style="margin-top:15px">🚀 ESTRATEGIA DE GANANCIA (VALOR DIFERENCIAL)</label>
-            <textarea id="f_estrat" rows="6" placeholder="Escribe el plan para neutralizar los riesgos..."></textarea>
-            
-            <div style="background-color: #fef9c3; border-left: 4px solid var(--importante); padding: 14px; border-radius: 10px; margin-top: 15px;">
-                <p style="font-size: 11px; font-weight: 600; color: #713f12; margin: 0;">
-                    <i class="fas fa-star" style="color: var(--importante);"></i> <strong>POTENCIAL DE OPTIMIZACIÓN (Fase Pro):</strong> Este informe detectó vacíos estructurales. La versión Pro automatiza el 100% de la propuesta técnica, genera el análisis de precios de la competencia y reduce tus costos de licitación.
-                </p>
-            </div>
-        </div>
+    <div class="card" id="fase2_contenedor">
+        <h3>🟡 Fase 2: Plan Esencial (Rentabilidad)</h3>
+        <label>Margen deseado (%)</label>
+        <input type="number" id="f_margen" placeholder="Ej. 15" oninput="procesarFaseEsencial()">
+        <p id="resultado_financiero">Completa la fase básica para habilitar.</p>
     </div>
 
-    <button class="btn-premium" onclick="exportSIEL_V18()"><i class="fas fa-file-invoice"></i> GENERAR INFORME DE CONSULTORÍA MAESTRO</button>
-</div>
+    <div class="card bloqueado" id="fase3_contenedor">
+        <h3>🔴 Fase 3: Plan Premium (Estratégico)</h3>
+        <p>🔒 Esta función está reservada para suscriptores Premium.</p>
+        <button onclick="alert('Actualizando a Premium...');">ACTUALIZAR AHORA</button>
+    </div>
 
 <script>
-    function updateColors() {
-        const d = document.getElementById('f_dec').value;
-        const h = document.getElementById('hero_box');
-        if(d === 'GO') {
-            h.style.borderColor = '#10b981';
-        } else if(d === 'COND') {
-            h.style.borderColor = '#f59e0b';
-        } else {
-            h.style.borderColor = '#e11d48';
+    function procesarFaseBasica() {
+        const texto = document.getElementById('f_raw').value;
+        if (texto.length > 5) {
+            document.getElementById('resultado_viabilidad').innerText = "✅ Viabilidad evaluada correctamente. ¡Puedes avanzar al siguiente nivel!";
+            
+            // Lógica: Habilitar fase 2 (desbloquear el contenedor)
+            const f2 = document.getElementById('fase2_contenedor');
+            f2.style.opacity = "1";
+            f2.style.pointerEvents = "auto";
         }
     }
 
-    function autoScan() {
-        const text = document.getElementById('f_raw').value;
-        if(!text) return;
-
-        // 1. Detección automática del veredicto
-        if(/NO GO|NOGO|NO VIABLE/i.test(text)) {
-            document.getElementById('f_dec').value = "NOGO";
-            document.getElementById('f_motivo').value = "El proceso presenta vacíos legales críticos y un riesgo que supera el beneficio del contrato.";
-        } else if(/CONDICIONADO|DUDOSO/i.test(text)) {
-            document.getElementById('f_dec').value = "COND";
-            document.getElementById('f_motivo').value = "Proceso viable pero vulnerable. La clave es cubrir los vacíos con valor agregado para minimizar riesgos.";
-        } else {
-            document.getElementById('f_dec').value = "GO";
-            document.getElementById('f_motivo').value = "Proceso viable y seguro. Presenta oportunidades para destacar con nuestra estructura técnica.";
+    function procesarFaseEsencial() {
+        const margen = document.getElementById('f_margen').value;
+        if (margen >= 10) {
+            document.getElementById('resultado_financiero').innerText = "💰 Rentabilidad aprobada: Margen adecuado.";
+        } else if (margen > 0) {
+            document.getElementById('resultado_financiero').innerText = "⚠️ Alerta: El margen es bajo para los costos estimados.";
         }
-        updateColors();
+    }
+</script>
 
-        // 2. Extracción y generación automática del resumen de valor gerencial
-        const resMatch = text.match(/(?:RESUMEN EJECUTIVO|Resumen|Conclusión ejecutiva):?\s*([\s\S]*?)(?=\n\n|\d\.|ALERTAS|HALLAZGOS|Concepto)/i);
-        if(resMatch) {
-            document.getElementById('f_res').value = resMatch[1].trim().substring(0, 280);
-        } else {
-            document.getElementById('f_res').value = "Proceso evaluado estratégicamente. Determina un plan de mitigación enfocado en la confianza y el control de riesgos operativos.";
-        }
-
-        // 3. Matriz de riesgos
-        const alertsMatch = text.match(/(?:ALERTAS CRÍTICAS|ALERTAS|HALLAZGOS):?\s*([\s\S]*?)(?=ESTRATEGIA|CONCEPTO|RECOMENDACIONES)/i);
-        if(alertsMatch) {
-            document.getElementById('f_alertas').value = alertsMatch[1].trim();
-        }
-
-        // 4. Estrategia
+</body>
+</html>
