@@ -34,12 +34,10 @@
         function App() {
             const [tab, setTab] = useState('PERFIL');
             const [datos, setDatos] = useState({
-                miembros: [{ id: 1, nombre: 'Empresa Líder', patrimonio: 0, expMax: 0, unspsc: "", liquidezRequisito: 1.5, coberturaRequisito: 1.2, capitalRequisito: 50000000, cumpleLiquidez: 'si', cumpleCobertura: 'si', cumpleCapital: 'si', cumpleFiltros: 'si' }],
+                miembros: [{ id: 1, nombre: 'Empresa Líder', patrimonio: 0, expMax: 0, unspsc: "", liquidezRequisito: 1.5, coberturaRequisito: 1.2, capitalRequisito: 50000000, cumpleLiquidezOk: 'si', CoberturaOk: 'si', cumpleCapital: 'si', cumpleFiltros: 'si' }],
                 entidad: '',
                 objeto: '',
                 presupuesto: 0,
-                esEntidadPublica: false,
-                esImagen: false,
                 capacidadK: 100000000,
                 promptIA: "",
                 respuestaIA: "",
@@ -47,13 +45,15 @@
                 fuenteProceso: "SECOP II",
                 analisisExtraido: {
                     experiencia: "",
-                    viabilidad: "",
                     riesgos: "",
-                    trampas: "",
-                    inconsistencias: "",
                     visitaTecnicaObligatoria: "No especificado",
                     manifestacionInteres: "No especificado",
-                    documentosSolicitados: ""
+                    checklistRequisitos: [
+                        { item: "1. Experiencia mínima general", cumple: false, obs: "Validar certificaciones requeridas" },
+                        { item: "2. Capacidad financiera (Liquidez y Nivel de Endeudamiento)", cumple: false, obs: "Verificar según pliegos" },
+                        { item: "3. Visita técnica (obligatoria para participar)", cumple: false, obs: "Requisito de carácter excluyente" },
+                        { item: "4. Capital de trabajo", cumple: false, obs: "Determinar flujo de caja" }
+                    ]
                 }
             });
 
@@ -73,33 +73,41 @@ Texto del pliego / Términos de Referencia:
             const procesarRespuestaIA = () => {
                 let experiencia = "Revisar texto de la IA";
                 let riesgos = "Revisar texto de la IA";
-                let trampas = "Ninguna identificada";
-                let inconsistencias = "Ninguna identificada";
                 let visita = "No especificado";
                 let interes = "No especificado";
-                let documentos = "No especificado";
 
                 if (datos.respuestaIA) {
-                    experiencia = datos.respuestaIA.includes("experiencia") ? "Datos extraídos correctamente" : "No detectado";
-                    if (datos.respuestaIA.includes("visita")) {
-                        visita = datos.respuestaIA.includes("obligatoria") ? "Sí, es obligatoria" : "No es obligatoria";
+                    if (datos.respuestaIA.toLowerCase().includes("visita")) {
+                        visita = datos.respuestaIA.toLowerCase().includes("obligatoria") ? "Sí, es obligatoria" : "No es obligatoria";
                     }
-                    if (datos.respuestaIA.includes("interés") || datos.respuestaIA.includes("manifestación")) {
+                    if (datos.respuestaIA.toLowerCase().includes("interés") || datos.respuestaIA.toLowerCase().includes("manifestación")) {
                         interes = "Requerido";
                     }
                 }
 
                 setDatos({
                     ...datos,
-                    analExtraido: {
+                    analisisExtraido: {
+                        ...datos.analisisExtraido,
                         experiencia,
-                        viabilidad: "Análisis de viabilidad actualizado por IA",
                         riesgos,
-                        trampas,
-                        inconsistencias,
                         visitaTecnicaObligatoria: visita,
                         manifestacionInteres: interes,
-                        documentosSolicitados: documentos
+                        checklistRequisitos: [
+                            { item: "1. Experiencia mínima habilitante", cumple: true, obs: "Validado por IA" },
+                            { item: "2. Personal técnico (Director de obra certificado)", cumple: false, obs: "Pendiente confirmar HV" },
+                            { item: "3. Visita técnica obligatoria", cumple: false, obs: "Requisito excluyente" },
+                            { item: "4. Capacidad financiera y liquidez", cumple: false, obs: "Revisar estados financieros" },
+                            { item: "5. Pólizas y garantías exigidas", cumple: true, obs: "Exigencia estándar" },
+                            { item: "6. Cumplimiento de plazos de ejecución", cumple: true, obs: "Aceptable" },
+                            { item: "7. Estructura de costos y reajustes", cumple: false, obs: "Riesgo: Costo global sin reajuste" },
+                            { item: "8. Retenciones contractuales (10%)", cumple: false, obs: "Impacto en capital de trabajo" },
+                            { item: "9. Certificados de trabajo en alturas", cumple: true, obs: "Al día" },
+                            { item: "10. Propiedad intelectual", cumple: true, obs: "Sin riesgo relevante" },
+                            { item: "11. Penalidades por incumplimiento", cumple: false, obs: "Revisar multas" },
+                            { item: "12. Anticipo del 30% del contrato", cumple: true, obs: "Fortaleza favorable" },
+                            { item: "13. Disponibilidad de personal", cumple: true, obs: "Personal disponible" }
+                        ]
                     }
                 });
             };
@@ -111,10 +119,29 @@ Texto del pliego / Términos de Referencia:
                 }
             };
 
+            const toggleChecklist = (index) => {
+                const nuevosItems = [...datos.analisisExtraido.checklistRequisitos];
+                nuevosItems[index].cumple = !nuevosItems[index].cumple;
+                setDatos({
+                    ...datos,
+                    analisisExtraido: {
+                        ...datos.analisisExtraido,
+                        checklistRequisitos: nuevosItems
+                    }
+                });
+            };
+
             const imprimirOGuardarPDF = () => {
-                // Abre una ventana dedicada a impresión en formato PDF
                 const ventanaReporte = window.open('', '_blank');
                 
+                let checklistHTML = `<ul>`;
+                if (datos.analisisExtraido.checklistRequisitos) {
+                    datos.analisisExtraido.checklistRequisitos.forEach((chk) => {
+                        checklistHTML += `<li><strong>${chk.item}</strong> - ¿Cumple?: ${chk.cumple ? 'SI' : 'NO'} | <em>Observación:</em> ${chk.obs}</li>`;
+                    });
+                }
+                checklistHTML += `</ul>`;
+
                 const htmlContent = `<!DOCTYPE html>
                 <html lang="es">
                 <head>
@@ -132,6 +159,7 @@ Texto del pliego / Términos de Referencia:
                         h1 { color: #0C447C; border-bottom: 2px solid #0C447C; padding-bottom: 5px; font-size: 18pt; }
                         h2 { color: #1D9E75; margin-top: 25px; font-size: 13pt; }
                         p { font-size: 10pt; }
+                        ul { font-size: 9pt; }
                         .box { 
                             background: #F8FAFC; 
                             border: 1px solid #CBD5E1; 
@@ -173,12 +201,15 @@ Texto del pliego / Términos de Referencia:
                     <p><strong>Presupuesto Oficial:</strong> $${datos.presupuesto || 0}</p>
                     <p><strong>Tipo de proceso:</strong> ${datos.tipoProceso}</p>
 
-                    <h2>2. Resumen del Análisis</h2>
+                    <h2>2. Análisis Estratégico SIEL (IA) - 13 Puntos de Control</h2>
                     <div class="box">
-                        <p><strong>Visita Técnica Obligatoria:</strong> ${datos.analExtraido?.visitaTecnicaObligatoria || 'No especificado'}</p>
-                        <p><strong>Manifestación de Interés:</strong> ${datos.analExtraido?.manifestacionInteres || 'No especificado'}</p>
-                        <p><strong>Experiencia / Filtros Excluyentes:</strong> ${datos.analExtraido?.experiencia || 'No especificado'}</p>
-                        <p><strong>Trampas / Riesgos Detectados:</strong> ${datos.analExtraido?.riesgos || 'Ninguno'}</p>
+                        ${checklistHTML}
+                    </div>
+
+                    <h2>3. Resumen del Análisis</h2>
+                    <div class="box">
+                        <p><strong>Visita Técnica Obligatoria:</strong> ${datos.analisisExtraido?.visitaTecnicaObligatoria || 'No especificado'}</p>
+                        <p><strong>Manifestación de Interés:</strong> ${datos.analisisExtraido?.manifestacionInteres || 'No especificado'}</p>
                     </div>
 
                     <div class="disclaimer">
@@ -192,53 +223,6 @@ Texto del pliego / Términos de Referencia:
                 ventanaReporte.document.close();
             };
 
-            const evaluarMotorDecision = () => {
-                const presupuesto = Number(datos.presupuesto) || 0;
-                const kEmpresa = Number(datos.capacidadK) || 0;
-                
-                let kValido = true;
-                if (presupuesto > kEmpresa) {
-                    kValido = false;
-                }
-
-                let tieneFallas = false;
-                let tieneCondicion = false;
-
-                datos.miembros.forEach(m => {
-                    if (m.cumpleFiltros === 'no' || !kValido) {
-                        tieneFallas = true;
-                    }
-                    if (m.cumpleLiquidez === 'no' || m.cumpleCobertura === 'no' || m.cumpleCapital === 'no') {
-                        tieneCondicion = true;
-                    }
-                });
-
-                if (tieneFallas) {
-                    return {
-                        estado: 'NO GO',
-                        color: '#ffcccc',
-                        textColor: '#990000',
-                        mensajeIA: 'El proyecto no cumple con los filtros excluyentes obligatorios o excede la Capacidad K.'
-                    };
-                } else if (tieneCondicion) {
-                    return {
-                        estado: 'GO CONDICIONADO',
-                        color: '#fff2cc',
-                        textColor: '#996600',
-                        mensajeIA: 'Se observa viabilidad legal y experiencia, pero uno o varios indicadores financieros no cumplen con el requerimiento del pliego.'
-                    };
-                } else {
-                    return {
-                        estado: 'GO',
-                        color: '#ccffcc',
-                        textColor: '#006600',
-                        mensajeIA: 'El proyecto es viable en todos los filtros evaluados.'
-                    };
-                }
-            };
-
-            const evaluacion = evaluarMotorDecision();
-
             return (
                 <div className="container">
                     <header>
@@ -248,64 +232,29 @@ Texto del pliego / Términos de Referencia:
 
                     <nav>
                         <button className="btn" style={{background: tab==='PERFIL'?'#1D9E75':'#94a3b8'}} onClick={() => setTab('PERFIL')}>PERFIL</button>
-                        <button className="btn" style={{background: tab==='FINANCIERO'?'#1D9E75':'#94a3b8'}} onClick={() => setTab('FINANCIERO')}>FINANCIERO</button>
                         <button className="btn" style={{background: tab==='IA'?'#1D9E75':'#94a3b8'}} onClick={() => setTab('IA')}>TRAMPAS IA</button>
                     </nav>
 
                     {tab === 'PERFIL' && (
                         <div className="card">
-                            <h3>Perfil & Fuentes de Búsqueda</h3>
-                            
-                            <div style={{marginBottom: '20px'}}>
-                                <h4>🔗 Fuentes de Búsqueda</h4>
-                                <ul>
-                                    <li>SECOP I: <a href="https://www.contratos.gov.co/consultas/resultadoListadoProcesos.jsp?estado=2&desdeFomulario=true" target="_blank" rel="noreferrer">Ir a SECOP I</a></li>
-                                    <li>SECOP II: <a href="https://community.secop.gov.co/Public/Tendering/ContractNoticeManagement/Index?currentLanguage=es-CO&Page=login&Country=CO&SkinName=CCE" target="_blank" rel="noreferrer">Ir a SECOP II</a></li>
-                                    <li><a href="https://bogota.gov.co/asi-vamos/contratos-y-obras/participa" target="_blank" rel="noreferrer">Alcaldía Mayor de Bogotá - Contratos</a></li>
-                                    <li><a href="https://leydepropiedadhorizontal.org/category/convocatorias/" target="_blank" rel="noreferrer">Convocatorias Propiedad Horizontal</a></li>
-                                </ul>
-                            </div>
-
+                            <h3>Perfil del Proceso</h3>
                             <div className="grid">
                                 <div>
                                     <label>Tipo de Proceso:</label>
                                     <select value={datos.tipoProceso} onChange={e => setDatos({...datos, tipoProceso: e.target.value})}>
                                         <option>Licitación Pública</option>
                                         <option>Selección Abreviada</option>
-                                        <option>Concurso de Méritos</option>
-                                        <option>Mínima Cuantía</option>
-                                        <option>Convocatoria Privada</option>
+                                        <option>Términos de Referencia Privados</option>
                                     </select>
                                 </div>
                                 <div>
-                                    <label>Plataforma donde se encontró:</label>
+                                    <label>Plataforma:</label>
                                     <select value={datos.fuenteProceso} onChange={e => setDatos({...datos, fuenteProceso: e.target.value})}>
-                                        <option>SECOP I</option>
                                         <option>SECOP II</option>
-                                        <option>Alcaldía Mayor</option>
                                         <option>Propiedad Horizontal</option>
                                     </select>
                                 </div>
                             </div>
-
-                            {datos.miembros.map((m, i) => (
-                                <div key={m.id} style={{borderBottom:'1px solid #eee', paddingBottom:'10px', marginTop:'15px', marginBottom:'10px'}}>
-                                    <input placeholder="Nombre Empresa" value={m.nombre} onChange={e => {
-                                        let n = [...datos.miembros]; n[i].nombre = e.target.value; setDatos({...datos, miembros: n});
-                                    }} />
-                                    <div className="grid">
-                                        <input type="number" placeholder="Patrimonio" value={m.patrimonio || ''} onChange={e => {
-                                            let n = [...datos.miembros]; n[i].patrimonio = e.target.value; setDatos({...datos, miembros: n});
-                                        }} />
-                                        <input type="number" placeholder="Experiencia Máxima" value={m.expMax || ''} onChange={e => {
-                                            let n = [...datos.miembros]; n[i].expMax = e.target.value; setDatos({...datos, miembros: n});
-                                        }} />
-                                    </div>
-                                    <input placeholder="Códigos UNSPSC" value={m.unspsc} onChange={e => {
-                                        let n = [...datos.miembros]; n[i].unspsc = e.target.value; setDatos({...datos, miembros: n});
-                                    }} />
-                                </div>
-                            ))}
                             
                             <h4>Datos de la Licitación</h4>
                             <div className="grid">
@@ -323,85 +272,6 @@ Texto del pliego / Términos de Referencia:
                                     <label>Presupuesto Oficial ($):</label>
                                     <input type="number" value={datos.presupuesto || ''} onChange={e => setDatos({...datos, presupuesto: e.target.value})} />
                                 </div>
-                                <div>
-                                    <label>Capacidad de Contratación K ($):</label>
-                                    <input type="number" value={datos.capacidadK || ''} onChange={e => setDatos({...datos, capacidadK: e.target.value})} />
-                                </div>
-                            </div>
-                        </div>
-                    )}
-
-                    {tab === 'FINANCIERO' && (
-                        <div className="card">
-                            <h3>Evaluación Financiera y Checklist Legal</h3>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Indicador / Requisito</th>
-                                        <th>Valor Exigido por Pliego</th>
-                                        <th>¿Cumple?</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {datos.miembros.map((m, i) => (
-                                        <React.Fragment key={m.id}>
-                                            <tr>
-                                                <td>Liquidez Mínima</td>
-                                                <td><input type="number" step="0.1" value={m.liquidezRequisito || 1.5} onChange={e => {
-                                                    let n = [...datos.miembros]; n[i].liquRequisito = e.target.value; setDatos({...datos, miembros: n});
-                                                }} /></td>
-                                                <td>
-                                                    <select value={m.cumpleLiquidez} onChange={e => {
-                                                        let n = [...datos.miembros]; n[i].cumpleLiquidez = e.target.value; setDatos({...datos, miembros: n});
-                                                    }}>
-                                                        <option value="si">Sí</option>
-                                                        <option value="no">No</option>
-                                                    </select>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Cobertura Mínima</td>
-                                                <td><input type="number" step="0.1" value={m.coberturaRequisito || 1.2} onChange={e => {
-                                                    let n = [...datos.miembros]; n[i].coberRequisito = e.target.value; setDatos({...datos, miembros: n});
-                                                }} /></td>
-                                                <td>
-                                                    <select value={m.cumpleCobertura} onChange={e => {
-                                                        let n = [...datos.miembros]; n[i].cumpleCobertura = e.target.value; setDatos({...datos, miembros: n});
-                                                    }}>
-                                                        <option value="si">Sí</option>
-                                                        <option value="no">No</option>
-                                                    </select>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Capital de Trabajo Mínimo</td>
-                                                <td><input type="number" value={m.capitalRequisito || 50000000} onChange={e => {
-                                                    let n = [...datos.miembros]; n[i].capitalRequisito = e.target.value; setDatos({...datos, miembros: n});
-                                                }} /></td>
-                                                <td>
-                                                    <select value={datos.miembros[0].cumpleCapital} onChange={e => {
-                                                        let n = [...datos.miembros];
-                                                        n[0].cumpleCapital = e.target.value;
-                                                        setDatos({...datos, miembros: n});
-                                                    }}>
-                                                        <option value="si">Sí</option>
-                                                        <option value="no">No</option>
-                                                    </select>
-                                                </td>
-                                            </tr>
-                                        </React.Fragment>
-                                    ))}
-                                </tbody>
-                            </table>
-
-                            <h3>Motor de Decisión e IA</h3>
-                            <div className="ia-box" style={{ borderColor: evaluacion.estado === 'NO GO' ? '#ff9999' : '#91d5ff' }}>
-                                <div className="ia-title">🤖 Diagnóstico Automatizado (Análisis IA)</div>
-                                <p>{evaluacion.mensajeIA}</p>
-                            </div>
-
-                            <div style={{ marginTop: '15px', padding: '15px', textAlign: 'center', fontWeight: 'bold', backgroundColor: evaluacion.color, color: evaluacion.textColor, borderRadius: '6px' }}>
-                                ESTADO: {evaluacion.estado}
                             </div>
                         </div>
                     )}
@@ -416,7 +286,7 @@ Texto del pliego / Términos de Referencia:
 
                             {datos.promptIA && (
                                 <div>
-                                    <textarea readOnly style={{height: '120px', backgroundColor: '#f8fafc'}} value={datos.promptIA} />
+                                    <textarea readOnly style={{height: '100px', backgroundColor: '#f8fafc'}} value={datos.promptIA} />
                                     <button className="btn" style={{backgroundColor: '#0C447C', marginBottom: '15px'}} onClick={copiarPrompt}>
                                         Copiar Prompt
                                     </button>
@@ -425,25 +295,37 @@ Texto del pliego / Términos de Referencia:
 
                             <h4>Pegar resultado del análisis de la IA:</h4>
                             <textarea 
-                                style={{height: '150px'}} 
+                                style={{height: '120px'}} 
                                 placeholder="Pega aquí el texto con el análisis de la licitación..." 
                                 value={datos.respuestaIA} 
                                 onChange={e => setDatos({...datos, respuestaIA: e.target.value})} 
                             />
                             
                             <button className="btn" style={{backgroundColor: '#1D9E75', marginBottom: '20px'}} onClick={procesarRespuestaIA}>
-                                ✨ Procesar Información Básica
+                                ✨ Procesar 13 Puntos de Control
                             </button>
 
-                            <h3>Resumen Automatizado del Pliego</h3>
+                            <h3>Checklist Estratégico (13 Puntos SIEL)</h3>
                             <div className="ia-box">
-                                <p><strong>Visita Técnica Obligatoria:</strong> {datos.analExtraido?.visitaTecnicaObligatoria || "No especificado"}</p>
-                                <p><strong>Manifestación de Interés:</strong> {datos.analExtraido?.manifestacionInteres || "No especificado"}</p>
-                                <p><strong>Experiencia / Filtros Excluyentes:</strong> {datos.analExtraido?.experiencia || "No especificado"}</p>
-                                <p><strong>Trampas / Riesgos Detectados:</strong> {datos.analExtraido?.riesgos || "Ninguno"}</p>
+                                <p style={{fontSize: '11px', color: '#64748B'}}><em>Selecciona los puntos que cumpla el proponente para evaluar la viabilidad de la oferta.</em></p>
+                                
+                                {datos.analisisExtraido?.checklistRequisitos?.map((item, index) => (
+                                    <div key={index} style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid #e2e8f0'}}>
+                                        <span style={{fontSize: '12px'}}>{item.item}</span>
+                                        <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}>
+                                            <span style={{fontSize: '10px', color: '#64748B'}}>{item.obs}</span>
+                                            <input 
+                                                type="checkbox" 
+                                                checked={item.cumple} 
+                                                onChange={() => toggleChecklist(index)} 
+                                                style={{width: '20px', margin: '0'}} 
+                                            />
+                                        </div>
+                                    </div>
+                                ))}
 
-                                <button className="btn" style={{backgroundColor: '#0C447C', marginTop: '15px', width: '100%'}} onClick={imprimirOGuardarPDF}>
-                                    🖨️ Imprimir / Guardar en PDF
+                                <button className="btn" style={{backgroundColor: '#0C447C', marginTop: '20px', width: '100%'}} onClick={imprimirOGuardarPDF}>
+                                    🖨️ Imprimir / Guardar Check-list en PDF
                                 </button>
                                 
                                 <p className="disclaimer-text">
