@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SIEL — Sistema Inteligente de Evaluación de Licitaciones</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Space+Mono:wght@400;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+<!-- AUTH SCREENS -->
+<div id="auth-screen">
+  <div class="auth-bg">
+    <div class="auth-grid"></div>
+    <div class="auth-glow g1"></div>
+    <div class="auth-glow g2"></div>
+  </div>
+
+  <!-- LOGIN -->
+  <div class="auth-card" id="login-card">
+    <div class="auth-logo">
+      <div class="logo-mark">SI</div>
+      <div>
+        <div class="logo-name">SIEL</div>
+        <div class="logo-tagline">Copiloto de Licitaciones IA</div>
+      </div>
+    </div>
+    <h2 class="auth-title">Ingresa a tu cuenta</h2>
+    <p class="auth-sub">Análisis inteligente de pliegos en segundos</p>
+    <div class="field-group">
+      <label>Correo electrónico</label>
+      <input type="email" id="login-email" class="field-input" placeholder="correo@empresa.com">
+    </div>
+    <div class="field-group">
+      <label>Contraseña</label>
+      <input type="password" id="login-pass" class="field-input" placeholder="••••••••">
+    </div>
+    <div id="login-error" class="auth-error" style="display:none"></div>
+    <button class="btn-auth" id="login-btn" onclick="handleLogin()">
+      <span id="login-txt"><i class="fa-solid fa-shield-halved"></i> Ingresar</span>
+      <span id="login-loading" style="display:none"><i class="fa-solid fa-spinner fa-spin"></i> Verificando...</span>
+    </button>
+    <p class="auth-switch">¿No tienes cuenta? <a onclick="showRegister()">Regístrate gratis</a></p>
+  </div>
+
+  <!-- REGISTER -->
+  <div class="auth-card" id="register-card" style="display:none">
+    <div class="auth-logo">
+      <div class="logo-mark">SI</div>
+      <div>
+        <div class="logo-name">SIEL</div>
+        <div class="logo-tagline">Copiloto de Licitaciones IA</div>
+      </div>
+    </div>
+    <h2 class="auth-title">Crear cuenta gratis</h2>
+    <p class="auth-sub">Empieza a analizar licitaciones con IA hoy</p>
+    <div class="field-group">
+      <label>Nombre completo</label>
+      <input type="text" id="reg-name" class="field-input" placeholder="Juan Rodríguez">
+    </div>
+    <div class="field-group">
+      <label>Empresa / Organización</label>
+      <input type="text" id="reg-company" class="field-input" placeholder="Constructora XYZ S.A.S">
+    </div>
+    <div class="field-group">
+      <label>Correo electrónico</label>
+      <input type="email" id="reg-email" class="field-input" placeholder="correo@empresa.com">
+    </div>
+    <div class="field-group">
+      <label>Contraseña</label>
+      <input type="password" id="reg-pass" class="field-input" placeholder="Mínimo 6 caracteres">
+    </div>
+    <div id="reg-error" class="auth-error" style="display:none"></div>
+    <div id="reg-success" class="auth-success" style="display:none"></div>
+    <button class="btn-auth" id="reg-btn" onclick="handleRegister()">
+      <span id="reg-txt"><i class="fa-solid fa-user-plus"></i> Crear cuenta</span>
+      <span id="reg-loading" style="display:none"><i class="fa-solid fa-spinner fa-spin"></i> Creando...</span>
+    </button>
+    <p class="auth-switch">¿Ya tienes cuenta? <a onclick="showLogin()">Inicia sesión</a></p>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="app" style="display:none">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-logo">
+      <div class="logo-mark sm">SI</div>
+      <div>
+        <div class="logo-name sm">SIEL</div>
+        <div class="logo-tagline">v2.5 · <span id="sb-plan">Starter</span></div>
+      </div>
+    </div>
+
+    <nav class="sb-nav">
+      <div class="sb-section">
+        <div class="sb-section-label">Principal</div>
+        <button class="sb-item active" data-page="dashboard"><i class="fa-solid fa-chart-line"></i>Dashboard</button>
+        <button class="sb-item" data-page="upload"><i class="fa-solid fa-cloud-arrow-up"></i>Analizar Pliego</button>
+        <button class="sb-item" data-page="licitaciones"><i class="fa-solid fa-folder-open"></i>Mis Análisis <span class="sb-badge" id="sb-count">0</span></button>
+      </div>
+      <div class="sb-section">
+        <div class="sb-section-label">Herramientas</div>
+        <button class="sb-item" data-page="comparar"><i class="fa-solid fa-scale-balanced"></i>Comparar</button>
+        <button class="sb-item" data-page="alertas"><i class="fa-solid fa-bell"></i>Alertas <span class="sb-badge red" id="sb-alerts">0</span></button>
+        <button class="sb-item" data-page="asistente"><i class="fa-solid fa-robot"></i>SIEL Copilot IA</button>
+      </div>
+      <div class="sb-section">
+        <div class="sb-section-label">Cuenta</div>
+        <button class="sb-item" data-page="suscripcion"><i class="fa-solid fa-crown"></i>Suscripción</button>
+      </div>
+    </nav>
+
+    <div class="sb-user">
+      <div class="user-av" id="sb-av">?</div>
+      <div class="sb-user-info">
+        <div class="sb-user-name" id="sb-name">Cargando...</div>
+        <div class="sb-user-company" id="sb-company"></div>
+      </div>
+      <button class="sb-logout" onclick="handleLogout()" title="Cerrar sesión"><i class="fa-solid fa-arrow-right-from-bracket"></i></button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <header class="topbar">
+      <div class="topbar-left">
+        <div>
+          <div class="tb-title" id="page-title">Dashboard</div>
+          <div class="tb-sub" id="page-sub">Bienvenido a SIEL</div>
+        </div>
+        <div class="tb-search">
+          <i class="fa-solid fa-search"></i>
+          <input placeholder="Buscar análisis, procesos...">
+        </div>
+      </div>
+      <div class="topbar-right">
+        <button class="tb-icon-btn" onclick="showPage('alertas')"><i class="fa-solid fa-bell"></i><span class="tb-dot" id="tb-notif-dot" style="display:none"></span></button>
+        <button class="tb-cta" onclick="showPage('upload')"><i class="fa-solid fa-plus"></i> Nuevo análisis</button>
+      </div>
+    </header>
+
+    <div class="content" id="content">
+
+      <!-- PAGE: DASHBOARD -->
+      <div class="page active" id="page-dashboard">
+        <div class="kpi-grid" id="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-label">Análisis Totales</div>
+            <div class="kpi-value" id="kpi-total">0</div>
+            <div class="kpi-sub">licitaciones evaluadas</div>
+            <div class="kpi-icon blue"><i class="fa-solid fa-folder-open"></i></div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Score Promedio</div>
+            <div class="kpi-value" id="kpi-score">—</div>
+            <div class="kpi-sub">viabilidad promedio</div>
+            <div class="kpi-icon green"><i class="fa-solid fa-chart-simple"></i></div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Alta Viabilidad</div>
+            <div class="kpi-value" id="kpi-high">0</div>
+            <div class="kpi-sub">score ≥ 70/100</div>
+            <div class="kpi-icon gold"><i class="fa-solid fa-star"></i></div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Riesgo Alto</div>
+            <div class="kpi-value" id="kpi-risk">0</div>
+            <div class="kpi-sub">requieren atención</div>
+            <div class="kpi-icon red"><i class="fa-solid fa-triangle-exclamation"></i></div>
+          </div>
+        </div>
+
+        <div class="dash-grid">
+          <div class="card" id="recent-card">
+            <div class="card-header">
+              <h3>Análisis Recientes</h3>
+              <button class="btn-sm" onclick="showPage('upload')"><i class="fa-solid fa-plus"></i> Nuevo</button>
+            </div>
+            <div id="recent-list">
+              <div class="empty-state">
+                <i class="fa-solid fa-folder-open"></i>
+                <h4>Sin análisis aún</h4>
+                <p>Sube tu primer pliego de licitación para comenzar</p>
+                <button class="btn-primary-sm" onclick="showPage('upload')">Analizar primer pliego</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header"><h3>Distribución de Scores</h3></div>
+            <div id="score-dist">
+              <div class="dist-item">
+                <span class="dist-label">Alta (70-100)</span>
+                <div class="dist-bar-wrap"><div class="dist-bar green" id="dist-high" style="width:0%"></div></div>
+                <span class="dist-val" id="dist-high-n">0</span>
+              </div>
+              <div class="dist-item">
+                <span class="dist-label">Media (40-69)</span>
+                <div class="dist-bar-wrap"><div class="dist-bar gold" id="dist-med" style="width:0%"></div></div>
+                <span class="dist-val" id="dist-med-n">0</span>
+              </div>
+              <div class="dist-item">
+                <span class="dist-label">Baja (0-39)</span>
+                <div class="dist-bar-wrap"><div class="dist-bar red" id="dist-low" style="width:0%"></div></div>
+                <span class="dist-val" id="dist-low-n">0</span>
+              </div>
+            </div>
+            <div style="margin-top:24px">
+              <div class="card-header"><h3>Acciones Rápidas</h3></div>
+              <div class="quick-actions">
+                <button class="qa-btn" onclick="showPage('upload')"><i class="fa-solid fa-file-arrow-up"></i><span>Subir Pliego</span></button>
+                <button class="qa-btn" onclick="showPage('asistente')"><i class="fa-solid fa-robot"></i><span>Preguntar IA</span></button>
+                <button class="qa-btn" onclick="showPage('comparar')"><i class="fa-solid fa-scale-balanced"></i><span>Comparar</span></button>
+                <button class="qa-btn" onclick="showPage('alertas')"><i class="fa-solid fa-bell"></i><span>Alertas</span></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE: UPLOAD -->
+      <div class="page" id="page-upload">
+        <div class="upload-wrap">
+          <div class="upload-zone" id="drop-zone" onclick="document.getElementById('file-inp').click()">
+            <div class="uz-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+            <h3>Sube el pliego de licitación</h3>
+            <p>PDF, Word (.docx) o Excel (.xlsx) · La IA analizará los 13 puntos automáticamente</p>
+            <div class="uz-formats">
+              <span>📄 PDF</span><span>📝 DOCX</span><span>📊 XLSX</span><span>🔍 OCR incluido</span>
+            </div>
+            <input type="file" id="file-inp" style="display:none" accept=".pdf,.docx,.xlsx,.txt">
+          </div>
+
+          <div id="upload-progress-area" style="display:none">
+            <div class="progress-card">
+              <div class="prog-header">
+                <i class="fa-solid fa-robot prog-icon"></i>
+                <div>
+                  <div class="prog-title">SIEL IA analizando pliego...</div>
+                  <div class="prog-file" id="prog-filename"></div>
+                </div>
+              </div>
+              <div class="prog-steps" id="prog-steps"></div>
+              <div class="prog-bar-outer"><div class="prog-bar-inner" id="prog-bar"></div></div>
+              <div class="prog-status" id="prog-status">Iniciando análisis...</div>
+            </div>
+          </div>
+
+          <div class="analysis-modules">
+            <h3><i class="fa-solid fa-list-check"></i> Los 13 puntos de análisis SIEL</h3>
+            <div class="modules-grid">
+              <div class="module-item"><span class="mod-num">01</span>Resumen Ejecutivo</div>
+              <div class="module-item"><span class="mod-num">02</span>Score de Viabilidad</div>
+              <div class="module-item"><span class="mod-num">03</span>Análisis Jurídico</div>
+              <div class="module-item"><span class="mod-num">04</span>Análisis Financiero</div>
+              <div class="module-item"><span class="mod-num">05</span>Análisis Técnico</div>
+              <div class="module-item"><span class="mod-num">06</span>Análisis Económico</div>
+              <div class="module-item"><span class="mod-num">07</span>Checklist Documental</div>
+              <div class="module-item"><span class="mod-num">08</span>Matriz de Riesgos</div>
+              <div class="module-item"><span class="mod-num">09</span>Alertas Automáticas</div>
+              <div class="module-item"><span class="mod-num">10</span>Recomendaciones IA</div>
+              <div class="module-item"><span class="mod-num">11</span>Comparación</div>
+              <div class="module-item"><span class="mod-num">12</span>Dashboard Gerencial</div>
+              <div class="module-item"><span class="mod-num">13</span>Asistente Copilot</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE: LICITACIONES -->
+      <div class="page" id="page-licitaciones">
+        <div class="card">
+          <div class="card-header">
+            <h3>Mis Análisis</h3>
+            <button class="btn-sm" onclick="showPage('upload')"><i class="fa-solid fa-plus"></i> Nuevo</button>
+          </div>
+          <div id="all-list">
+            <div class="empty-state">
+              <i class="fa-solid fa-folder-open"></i>
+              <h4>Sin análisis aún</h4>
+              <p>Tus análisis de licitaciones aparecerán aquí</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE: ANÁLISIS DETALLADO -->
+      <div class="page" id="page-analisis">
+        <div id="analisis-content">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+
+      <!-- PAGE: COMPARAR -->
+      <div class="page" id="page-comparar">
+        <div class="card">
+          <div class="card-header"><h3>Comparar Licitaciones</h3></div>
+          <p class="page-desc">Selecciona dos análisis para compararlos lado a lado.</p>
+          <div id="compare-select-grid" class="compare-select-grid"></div>
+          <div id="compare-result" style="display:none;margin-top:20px"></div>
+        </div>
+      </div>
+
+      <!-- PAGE: ALERTAS -->
+      <div class="page" id="page-alertas">
+        <div class="card">
+          <div class="card-header"><h3>Centro de Alertas</h3></div>
+          <div id="alertas-list">
+            <div class="empty-state">
+              <i class="fa-solid fa-bell"></i>
+              <h4>Sin alertas activas</h4>
+              <p>Las alertas se generan automáticamente al analizar pliegos</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE: ASISTENTE -->
+      <div class="page" id="page-asistente">
+        <div class="chat-card">
+          <div class="chat-head">
+            <div class="chat-av"><i class="fa-solid fa-robot"></i></div>
+            <div>
+              <div class="chat-name">SIEL Copilot IA</div>
+              <div class="chat-status">● Activo · Conectado a tus análisis</div>
+            </div>
+            <div class="chat-model">claude-sonnet-4</div>
+          </div>
+          <div class="chat-msgs" id="chat-msgs"></div>
+          <div class="chat-quick" id="chat-quick">
+            <button onclick="quickAsk('¿Cuál de mis licitaciones tiene mayor viabilidad?')">🏆 Mayor viabilidad</button>
+            <button onclick="quickAsk('¿Qué riesgos debo priorizar?')">⚠️ Riesgos críticos</button>
+            <button onclick="quickAsk('¿Qué documentos suelen faltar en licitaciones colombianas?')">📋 Docs. frecuentes</button>
+            <button onclick="quickAsk('Dame consejos para mejorar una propuesta técnica')">🚀 Mejorar propuesta</button>
+          </div>
+          <div class="chat-input-area">
+            <textarea id="chat-inp" class="chat-textarea" placeholder="Pregunta sobre tus licitaciones, requisitos, estrategia..." onkeydown="chatKey(event)" rows="1"></textarea>
+            <button class="chat-send" onclick="sendChat()"><i class="fa-solid fa-paper-plane"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE: SUSCRIPCION -->
+      <div class="page" id="page-suscripcion">
+        <p class="page-desc">Todos los planes incluyen IA ilimitada durante el período de prueba. Escala cuando estés listo.</p>
+        <div class="plans-grid">
+          <div class="plan-card">
+            <div class="plan-name">STARTER</div>
+            <div class="plan-price">Gratis<span>/siempre</span></div>
+            <ul class="plan-feats">
+              <li class="yes"><i class="fa-solid fa-check"></i>3 análisis/mes</li>
+              <li class="yes"><i class="fa-solid fa-check"></i>Los 13 puntos SIEL</li>
+              <li class="yes"><i class="fa-solid fa-check"></i>Checklist documental</li>
+              <li class="yes"><i class="fa-solid fa-check"></i>1 usuario</li>
+              <li class="no"><i class="fa-solid fa-xmark"></i>Análisis ilimitados</li>
+              <li class="no"><i class="fa-solid fa-xmark"></i>Comparación avanzada</li>
+              <li class="no"><i class="fa-solid fa-xmark"></i>Exportar PDF</li>
+            </ul>
+            <button class="plan-btn outline">Plan actual</button>
+          </div>
+          <div class="plan-card featured">
+            <div class="plan-name" style="color:var(--blue3)">PRO</div>
+            <div class="plan-price">$490<span> USD/mo</span></div>
+            <ul class="plan-feats">
+              <li class="yes"><i class="fa-solid fa-check"></i>Análisis ilimitados</li>
+              <li class="yes"><i class="fa-solid fa-check"></i>Los 13 puntos SIEL</li>
+              <li class="yes"><i class="fa-solid fa-check"></i>SIEL Copilot IA</li>
+              <li class="yes"><i class="fa-solid fa-check"></i>Comparación avanzada</li>
+              <li class="yes"><i class="fa-solid fa-check"></i>Exportar PDF/Excel</li>
+              <li class="yes"><i class="fa-solid fa-check"></i>Hasta 5 usuarios</li>
+              <li class="no"><i class="fa-solid fa-xmark"></i>API access</li>
+            </ul>
+            <button class="plan-btn filled">Próximamente</button>
+          </div>
+          <div class="plan-card">
+            <div class="plan-name" style="color:var(--gold)">ENTERPRISE</div>
+            <div class="plan-price">$1.290<span> USD/mo</span></div>
+            <ul class="plan-feats">
+              <li class="yes"><i class="fa-solid fa-check"></i>Todo lo del Pro</li>
+              <li class="yes"><i class="fa-solid fa-check"></i>API REST completa</li>
+              <li class="yes"><i class="fa-solid fa-check"></i>Modelo IA propio</li>
+              <li class="yes"><i class="fa-solid fa-check"></i>Usuarios ilimitados</li>
+              <li class="yes"><i class="fa-solid fa-check"></i>SLA 99.9%</li>
+              <li class="yes"><i class="fa-solid fa-check"></i>Soporte 24/7</li>
+              <li class="yes"><i class="fa-solid fa-check"></i>On-premise</li>
+            </ul>
+            <button class="plan-btn outline">Contactar</button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end content -->
+  </main>
+</div><!-- end app -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/config.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/db.js"></script>
+<script src="js/analyzer.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
